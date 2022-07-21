@@ -196,7 +196,7 @@ night_mode: "on/off"
 # set follow_site_theme true to make utterances' theme follow the site's
 
 utterances:
-  repo: "97kim/blog-comments"
+  repo: "haedal-uni/blog-comments"
   issue_term: "title"
   label: "comments"
   theme: "github-light"
