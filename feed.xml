@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://haedal-uni.github.io/jekyll-theme-yat/feed.xml" rel="self" type="application/atom+xml" /><link href="https://haedal-uni.github.io/jekyll-theme-yat/" rel="alternate" type="text/html" hreflang="ko" /><updated>2022-07-23T12:16:39+00:00</updated><id>https://haedal-uni.github.io/jekyll-theme-yat/feed.xml</id><title type="html">hi Clare👋🏻</title><subtitle>Tech-blog - 한걸음 한걸음</subtitle><author><name>haedal-uni</name></author><entry><title type="html">@tostring</title><link href="https://haedal-uni.github.io/jekyll-theme-yat/2022/07/23/@ToString.html" rel="alternate" type="text/html" title="@tostring" /><published>2022-07-23T00:00:00+00:00</published><updated>2022-07-23T00:00:00+00:00</updated><id>https://haedal-uni.github.io/jekyll-theme-yat/2022/07/23/@ToString</id><content type="html" xml:base="https://haedal-uni.github.io/jekyll-theme-yat/2022/07/23/@ToString.html"><![CDATA[<h2 id="tostring">@ToString</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">SubClass</span> <span class="kd">extends</span> <span class="nc">SuperClass</span>
+</code></pre></div></div>
+<p><a href="https://enter.tistory.com/108">JAVA 상속 - 부모(슈퍼)클래스와 자식(서브)클래스</a></p>
+
+<p><br /><br /></p>
+
+<h4 id="tostring-1">@ToString</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ToString</span><span class="o">(</span><span class="n">exclude</span> <span class="o">=</span> <span class="s">"password"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="nc">String</span> <span class="n">username</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">scores</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위와 같이 클래스에 @ToString 어노테이션을 붙이고, 아래와 같이 필드를 세팅 후 출력을 하면,</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">User</span><span class="o">();</span>
+<span class="n">user</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="mi">1L</span><span class="o">);</span>
+<span class="n">user</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"dale"</span><span class="o">);</span>
+<span class="n">user</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"1234"</span><span class="o">);</span>
+<span class="n">user</span><span class="o">.</span><span class="na">setScores</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">80</span><span class="o">,</span> <span class="mi">70</span><span class="o">,</span> <span class="mi">100</span><span class="o">});</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>다음과 같이, 클래스명(필드1명=필드1값, 필드2명=필드2값,…) 식으로 출력된다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">User(id=1, username=1234, scores=[80, 70, 100])</code></p>
+
+<p><a href="https://www.daleseo.com/lombok-popular-annotations/">[자바] 자주 사용되는 Lombok 어노테이션</a></p>
+
+<p><br /><br /><br /></p>
+
+<h4 id="option">Option</h4>
+<p>toString 기본 출력에는 슈퍼클래스 구현 데이터가 포함되지 않는다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">@ToString(callSuper = true)</code> 코드를 추가하면 슈퍼클래스 정보와 서브클래스 필드 및 값이 포함된 다음 출력이 생성된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ToString</span><span class="o">(</span><span class="n">callSuper</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SavingAccount</span> <span class="kd">extends</span> <span class="nc">Account</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">savingAccountId</span><span class="o">;</span>
+
+    <span class="c1">// standard getters and setters</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><strong>출력</strong>    <br />
+<code class="language-plaintext highlighter-rouge">SavingAccount(super=Account(id=12345, name=An account), savingAccountId=6789)</code></p>
+
+<p><a href="https://www.baeldung.com/lombok-tostring">롬복의 @ToString 주석</a></p>]]></content><author><name>haedal-uni</name></author><summary type="html"><![CDATA[@ToString]]></summary></entry><entry><title type="html">첫 시작</title><link href="https://haedal-uni.github.io/jekyll-theme-yat/log/2022/07/16/%EC%B2%AB-%EC%8B%9C%EC%9E%91.html" rel="alternate" type="text/html" title="첫 시작" /><published>2022-07-16T00:00:00+00:00</published><updated>2022-07-16T00:00:00+00:00</updated><id>https://haedal-uni.github.io/jekyll-theme-yat/log/2022/07/16/%EC%B2%AB%20%EC%8B%9C%EC%9E%91</id><content type="html" xml:base="https://haedal-uni.github.io/jekyll-theme-yat/log/2022/07/16/%EC%B2%AB-%EC%8B%9C%EC%9E%91.html"><![CDATA[<h3 id="이제-여기로">이제 여기로!</h3>
+<p>이전에 <a href="https://lu-delight.tistory.com/">Tistory</a>에서 공부했던 부분이나 팀 프로젝트 했던 기록들을 적어왔었다.    <br />
+회사 다니기 시작하면서 배우는 부분들을 그대로 이어서 작성해야 하나 고민했었는데 이제 여기에 배워 나가는 것들을 정리해보려고 한다😄</p>]]></content><author><name>haedal-uni</name></author><category term="log" /><category term="log" /><summary type="html"><![CDATA[이제 여기로! 이전에 Tistory에서 공부했던 부분이나 팀 프로젝트 했던 기록들을 적어왔었다. 회사 다니기 시작하면서 배우는 부분들을 그대로 이어서 작성해야 하나 고민했었는데 이제 여기에 배워 나가는 것들을 정리해보려고 한다😄]]></summary></entry></feed>
