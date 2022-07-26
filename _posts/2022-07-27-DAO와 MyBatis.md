@@ -1,4 +1,5 @@
 ---
+categories: spring
 tags: [spring]
 ---
 # DAO와 MyBatis
