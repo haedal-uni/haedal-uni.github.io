@@ -3,7 +3,7 @@ categories: spring
 tags: [spring]
 ---
                        
-# DAO와 MyBatis
+# DAO와 MyBatis                      
 
 **Mapper 파일의 저장경로 설정**          
 
@@ -74,15 +74,6 @@ ex. userId가 1로 정해지면 USERID = #{userId}는 USERID = 1이 된다.
 <br><br>
 
 ### 반환 하는 값 
-```java
-UserA userInfo(User user)
-```
-UserA가 반환 값이다. sql에서는 resultType이 반환 값으로 적힌다.  
-
-아래 코드를 보면 as(alias)가 추가되었다.                   
-      
-<br>
-
 UserA에는 `private string username;` 과 `private User user;` 이 있고        
 User 에는 userId가 있다고 가정한다.
 
@@ -103,7 +94,12 @@ public class User {
 
 <br>
   
-               
+```java
+UserA userInfo(User user)
+```
+UserA가 반환 값이다. sql에서는 resultType이 반환 값으로 적힌다.  
+
+아래 코드를 보면 as(alias)가 추가되었다.                        
                             
 ```sql
 <select id="userInfo" resultType="UserA">
