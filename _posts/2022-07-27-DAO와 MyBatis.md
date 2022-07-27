@@ -91,21 +91,22 @@ public class UserA {
     private User user;
 }
 ```
-
+                      
 ```java
 @Alias("User")
 public class User {
     private UserId userId;
 } 
 ```  
+
 <br>
   
   ---
   
 </details>
-
-
-
+                     
+                      
+                            
 ```sql
 <select id="userInfo" resultType="UserA">
    select
