@@ -8,7 +8,8 @@ tags: [spring]
 **Mapper 파일의 저장경로 설정**          
 
 Mapper란 MyBatis에서 SQL 문을 저장하는 존재를 말한다.            
-Mapper를 저장할 폴더 mappers를 src/main/resources 에 추가해준다.       
+
+Mapper를 저장할 폴더 mappers를 src/main/resources 에 추가해준다.     
 [[Spring] 7.DAO 구현](https://kookyungmin.github.io/server/2018/08/13/spring_07/)
 
 <br>
@@ -16,7 +17,8 @@ Mapper를 저장할 폴더 mappers를 src/main/resources 에 추가해준다.
 
 ## DAO
 **UserDAO**     
-쿼리문에 던져주는 정보가 매개변수(`User user`) 부분이고 해당 정보를 토대로 쿼리에 다시 반환하는 값이 리턴 타입인 `UserA`부분이다.    
+쿼리문에 던져주는 정보가 매개변수(`User user`) 부분이고          
+해당 정보를 토대로 쿼리에 다시 반환하는 값이 리턴 타입인 `UserA`부분이다.    
 ```java
 UserA userInfo(User user)
 ```
@@ -65,6 +67,7 @@ UserA userInfo(User user)
 <br>
 
 `#{ }`는 후에 삽입되어 대체될 값이다.          
+
 ex. userId가 1로 정해지면 USERID = #{userId}는 USERID = 1이 된다.            
 [[Spring] 7.DAO 구현](https://kookyungmin.github.io/server/2018/08/13/spring_07/)
 
@@ -80,7 +83,8 @@ UserA가 반환 값이다. sql에서는 resultType이 반환 값으로 적힌다
       
 <br>
 
-UserA에는 `private string username;` 과 `private User user;` 이 있고 User 에는 userId가 있다고 가정한다.
+UserA에는 `private string username;` 과 `private User user;` 이 있고        
+User 에는 userId가 있다고 가정한다.
 
 ```java          
 @Alias("UserA")
