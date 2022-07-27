@@ -80,10 +80,8 @@ UserA가 반환 값이다. sql에서는 resultType이 반환 값으로 적힌다
       
 <br>
 
-<details><summary>UserA에는 `private string username;` 과 `private User user;` 이 있고 User 에는 userId가 있다고 가정한다.</summary>
-                    
-  <br>
-  
+UserA에는 `private string username;` 과 `private User user;` 이 있고 User 에는 userId가 있다고 가정한다.
+
 ```java          
 @Alias("UserA")
 public class UserA {
@@ -101,11 +99,7 @@ public class User {
 
 <br>
   
-  ---
-  
-</details>
-                     
-                      
+               
                             
 ```sql
 <select id="userInfo" resultType="UserA">
