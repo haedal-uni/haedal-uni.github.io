@@ -39,9 +39,9 @@ MyBatis의 namespace에 Mapper 인터페이스의 경로를 적어준다.
 <br>
 <br>
 
-### 전해주는 값
+### 전해주는 값 : `반환 값` 메소드 `(전해주는 값)`
 
-SQL id에는 매핑하는 메소드의 이름을 지정한다. → DAO의 메소드 이름과 id값이 같아야 한다.         
+SQL id에는 매핑하는 메소드의 이름을 지정한다. → DAO의 메소드 이름과 id 값이 같아야 한다.         
 ```sql
 <select id="userInfo" resultType="UserA">
 ```
@@ -73,7 +73,14 @@ ex. userId가 1로 정해지면 USERID = #{userId}는 USERID = 1이 된다.
 
 <br><br>
 
-### 반환 하는 값 
+### 반환 하는 값 _  `반환 값` 메소드 `(전해주는 값)`      
+id = “DAO 메소드 명” resultType = “반환 값”(모델 or int 기타 등등)           
+```sql 
+<select id="userInfo" resultType="UserA">       
+``` 
+
+<br>
+
 UserA에는 `private string username;` 과 `private User user;` 이 있고        
 User 에는 userId가 있다고 가정한다.
 
