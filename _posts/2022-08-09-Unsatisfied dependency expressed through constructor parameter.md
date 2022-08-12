@@ -8,8 +8,8 @@ Unsatisfied dependency expressed through constructor parameter
 available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}                             
 
 
-[1번](https://sg-moomin.tistory.com/entry/available-expected-at-least-1-bean-which-qualifies-as-autowire-candidate-Dependency-annotations-%EC%98%A4%EB%A5%98-%ED%95%B4%EA%B2%B0%ED%95%B4%EB%B3%B4%EA%B8%B0)                     
-[[스프링 Error]org.springframework.beans.factory.NoSuchBeanDefinitionException 에러메시지](https://sas-study.tistory.com/385)            
+[1. blog](https://sg-moomin.tistory.com/entry/available-expected-at-least-1-bean-which-qualifies-as-autowire-candidate-Dependency-annotations-%EC%98%A4%EB%A5%98-%ED%95%B4%EA%B2%B0%ED%95%B4%EB%B3%B4%EA%B8%B0)                      
+[2. blog : [스프링 Error]org.springframework.beans.factory.NoSuchBeanDefinitionException 에러메시지](https://sas-study.tistory.com/385)            
 
 위 블로그를 보면 알겠지만 어노테이션 문제라는 것을 알 수 있다.                
 ex) @Service를 명시안했다던지,,,                      
