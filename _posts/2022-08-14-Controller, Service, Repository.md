@@ -140,5 +140,3 @@ mapper안에 정의된 xml 파일에는 요청한 정보를 처리하기 위한 
 [Spring MVC 디렉토리 구조 및 실행순서 (controller, service, dao, view )](https://it-sunny-333.tistory.com/129)                  
 [스프링 부트 : 기본 개념 1) Entity, Repository 개념](https://whitepro.tistory.com/265)                    
 [JPA와 Spring Data JPA의 차이](https://velog.io/@evelyn82ny/JPA-vs-Spring-Data-JPA)                
-[[Spring - 어노테이션(Annotation) ] @Repository → DAO 인식, @Service → Service 인식](https://whitekeyboard.tistory.com/178)
-
