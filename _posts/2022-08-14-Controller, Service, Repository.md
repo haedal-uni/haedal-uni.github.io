@@ -44,8 +44,9 @@ DB에 접근하는 코드
 
 #### Spring Data JPA                        
 ##### JPA (Java Persistence API)                        
-JPA : 애플리케이션을 객체지향 언어로 개발하고 관계형 DB 로 관리한다음 객체-관계형간의 차이를 해결하기 위해 JPA를 사용                         
-JPA는 자바 진영에서 ORM 기술 표준으로 Application 과 JDBC 사이에서 동작한다.                        
+JPA : 애플리케이션을 객체지향 언어로 개발하고 관계형 DB 로 관리한 다음         
+객체-관계형간의 차이를 해결하기 위해 JPA를 사용                          
+JPA는 자바 진영에서 ORM 기술 표준으로 Application 과 JDBC 사이에서 동작한다.                         
                                                 
 ![image](https://user-images.githubusercontent.com/74857364/184530243-fb94480f-e7bd-4d8e-b5e7-897e9d302451.png)                        
 
@@ -65,7 +66,8 @@ Hibernate에서 Interface로 상속받아 Impl로 구현했다.
 <br>
 
 ##### Spring Data JPA                        
-Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여 개발자가 JPA를 더 편하게 사용할 수 있게 하는 모듈이다.    
+Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여 
+개발자가 JPA를 더 편하게 사용할 수 있게 하는 모듈이다.    
 
 ![image](https://user-images.githubusercontent.com/74857364/184530292-544f47bd-fb38-4e27-a40e-8f9475ca36c3.png)                        
                         
