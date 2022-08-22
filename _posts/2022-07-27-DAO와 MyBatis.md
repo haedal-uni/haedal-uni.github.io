@@ -129,4 +129,8 @@ userId는 User에 있으므로 해당 경로에 맞게 적어준다.
 
 참고로 resultType에서 패키지 명(ex. haedal-uni.project.UserA)을 다 적어줄 필요가 없던 이유는       
 
-***UserA*** 라는 model 객체에 `@Alias`를 추가했기 때문이다.               
+***UserA*** 라는 model 객체에 `@Alias`를 추가했기 때문이다.       
+
+<br>
+
+관련 글 : [resultType이 int? 객체?](https://haedal-uni.github.io/spring/2022/08/13/resultType.html)        
