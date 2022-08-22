@@ -4,7 +4,7 @@ tags: [spring]
 ---
          
 ## resultType이 int? 객체?
-[관련 글](https://haedal-uni.github.io/spring/2022/07/27/DAO%EC%99%80-MyBatis.html)             
+관련 글 : [Dao와 mybatis](https://haedal-uni.github.io/spring/2022/07/27/DAO%EC%99%80-MyBatis.html)             
                
 <br>
 
