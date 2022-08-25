@@ -53,11 +53,15 @@ ReturnType method (Apple apple, Ball ball)
 <br><br>
 
 ### @param 사용 이유                        
-public void gitBlog(@Param("haedal") String githubName);                        
-이렇게 @Param 어노테이션을 붙이면 본인이 원하는 명으로 mapper에서 사용할 수 있다.                        
+`public void gitBlog(@Param("haedal") String githubName);`
+                        
+이렇게 @Param 어노테이션을 붙이면 본인이 원하는 명으로 mapper에서 사용할 수 있다.
+                        
 위와 같은 경우는 `#{haedal}` 이다.                        
+<br>
 
-파라미터가 두 개 일 경우 MyBatis에서 인식을 못하기 때문에 ***@param***을 사용해야한다.                        
+파라미터가 두 개 일 경우 MyBatis에서 인식을 못하기 때문에 ***@param***을 사용해야한다.             
+           
 어노테이션을 쓰지 않아도 mapper에서 `#{paramNum}` 이라던지, `#{githubName}` 으로 파라미터 명을 적으면 사용이 가능하다.                        
 ```sql
 String gitBlog(String githubId);                        
