@@ -93,9 +93,6 @@ comments:
   utterances:
     repo: "haedal-uni/blog-comments"       # <gh-username>/<repo>
     issue_term: "title"  # < url | pathname | title | ...>
-    label: "comments"
-    theme: "github-light"
-    follow_site_theme: true
   # Giscus options › https://giscus.app
   giscus:
     repo:             # <gh-username>/<repo>
