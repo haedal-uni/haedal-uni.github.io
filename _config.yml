@@ -23,7 +23,7 @@ timezone: Asia/Seoul
 
 title: clare                        # the main title
 
-tagline: hi clare👋🏻   # it will display as the sub-title
+tagline: 이해안되는게 있으면 댓글로 적어주세요😆   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, responsive, and powerful Jekyll theme for presenting professional writing.
