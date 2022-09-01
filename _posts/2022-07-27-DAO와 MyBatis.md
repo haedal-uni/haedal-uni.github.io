@@ -1,6 +1,6 @@
 ---
 categories: Spring
-tags: [spring]
+tags: [spring, DAO, maven, mybatis]
 ---
                        
 # DAO와 MyBatis                      
@@ -10,7 +10,7 @@ tags: [spring]
 Mapper란 MyBatis에서 SQL 문을 저장하는 존재를 말한다.            
 
 Mapper를 저장할 폴더 mappers를 src/main/resources 에 추가해준다.     
-[[Spring] 7.DAO 구현](https://kookyungmin.github.io/server/2018/08/13/spring_07/)
+
 
 <br>
 <br>
@@ -69,7 +69,7 @@ UserA userInfo(User user)
 `#{ }`는 후에 삽입되어 대체될 값이다.          
 
 ex. userId가 1로 정해지면 USERID = #{userId}는 USERID = 1이 된다.            
-[[Spring] 7.DAO 구현](https://kookyungmin.github.io/server/2018/08/13/spring_07/)
+
 
 <br><br>
 
@@ -134,3 +134,4 @@ userId는 User에 있으므로 해당 경로에 맞게 적어준다.
 <br>
 
 관련 글 : [resultType이 int? 객체?](https://haedal-uni.github.io/spring/2022/08/13/resultType.html)        
+출처 : [[Spring] 7.DAO 구현](https://kookyungmin.github.io/server/2018/08/13/spring_07/)                            
