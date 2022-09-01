@@ -1,6 +1,6 @@
 ---
 categories: Git
-tags: [git]
+tags: [git, error]
 ---
     
 ## git checkout이 되지 않을 때 
