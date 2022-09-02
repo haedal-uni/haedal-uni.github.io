@@ -82,6 +82,30 @@ EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내
 
 <br>                        
 
+###### 정리
+                  
+<img src = https://user-images.githubusercontent.com/74857364/188051898-b350fbd3-6e65-4689-902f-106c33767b31.jpg width="50%">                  
+                  
+- JPA : ORM 기술 표준으로 채택된 인터페이스의 모음 ( = 기술 명세서 )
+
+- Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여 개발자가 JPA를 더 편하게 사용할 수 있게 하는 모듈   
+→ JPA를 추상화 시킨게 Repository Interface
+
+- ORM을 구현하기 위한 인터페이스(JPA) != JPA를 추상화 시킨 Repository Interface(Spring Data JPA)
+
+- JPA 구현체가 Hibernate(ORM framework)
+
+- JPA(인터페이스)를 구현해둔 Hibernate(ORM)                  
+Repository인터페이스를 Spring Data JPA가 JPA화하고(JPA로 번역해준다) 그 JPA를 Hibernate로 실행하는 것 같다.        
+
+- JPA를 추상화한게 Spring Data JPA이고 Spring Data JPA가 Repository를 제공                  
+ 
+<br>
+
+*추상화 : 불필요한 것을 지우고 핵심을 남겨둔다. (추상화 라는 단어가 어렵다면? → 반대로 생각하면 구체화)                   
+                  
+*인터페이스 : 완전한 추상화를 제공한다.                  
+
 ---
 
 ![image](https://user-images.githubusercontent.com/74857364/184529203-eda462c3-ab64-42e2-9b9e-81b71d5b83ac.png)
@@ -142,4 +166,6 @@ mapper안에 정의된 xml 파일에는 요청한 정보를 처리하기 위한 
 [[Spring - 어노테이션(Annotation) ] @Repository → DAO 인식, @Service → Service 인식](https://whitekeyboard.tistory.com/178)                  
 [Spring MVC 디렉토리 구조 및 실행순서 (controller, service, dao, view )](https://it-sunny-333.tistory.com/129)                  
 [스프링 부트 : 기본 개념 1) Entity, Repository 개념](https://whitepro.tistory.com/265)                    
-[JPA와 Spring Data JPA의 차이](https://velog.io/@evelyn82ny/JPA-vs-Spring-Data-JPA)                
+[JPA와 Spring Data JPA의 차이](https://velog.io/@evelyn82ny/JPA-vs-Spring-Data-JPA)                        
+[Java에서 추상화 란 무엇인가 – 예제로 배우기](https://ko.myservername.com/what-is-abstraction-java-learn-with-examples)                      
+[[OOP] 추상화(Abstraciton)란?](https://steady-coding.tistory.com/453)
