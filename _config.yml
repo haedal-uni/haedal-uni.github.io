@@ -21,9 +21,9 @@ timezone: Asia/Seoul
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: clare                        # the main title
+title: daldal haedal                        # the main title
 
-tagline: 이해안되는게 있으면 댓글로 적어주세요😆   # it will display as the sub-title
+tagline: 한 걸음씩   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, responsive, and powerful Jekyll theme for presenting professional writing.
@@ -37,7 +37,7 @@ github:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: clare
+  name: haedal-uni
   email: example@doamin.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
