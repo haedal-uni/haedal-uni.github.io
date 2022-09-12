@@ -37,11 +37,10 @@ data(json, xml 등) return이 주목적: return ResponseEntity
 ---
 
 ### Repository           
-DB에 접근하는 코드             
+DB에 접근하는 코드                                                   
 
-`@Repository` : DAO를 인식시켜주기 위한 설정                                       
-해당 클래스가 DAO라는 것을 알리기 위해서 `@Repository`라고 적어준다.                                       
-
+<br>
+  
 #### Spring Data JPA                        
 ##### JPA (Java Persistence API)                        
 JPA : 애플리케이션을 객체지향 언어로 개발하고 관계형 DB 로 관리한 다음         
