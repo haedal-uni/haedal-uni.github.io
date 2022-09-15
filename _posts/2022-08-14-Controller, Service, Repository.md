@@ -83,9 +83,8 @@ EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내
 
 ###### 정리
 
-<img src = https://user-images.githubusercontent.com/74857364/190387502-016baab9-180b-4ab8-aa5f-f80e0846f080.png width="40%">      
-                         
-                    
+![image](https://user-images.githubusercontent.com/74857364/190387991-877abdbc-d2e3-4a6e-8268-0df7a589ae59.png)
+    
 - JPA : ORM 기술 표준으로 채택된 인터페이스의 모음 ( = 기술 명세서 )
 
 - Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여                  
