@@ -32,8 +32,8 @@ public Board saveBoard(@RequestBody BoardDto boardDto){
 
 **ResponseEntity** : 응답 자체의 독립된 값이나 표현 형태                       
 
-Spring Framework에서 제공하는 클래스인 HttpEntity<T>를 상속받고 있으며,                               
-  RestTemplate 및 @Controller 메서드에 사용하고 있다.                       
+Spring Framework에서 제공하는 클래스인 HttpEntity<T>를 상속받고 있으며,                                                                     
+  RestTemplate 및 @Controller 메서드에 사용하고 있다.                                     
 
 HttpEntity는 HTTP 요청(Request) 또는 응답(Response)에 해당하는 HttpHeader와 HttpBody를 포함하는 클래스이다.                       
 
