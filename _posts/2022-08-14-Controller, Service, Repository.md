@@ -83,8 +83,9 @@ EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내
 
 ###### 정리
 
-<img src = https://user-images.githubusercontent.com/74857364/188552058-7aa8e75d-39de-4118-9c3c-c988d3e7ea35.png width="50%">                             
-                   
+<img src = https://user-images.githubusercontent.com/74857364/190387502-016baab9-180b-4ab8-aa5f-f80e0846f080.png width="40%">      
+                         
+                    
 - JPA : ORM 기술 표준으로 채택된 인터페이스의 모음 ( = 기술 명세서 )
 
 - Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여                  
@@ -159,7 +160,7 @@ mapper안에 정의된 xml 파일에는 요청한 정보를 처리하기 위한 
 ```
 
 <br>   
-<br>
+<br>                              
 
 출처                           
 [스프링 부트 : 기본 개념 1) Entity, Repository 개념](https://whitepro.tistory.com/265)                    
