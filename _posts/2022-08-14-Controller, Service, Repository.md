@@ -66,7 +66,7 @@ Hibernate에서 Interface로 상속받아 Impl로 구현했다.
 <br>
 
 ##### Spring Data JPA                        
-Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여 
+Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여                            
 개발자가 JPA를 더 편하게 사용할 수 있게 하는 모듈이다.    
 
 ![image](https://user-images.githubusercontent.com/74857364/184530292-544f47bd-fb38-4e27-a40e-8f9475ca36c3.png)                        
@@ -83,11 +83,12 @@ EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내
 
 ###### 정리
 
-![image](https://user-images.githubusercontent.com/74857364/188552058-7aa8e75d-39de-4118-9c3c-c988d3e7ea35.png)                             
+<img src = https://user-images.githubusercontent.com/74857364/188552058-7aa8e75d-39de-4118-9c3c-c988d3e7ea35.png width="50%">                             
                    
 - JPA : ORM 기술 표준으로 채택된 인터페이스의 모음 ( = 기술 명세서 )
 
-- Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여 개발자가 JPA를 더 편하게 사용할 수 있게 하는 모듈   
+- Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여                  
+  개발자가 JPA를 더 편하게 사용할 수 있게 하는 모듈   
 → JPA를 추상화 시킨게 Repository Interface
 
 - ORM을 구현하기 위한 인터페이스(JPA) != JPA를 추상화 시킨 Repository Interface(Spring Data JPA)
@@ -104,6 +105,8 @@ Repository인터페이스를 Spring Data JPA가 JPA화하고(JPA로 번역해준
 *추상화 : 불필요한 것을 지우고 핵심을 남겨둔다. (추상화 라는 단어가 어렵다면? → 반대로 생각하면 구체화)                   
                   
 *인터페이스 : 완전한 추상화를 제공한다.                  
+
+<br>
 
 ---
 
@@ -155,7 +158,8 @@ mapper안에 정의된 xml 파일에는 요청한 정보를 처리하기 위한 
     </select>
 ```
 
-<br>          
+<br>   
+<br>
 
 출처                           
 [스프링 부트 : 기본 개념 1) Entity, Repository 개념](https://whitepro.tistory.com/265)                    
