@@ -83,7 +83,7 @@ EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내
 
 ###### 정리
 
-![image](https://user-images.githubusercontent.com/74857364/190387991-877abdbc-d2e3-4a6e-8268-0df7a589ae59.png)
+<img src = https://user-images.githubusercontent.com/74857364/190387991-877abdbc-d2e3-4a6e-8268-0df7a589ae59.png width="50%">
     
 - JPA : ORM 기술 표준으로 채택된 인터페이스의 모음 ( = 기술 명세서 )
 
