@@ -134,6 +134,12 @@ final 이 제한을 두는 건 userService 의 대한 변화를 제한하는 것
 
 즉 `userService.setName();` 같은 메서드 호출은 userSerivce 에 영향을 주는 로직이 아니기 때문에 관련이 없다.
 
+```java
+final String str = "하이";
+str.charAt(0); // 가능
+str = "바이"; // 불가능
+// 객체의 메서드 호출이 str = "바이"; 처럼 객체 값을 변경하는게 아니니까
+```
 <br><br>
 
 ### 사용 방법              
