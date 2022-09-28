@@ -36,7 +36,7 @@ ReturnType method (Apple apple, Ball ball)
 
 <br>
 
-내가 여태까지 코드를 짜면서 늘 파라미터로 객체를 주고 있었는데                        
+내가 여태까지 코드를 짜면서 늘 파라미터로 객체를 주고 있었는데                         
 
 다른 코드들을 살펴보면 객체가 아니라 ***@Param***으로 명시를 해서 주고 있는 코드들이 몇 개 보였다.                        
 
@@ -46,16 +46,18 @@ ReturnType method (Apple apple, Ball ball)
 
 이 경우를 ***primitive type*** 을 사용한다고 표현한다.                        
 
-파라미터는 객체를 사용하거나 primitive를 사용하건 상관없으나 가급적 **객체**를 사용하는 것을 권장한다.                        
+파라미터는 객체를 사용하거나 primitive를 사용하건 상관없으나 가급적 **객체**를 사용하는 것을 권장한다.                         
 
-객체건 primitive이건 파라메터가 2개이상인 경우에는 ***@Param***을 통해 parameter를 구분해서 사용한다.                        
+객체건 primitive이건 파라메터가 2개이상인 경우에는 ***@Param***을 통해 parameter를 구분해서 사용한다.                         
 
-<br><br>
+*관련 글 : [자료형](https://haedal-uni.github.io/posts/%EC%9E%90%EB%A3%8C%ED%98%95/)     
+
+<br><br> 
 
 ### @param 사용 이유                        
 `public void gitBlog(@Param("haedal") String githubName);`
                         
-이렇게 @Param 어노테이션을 붙이면 본인이 원하는 명으로 mapper에서 사용할 수 있다.
+이렇게 @Param 어노테이션을 붙이면 본인이 원하는 명으로 mapper에서 사용할 수 있다.   
                         
 위와 같은 경우는 `#{haedal}` 이다.                        
 <br>
