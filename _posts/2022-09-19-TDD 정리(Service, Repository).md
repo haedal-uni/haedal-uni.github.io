@@ -68,7 +68,7 @@ Board boardSave = boardService.saveBoard(new BoardDto("3", "title", "main", "wri
 마찬가지로 @DataJpaTest에는 `@Transactional` 어노테이션이 있어서,       
 테스트의 롤백 등을 위해 별도로 트랜잭션 어노테이션을 추가하지 않아도 된다.
 
-<img src = https://user-images.githubusercontent.com/74857364/190093647-c6a4be88-4da9-49a7-b2a7-d82ca0ee89e5.png width="40%">
+<img src = https://user-images.githubusercontent.com/74857364/190093647-c6a4be88-4da9-49a7-b2a7-d82ca0ee89e5.png >
 
 <br><br>
 
