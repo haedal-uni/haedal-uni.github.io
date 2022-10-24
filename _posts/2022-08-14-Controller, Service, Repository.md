@@ -47,7 +47,7 @@ JPA : 애플리케이션을 객체지향 언어로 개발하고 관계형 DB 로
 객체-관계형간의 차이를 해결하기 위해 JPA를 사용                          
 JPA는 자바 진영에서 ORM 기술 표준으로 Application 과 JDBC 사이에서 동작한다.                         
                                                 
-![image](https://user-images.githubusercontent.com/74857364/184530243-fb94480f-e7bd-4d8e-b5e7-897e9d302451.png)                        
+![image](https://user-images.githubusercontent.com/74857364/184530243-fb94480f-e7bd-4d8e-b5e7-897e9d302451.png)                           
 
 - ORM (Object Relational Mapper) : 직접 SQL을 작성하지 않고도 객체지향 방식으로 DB에 접근                        
 - JDBC (Java Database Connectivity) : Java에서 DB에 접속할 수 있도록 하는 자바 API                        
@@ -83,7 +83,7 @@ EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내
 
 ###### 정리
 
-![image](https://user-images.githubusercontent.com/74857364/190387991-877abdbc-d2e3-4a6e-8268-0df7a589ae59.png)
+![image](https://user-images.githubusercontent.com/74857364/190387991-877abdbc-d2e3-4a6e-8268-0df7a589ae59.png){: width="50%"}   
     
 - JPA : ORM 기술 표준으로 채택된 인터페이스의 모음 ( = 기술 명세서 )
 
