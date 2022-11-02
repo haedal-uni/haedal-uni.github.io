@@ -7,13 +7,13 @@ tags: [spring, study, summary]
 
 <br>
 
-## Singleton
-### 생성 과정
+# Singleton
+## 생성 과정
 예제로 든 싱글톤은 Thread Safe 하지는 않다.                  
 
 <br>
 
-#### 1. final로 써서 초기화 시켜주는 방법
+### 1. final로 써서 초기화 시켜주는 방법
 1. 자기 자신을 `private static final`으로 선언                  
 2. public으로 *getInstance*를 선언해서 이 메소드를 통해서만 조회하도록 허용                  
 3. 생성자를 private 으로 선언해서 외부에서 *new* 키워드를 사용한 객체 생성을 못하게 막는다                  
@@ -43,7 +43,7 @@ public class SingletonTest {
 
 <br>
 
-#### 2. final을 쓰지 않고 null로 체크해서 작성하는 방법
+### 2. final을 쓰지 않고 null로 체크해서 작성하는 방법
 ```java
 class Singleton{
 	private static Singleton instance;
@@ -95,7 +95,7 @@ final이 상수이기 때문에 한번 초기화 시켜줘야한다.(*상수란 
 
 ---
 
-## final
+# final
 자료형에 값을 단 한번만 설정할수 있게 강제하는 키워드이다.
 
 즉, 값을 한번 설정하면 그 값을 다시 설정할 수 없다는 말이다.
@@ -103,7 +103,7 @@ final이 상수이기 때문에 한번 초기화 시켜줘야한다.(*상수란 
 <br>
 <br>
 
-### final 쓰는 이유?
+## final 쓰는 이유?
 final 을 선언함으로 인해 상수라는 개념을 가지게 된다.
 
 상수라는 것은 절대 변하지않는 값을 뜻한다.                  
@@ -142,7 +142,7 @@ str = "바이"; // 불가능
 ```
 <br><br>
 
-### 사용 방법              
+## 사용 방법              
 
 `final + 초기화`                  
 
@@ -177,7 +177,188 @@ str = "바이"; // 불가능
 
 ---
 
-## static
+# static
+클래스 안에서 static 키워드가 붙는 경우는 2가지가 존재한다.
+
+1. static 변수 혹은 정적 변수
+2. static 메서드 혹은 정적 메서드
+
+<br><br>
+
+#### 변수 앞에 static 키워드가 붙는 케이스
+```java
+public static double pi = 3.14
+```
+
+<br><br>
+
+#### 메서드 앞에 static 키워드가 붙는 케이스
+```java
+public static int plus ( int x , int y ){
+     return x + y; 
+} 
+```
+
+<br><br><br>
+
+## JVM 메모리 구조
+JVM은 크게 `Garbage collector`, `Execution Engine`, `Class Loader`, `Runtime Data Area` 4가지 영역으로 나누어진다.
+
+이 중에서 static을 이해하는 데 필요한 `Class Loader`와 `Runtime Data Area`(메모리 영역)에 관해 작성했다.
+
+<br>
+
+우리가 코드를 작성한다면 확장자가 java인 `*.java` 파일들을 만든다. 
+
+해당 java 파일들은 Java 컴파일러(javac)에 의해 `.class` 파일인 JAVA Byte Code로 컴파일된다. 
+
+이렇게 컴파일된 바이트 코드들은 `Class Loader`가 메모리가 할당된 `Runtime Data Area`으로 코드들을 적재시킨다.         
+
+<br>
+
+**Java Virtual Machine**
+![image](https://user-images.githubusercontent.com/74857364/199482810-2735b380-87d7-487d-8437-bfcea406a043.png){: width="70%"}
+
+
+<br>
+
+`Runtime Data Area`은 `Method Area`, `Heap Area`, `Stack Area`, `PC register`, `Native Method Stack` 총 5가지로 구분된다.
+
+이 중에서 static을 이해하는 데 필요한 3가지의 영역 중 하나인 `Method Area(Static Area)`은 초기 로드 필요한 정보들           
+즉 필요한 패키지 클래스, 인터페이스, 상수, static변수, final 변수, 클래스 멤버 변수 등 로드된 후 메모리에 항상 상주하고 있는 영역이다.          
+
+`Stack Area`는 클래스 안 메서드 실행 시 해당 영역이 할당되며 메서드에서 직접 사용할 지역 변수, 파라미터, 리턴 값, 참조 변수일 경우 주소 값들이 저장된다. 
+
+`Heap Area`은 메서드 안에서 사용되는 객체들을 위한 영역으로 new를 통해 생성된 객체, 배열, immutal 객체 등의 메모리와 값이 저장된다.
+
+<br><br><br>
+
+## static과 메모리 구조
+
+클래스 로더가 .class파일을 탐색 중 static 키워드를 보는 순간 객체가 생성되지 않아도 항상 메모리를 할당해야 하는 멤버로 보고                
+`Method Area(Static Area)`에 메모리를 할당한다.
+
+그래서 static 키워드가 붙은 멤버들은 객체(인스턴스)에 소속된 변수가 아니라 클래스에 소속된 변수이기 때문에                    
+**클래스 변수** 혹은 **클래스 메서드**라고도 부른다. 
+
+**new**를 통해 객체를 생성하면 각 인스턴스는 서로 독립적이지만 이러한 특징 때문에           
+static 키워드가 붙은 멤버들은 모든 객체가 메모리 영역을 공유하기에 공통으로 같은 영역을 바라보기에 아래와 같은 코드가 가능하다.
+
+```java
+public class Counter {
+    public static int count = 0;
+    Counter() {
+        this.count++;
+        System.out.println(this.count);
+    }
+    public static void main(String[] args) {
+        Counter c1 = new Counter();
+        Counter c2 = new Counter();
+    }
+}
+```
+
+<br><br>
+
+같은 이유로 static 메서드 안에서 사용할 변수들은 메모리에 올라가는 순서 때문에 아래와 같은 코드는 불가능하다.                        
+(스태틱 메서드 안에서는 인스턴스 변수 접근이 불가능하다)
+
+```java
+public class Counter {
+    public int count = 0;
+    Counter() {
+        this.count++;
+    }
+    public static int getCount() {
+        return count; // 에러 발생
+    }
+    public static void main(String[] args) {
+        Counter c1 = new Counter();
+        Counter c2 = new Counter();
+	System.out.println(Counter.getCount());
+    }
+}
+```
+
+static키워드를 만난 순간 메모리에 적재시켜야 하는데 count 변수에 대해 선언 및 메모리가 할당되어 있지 않아 에러가 발생한다. 
+
+이를 해결하기 위해서는 count변수를 static변수로 만든다면 메모리 로드 시점에 count변수에 대한 선언이 존재하여 에러가 발생하지 않는다.
+
+
+<br><br><br>
+
+```java
+public class JvmStack {
+	public static void main(String[] args) {
+		add();
+	}
+
+	public static void add(){
+		minus();
+		mul();
+	}
+
+	public static void minus(){
+		System.out.println("minus");
+	}
+	public static void mul(){
+		System.out.println("mul");
+	}
+}
+```
+static이 아닌 변수나 메소드는 static이 jvm에 올라가는 타이밍에 아직 jvm에 올라가지 않았기 때문에                    
+사용할 수가 없으므로 관련 메소드는 모두 static으로 작성해줘야한다.
+
+하지만 무분별한 static 사용은 지양한다.
+
+<br>
+
+따라서 아래와 같이 인스턴스 생성으로 작성한다.
+
+```java
+public class JvmStack {
+
+	public static void main(String[] args) {
+		JvmStack jvmStack = new JvmStack();
+		jvmStack.add();
+	}
+
+	public void add(){
+		mul();
+		minus();
+	}
+
+	public void minus(){
+		System.out.println("minus");
+	}
+	public void mul(){
+		System.out.println("mul");
+	}
+}
+```
+
+<br><br><br>
+
+## 이슈
+이러한 static의 특징들 때문에 메서드의 호출 시간이 짧아진다고 무분별한 static의 사용은 java에서 지양된다.
+
+- static 변수는 글로벌 변수에 가까우므로 글로벌 변수는 인스턴스 변수보다 테스트가 까다로워진다.
+
+- static 변수는 객체지향 프로그램의 원칙인 각 객체의 데이터들이 캡슐화되어야 한다는 원칙에 어긋나며                    
+   static 변수를 공유한 순간 서로에 영향을 주게 되어 어떤 사이드 이펙트가 발생할지 모른다.
+   
+- 오버라이딩을 할 수 없으므로 코드의 재사용성이 떨어진다.
+
+- 프로그램이 종료되기 전에 항상 메모리에 상주하고 있어 자주 사용하지 않는 매서드가 누적된다면 GC에 수거되지 못하므로 오히려 메모리 낭비가 발생한다.
+
+<br><br>
+
+🐣 static을 사용하는 것이 좋을 때 : 자주 사용하는 객체 + 만드는데 오래 걸리고 메모리를 많이 사용하는 객체
+
+
+<br><br><br>
+
+## static 쓰는 경우?
 static 키워드를 붙이면 자바는 메모리 할당을 딱 한번만 하게 되어 메모리 사용에 이점이 있다.                  
 
 static을 사용하는 또 한가지 이유로 **공유**개념을 들 수 있다.
@@ -188,8 +369,7 @@ static 으로 설정하면 같은 곳의 메모리 주소만을 바라보기 때
 
 <br><br>
 
-### static 쓰는 경우?
-객체를 여러 번 쓸 상황이 생길 때
+**객체를 여러 번 쓸 상황이 생길 때**
 
 <br>
 
@@ -237,17 +417,17 @@ public class UserController {
 }
 ```
 
-<br><br>
+<br><br><br>
 
-#### 접근제어자
+### 접근제어자
 static이 붙은 [메소드 or 변수]를 쓸 때 다른 파일에 있으면                  
 패키지랑 사용하고자 하는 [메소드 or 변수] 의 접근제어자를 본다.              
 
 패키지가 일단 *public*이어야 [메소드 or 변수] 의 접근제어자를 보겠쥬?                  
 
-<br><br>
+<br><br><br>
 
-#### 예시
+### 예시
 [점프 투 자바 - 03 정적(static) 변수와 메소드] 에서
 ```java
 class Counter  {
@@ -278,9 +458,10 @@ c1.count, c2.count 가 아니라 counter의 count이므로
 
 공유 count이기 때문에 counter 전체를 아우르는 것이어서 this를 없앤 것이다.
 
-<br><br>
+<br><br><br>
 
 출처                                  
-[final 을 쓰는 이유가 궁금합니다.](https://okky.kr/articles/239853)                  
-[03-11 형변환과 final](https://wikidocs.net/158529)                  
-[07-03 정적(static) 변수와 메소드](https://wikidocs.net/228)                  
+[final 을 쓰는 이유가 궁금합니다.](https://okky.kr/articles/239853)                   
+[03-11 형변환과 final](https://wikidocs.net/158529)                   
+[07-03 정적(static) 변수와 메소드](https://wikidocs.net/228)                 
+[Java에서 자주 보이는 Static이란 무엇일까?](https://honbabzone.com/java/java-static/)          
