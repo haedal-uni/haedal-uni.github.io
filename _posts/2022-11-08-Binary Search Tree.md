@@ -145,8 +145,8 @@ Binary(이진) → 이분화 된다.
 
 <br>
 
-![image](https://user-images.githubusercontent.com/90807141/200136215-b83fa979-00c1-472f-9904-b5ce598664d2.png){: width="40%" class ="left"}
-![image](https://user-images.githubusercontent.com/90807141/200136219-9bd06d97-fe74-4394-96a9-947560c7f994.png){: width="40%" class ="left"}         
+![image](https://user-images.githubusercontent.com/90807141/200136215-b83fa979-00c1-472f-9904-b5ce598664d2.png){: width="35%" class ="left"}
+![image](https://user-images.githubusercontent.com/90807141/200136219-9bd06d97-fe74-4394-96a9-947560c7f994.png){: width="35%" class ="normal"}         
                     
 
 <br><br><br>
