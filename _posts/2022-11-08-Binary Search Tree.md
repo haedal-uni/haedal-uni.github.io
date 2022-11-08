@@ -64,7 +64,7 @@ Binary(이진) → 이분화 된다.
 검색 목적 자료구조인데, 굳이 중복이 많은 경우에 트리를 사용하여 검색 속도를 느리게 할 필요가 없다.                   
 (트리에 삽입하는 것보다, 노드에 count 값을 가지게 하여 처리하는 것이 훨씬 효율적이다.)
 
-이진탐색트리의 순회는 **'중위순회(inorder)' 방식 (왼쪽 - 루트 - 오른쪽)**
+이진탐색트리의 순회는 **'중위순회(inorder)'** 방식 (왼쪽 - `루트` - 오른쪽)
 
 중위 순회로 **정렬된 순서**를 읽을 수 있다.
 
@@ -115,7 +115,7 @@ Binary(이진) → 이분화 된다.
 #### 삭제하려는 노드가 단말 노드인 경우
 삭제하는 노드가 자식노드를 갖고 있지 않을 때 해당 노드만 삭제해주면 된다.
 
-![image](https://user-images.githubusercontent.com/74857364/199722314-d69e2d0f-9a58-4233-b632-d023ca2dfe31.png){: width="75%"}
+![image](https://user-images.githubusercontent.com/74857364/199722314-d69e2d0f-9a58-4233-b632-d023ca2dfe31.png){: width="85%"}
 
 ![image](https://user-images.githubusercontent.com/74857364/199722633-4be281a8-c519-416d-a9cd-f30cb1b42810.png){: width="50%"}
 
@@ -125,7 +125,7 @@ Binary(이진) → 이분화 된다.
 
 삭제하는 노드가 왼쪽 또는 오른쪽 자식 노드를 갖고 있을 때 자식노드를 삭제노드의 위치로 옮겨오면 된다.
 
-![image](https://user-images.githubusercontent.com/74857364/199719908-fd5ffcb5-0a5d-40a8-aa07-a448778a9787.png){: width="65%"}       
+![image](https://user-images.githubusercontent.com/74857364/199719908-fd5ffcb5-0a5d-40a8-aa07-a448778a9787.png){: width="75%"}       
 
 <br><br>
 
@@ -145,7 +145,7 @@ Binary(이진) → 이분화 된다.
 
 <br>
 
-![image](https://user-images.githubusercontent.com/90807141/200136215-b83fa979-00c1-472f-9904-b5ce598664d2.png){: width="40%" class="left"}
+![image](https://user-images.githubusercontent.com/90807141/200136215-b83fa979-00c1-472f-9904-b5ce598664d2.png){: width="40%"}
 ![image](https://user-images.githubusercontent.com/90807141/200136219-9bd06d97-fe74-4394-96a9-947560c7f994.png){: width="40%"}         
                     
 
