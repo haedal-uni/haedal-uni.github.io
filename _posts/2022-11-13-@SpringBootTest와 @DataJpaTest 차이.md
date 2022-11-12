@@ -58,9 +58,9 @@ tags: [spring, study, summary]
 
 <br><br>
 
-Any 속성 외에도 AUTO_CONFIGURED와 None이 더 있다.
+Any 속성 외에도 AUTO_CONFIGURED와 NONE이 있다.
 
-![image](https://user-images.githubusercontent.com/74857364/201484635-3265edbd-4405-4556-9ea4-2e3e35676777.png)
+![image](https://user-images.githubusercontent.com/74857364/201484635-3265edbd-4405-4556-9ea4-2e3e35676777.png){: width="80%"}
 
 <br>
 
@@ -72,7 +72,7 @@ Any 속성 외에도 AUTO_CONFIGURED와 None이 더 있다.
   - 어플리케이션에 기본 값으로 설정된 DataSource를 교체하지 않음
 
 
-<br><br>
+<br><br><br>     
 
 **`@DataJpaTest`에서 in-memory 데이터베이스로 사용할 수 있는 db 유형**
 
@@ -80,7 +80,7 @@ Any 속성 외에도 AUTO_CONFIGURED와 None이 더 있다.
 
 EmbeddedConnection으로 제공하고 있는것은 H2, DERBY, HSQL을 제공하고 있다.
 
-<br><br>
+<br><br><br>
 
 **실제 db를 사용하려면?**              
 
