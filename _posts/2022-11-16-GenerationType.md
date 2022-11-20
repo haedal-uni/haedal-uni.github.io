@@ -49,19 +49,19 @@ id 값을 null로 하면 DB가 알아서 AUTO_INCREMENT 해준다.
 
 <br>   
 
-JPA는 보통 영속성 컨텍스트에서 객체를 관리하다가 트랜잭션 커밋 시점에 INSERT 쿼리문을 실행한다.
+JPA는 보통 영속성 컨텍스트에서 객체를 관리하다가 트랜잭션 커밋 시점에 INSERT 쿼리문을 실행한다.                               
+ 
+하지만 **IDENTITY** 전략에서는 `EntityManager.persist()`를 하는 시점에 Insert SQL을 실행하여 DB에서 식별자를 조회해온다.           
+그 이유는 영속성 컨텍스트는 1차 캐시에 PK와 객체를 가지고 관리를 하는데 기본키를 데이터베이스에게 위임했기 때문에                         
+`EntityManager.persist()` 호출 하더라도 DB에 값을 넣기 전까지 기본키를 모르고 있기 때문에 관리가 되지 않기 때문이다.            
 
-하지만 **IDENTITY** 전략에서는 `EntityManager.persist()`를 하는 시점에 Insert SQL을 실행하여 DB에서 식별자를 조회해온다.          
-그 이유는 영속성 컨텍스트는 1차 캐시에 PK와 객체를 가지고 관리를 하는데 기본키를 데이터베이스에게 위임했기 때문에                        
-EntityManager.persist() 호출 하더라도 DB에 값을 넣기 전까지 기본키를 모르고 있기 때문에 관리가 되지 않기 때문이다.           
+AUTO_INCREMENT는 DB에 INSERT 쿼리문을 실행 한 이후에 ID값을 알 수 있다.                         
+영속성 관리 시점에서 1차캐시에 @Id값을 알 수 없다는 말이된다. (IDENTITY 전략은 AUTO_INCREMENT로 동작하기 때문)                     
 
-AUTO_INCREMENT는 DB에 INSERT 쿼리문을 실행 한 이후에 ID값을 알 수 있다.
-영속성 관리 시점에서 1차캐시에 @Id값을 알 수 없다는 말이된다. (IDENTITY 전략은 AUTO_INCREMENT로 동작하기 때문)
+따라서 IDENTITY 에서는 `EntityManager.persist()`를 하는 시점에 insert 쿼리를 실행해                       
+DB에서 식별자를 조회하여 영속성 컨텍스트 1차 캐시에 값을 넣어주기 때문에 관리가 가능해진다.        
 
-따라서 IDENTITY 에서는 `EntityManager.persist()``를 하는 시점에 insert 쿼리를 실행해
-DB에서 식별자를 조회하여 영속성 컨텍스트 1차 캐시에 값을 넣어주기 때문에 관리가 가능해진다.      
-
-그렇기에 IDENTITY케이스에서는 지연쓰기가 제한된다 . (하지만 크게 성능 하락이 있거나 하지는 않다.)               
+그렇기에 IDENTITY 에서는 지연쓰기가 제한된다 . (하지만 크게 성능 하락이 있거나 하지는 않다.)                      
 
 <br><br><br>
 
@@ -307,7 +307,13 @@ SEQUENCE는 Current value를 공유하고 table은 공유하지 않는다는 차
 
 <br><br>
 
-무턱대로 AUTO 쓰지 말고 IDENTITY 쓴다.😂
+GenerationType을 잘 모르는 상황에서 `AUTO`로 작성했을 때 어떻게 돌아가는지 모르는 경우 위험하다.
+
+따라서 직접 정해서 작성해주는 것이 좋은데 MySQL에서는 `SEQUENCE` 기능을 제공하지 않고 있다.
+
+사실상 `TABLE`과 `IDENTITY`인데 TABLE을 생성하기 보다는 `IDENTITY`로 하는게 낫다고 생각한다.
+
+그래서 `AUTO` 쓸 바에는 `IDENTITY` 쓴다.😂
 
 <br><br><br>
 
