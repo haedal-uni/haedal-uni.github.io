@@ -37,9 +37,11 @@ data(json, xml 등) return이 주목적: return ResponseEntity
 ---
 
 ### Repository      
-리포지터리는 엔티티에 의해 생성된 데이터베이스 테이블에 접근하는 메서드들(예: findAll, save 등)을 사용하기 위한 인터페이스이다. 
+Repository는 Entity에 의해 생성된 데이터베이스 테이블에 접근하는 메서드들(예: findAll, save 등)을 사용하기 위한 interface다. 
+
 데이터 처리를 위해서는 테이블에 어떤 값을 넣거나 값을 조회하는 등의 CRUD(Create, Read, Update, Delete)가 필요하다.
-이 때 이러한 CRUD를 어떻게 처리할지 정의하는 계층이 바로 리포지터리이다.
+
+이 때 이러한 CRUD를 어떻게 처리할지 정의하는 계층이 바로 Repository다.
 
 * DB에 접근하는 코드                                                   
 
