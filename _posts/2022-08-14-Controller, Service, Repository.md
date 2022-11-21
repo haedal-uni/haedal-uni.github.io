@@ -36,12 +36,22 @@ data(json, xml 등) return이 주목적: return ResponseEntity
 
 ---
 
-### Repository           
-DB에 접근하는 코드                                                   
+### Repository      
+리포지터리는 엔티티에 의해 생성된 데이터베이스 테이블에 접근하는 메서드들(예: findAll, save 등)을 사용하기 위한 인터페이스이다. 
+데이터 처리를 위해서는 테이블에 어떤 값을 넣거나 값을 조회하는 등의 CRUD(Create, Read, Update, Delete)가 필요하다.
+이 때 이러한 CRUD를 어떻게 처리할지 정의하는 계층이 바로 리포지터리이다.
+
+* DB에 접근하는 코드                                                   
 
 <br>
   
-#### Spring Data JPA                        
+#### Spring Data JPA
+Entity만으로는 데이터베이스에 데이터를 저장하거나 조회 할 수 없다. 
+
+데이터 처리를 위해서는 실제 데이터베이스와 연동하는 JPA Repository가 필요하다.
+
+<br>
+
 ##### JPA (Java Persistence API)                        
 JPA : 애플리케이션을 객체지향 언어로 개발하고 관계형 DB 로 관리한 다음         
 객체-관계형간의 차이를 해결하기 위해 JPA를 사용                          
@@ -73,11 +83,23 @@ Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여
                         
 Spring Data JPA를 사용하지 않는다면 클래스에 `@Repository` annotation 을 작성하고       
 JPA를 적용한 다음 EntityManager의 API 를 직접 호출해야 entity CRUD 가 처리된다.                                       
+                            
+EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내부에서 자동으로 호출된다.                                  
+또한, `@Repository` annotation 작성하지 않아도 spring data JPA가 알아서 Bean으로 등록해준다.                 
 
-Spring Data JPA 의 **Repository Interface (SimpleJpaRepository)** 에는                         
-EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내부에서 자동으로 호출된다.                                      
+<br>
 
-또한, `@Repository` annotation 작성하지 않아도 spring data JPA가 알아서 Bean으로 등록해준다.                                            
+**작성 방법**
+
+```java
+public interface RegistryRepository extends JpaRepository<Registry, Long> {
+}
+```
+RegistryRepository는 repository로 만들기 위해서 JpaRepository를 상속했다.
+
+JpaRepository를 상속할 때는 제네릭스 타입으로 `<Registry, Long>` 처럼 
+
+Repository의 대상이 되는 Entity의 타입(Registry)과 해당 엔티티의 PK의 속성 타입(Long)을 지정해야 한다.
 
 <br>                        
 
@@ -171,4 +193,5 @@ mapper안에 정의된 xml 파일에는 요청한 정보를 처리하기 위한 
 [스프링 부트 : 기본 개념 1) Entity, Repository 개념](https://whitepro.tistory.com/265)                    
 [JPA와 Spring Data JPA의 차이](https://velog.io/@evelyn82ny/JPA-vs-Spring-Data-JPA)                        
 [Java에서 추상화 란 무엇인가 – 예제로 배우기](https://ko.myservername.com/what-is-abstraction-java-learn-with-examples)                      
-[[OOP] 추상화(Abstraciton)란?](https://steady-coding.tistory.com/453)
+[[OOP] 추상화(Abstraciton)란?](https://steady-coding.tistory.com/453)           
+[리포지터리](https://wikidocs.net/160890)
