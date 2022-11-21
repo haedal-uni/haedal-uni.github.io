@@ -86,8 +86,8 @@ Spring Data JPA 란 JPA를 추상화시킨 Repository Interface를 제공하여
 Spring Data JPA를 사용하지 않는다면 클래스에 `@Repository` annotation 을 작성하고       
 JPA를 적용한 다음 EntityManager의 API 를 직접 호출해야 entity CRUD 가 처리된다.                                       
                             
-EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내부에서 자동으로 호출된다.                                  
-또한, `@Repository` annotation 작성하지 않아도 spring data JPA가 알아서 Bean으로 등록해준다.                 
+JpaRepository에는 EntityManager가 포함되어 있기 때문에 직접 작성하지 않아도 내부에서 자동으로 호출된다.                                    
+또한, `@Repository` annotation 작성하지 않아도 spring data JPA가 알아서 Bean으로 등록해준다.                  
 
 <br>
 
