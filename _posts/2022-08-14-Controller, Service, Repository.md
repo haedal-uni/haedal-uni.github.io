@@ -4,8 +4,7 @@ tags: [spring]
 ---
 
 ## Controller
-해당 요청 url에 따라 적절한 view와 mapping 처리                  
-`@Autowired` Service를 통해 service의 method를 이용                  
+해당 요청 url에 따라 적절한 view와 mapping 처리                           
 
 <br>
 
@@ -30,7 +29,131 @@ data(json, xml 등) return이 주목적: return ResponseEntity
 ## Service
 비즈니스 로직          
 
-`@Autowired` Repository를 통해 repository의 method를 이용            
+<br>
+
+### Service interface와 ServiceImpl로 나누는 이유
+
+#### 1. AOP
+
+`Spring AOP`는 빈 등록 시 사용자의 특정 메서드 호출 시점에 AOP를 수행하는 `Proxy Bean`을 생성해주며   
+
+크게 2가지 프록시 객체 생성 방법이 존재한다.
+
+<br>
+
+`JDK Dinamic Proxy`는 프록시 객체 생성 시 인터페이스 존재가 필수적이고 
+
+`CGLib`은 프록시 객체 생성 시 인터페이스가 존재하지 않아도 클래스 기반으로 프록시 객체를 생성할 수 있다.             
+
+<br>
+
+옛날 spring framework에서는 spring AOP 사용 시 `CGLib`의 여러 문제점으로 인해 `JDK Dinamic Proxy`을 사용하는 것을 권장했다.
+
+**CGLib 문제점**
+- `net.sf.cglib.proxy.Enhancer` 의존성 추가
+- `default` 생성자가 무조건 필요함
+- 타깃의 생성자 두 번 호출
+
+<br>
+
+`JDK Dinamic Proxy`는 인터페이스를 기반으로 프록시 객체를 생성한다.              
+
+반드시 인터페이스가 존재해야 프록시 객체를 정상적으로 만들어 낼 수 있었다.            
+
+하지만 요즘 spring boot는 인터페이스를 구현한 클래스임에도 프록시 객체 생성 시 `CGLib`를 사용한다.                
+
+<br>
+
+spring 3.2 이후부터는 `CGLib`의 위에서 언급한 문제점이 외부 라이브러리의 도움을 받아 개선이 이루어졌다고 판단되어       
+
+spring core 패키지에 포함되었고 spring boot 사용 시 인터페이스를 구현한 클래스여도             
+
+`JDK Dynamic Proxy`보다 성능이 좋은 `CGLib`를 디폴트(`spring.aop.proxy-target-class=true`)로 사용하여 프록시 객체를 생성한다.                 
+
+만약 직접 `JDK Dynamic Proxy`와 `CGLib`를 활용한 프록시 객체 생성을 눈으로 확인해보고 싶다면 아래와 같이 입력한다.
+```java
+// application.properties
+spring.aop.proxy-target-class=false // CGLib 사용하지 않음
+
+spring.aop.proxy-target-class=true // CGLib 사용 - 디폴트)
+````
+<br><br><br>
+
+#### 2. OOP
+객체 간의 결합도를 낮추어 변화에 유연한 개발을 하기 위해서이다. 
+
+하나의 인터페이스를 구현하는 여러 구현체가 있고 기능에 따라 적절한 구현체가 들어가서 다형성을 주기 위함이다. 
+
+또 하나의 인터페이스만 바라보니 의존관계도 줄일 수 있다.
+
+<br><br>
+
+**OCP(개방 폐쇄 원칙)**
+
+기존의 코드는 잘 변경하지 않으면서도 확장은 쉽게 할 수 있어야 한다.
+
+<br>
+
+**DIP(의존관계 역전의 원칙)** 
+
+자신보다 변하기 쉬운 것에 의존 하던 것을 추상화된 인터페이스나 상위 클래스를 두어 변하기 쉬운 것의 변화에 영향받지 않게 하는 원칙
+
+→ 구현 클래스에 의존하지 말고, 인터페이스에 의존하라는 뜻
+
+<br><br>
+
+**어떨 때 나눠서 사용할까?**
+
+구현체를 2개 이상 갖게 될 때 인터페이스를 두는 것이 바람직하다.
+
+일반적으로 카드는 결제가 있으면 반드시 취소 기능도 있어야 한다. 
+
+인터페이스가 ‘카드 결제’라는 하나의 책임을 가질지라도 카드 결제와 관련된 다양한 메소드가 존재할 수 있음을 확인할 수 있다. 
+
+<br><br>
+
+### 트랜잭션
+
+트랜잭션은 데이터베이스의 상태를 변환시키는 하나의 논리적 기능을 수행하기 위한 작업의 단위 또는            
+한꺼번에 수행되어야할 일련의 연산들을 의미한다.
+
+<br>
+
+트랜잭션은 작업의 완전성을 보장해준다. 즉, 논리적인 작업 셋을 모두 완벽하게 처리하거나 또는 처리하지 못할 경우에는        
+
+원 상태로 복구해서 작업의 일부만 적용되는 현상이 발생하지 않게 만들어주는 기능이다.             
+
+사용자의 입장에서는 작업의 논리적 단위로 이해를 할 수 있고 시스템의 입장에서는 데이터들을 접근 또는 변경하는 프로그램의 단위가 된다.            
+
+트랜잭션은 SELECT, UPDATE, INSERT, DELETE와 같은 연산을 수행하여 데이터베이스의 상태를 변화시키는 작업의 단위다.
+
+![image](https://user-images.githubusercontent.com/74857364/203323080-e5d4acc3-6422-4fbe-b153-87c53a155835.png){: width="70%"}
+
+<br><br>
+
+**스프링에서 트랜잭션 처리 방법**
+
+스프링에서는 트랜잭션 처리를 지원하는데                      
+그 중 어노테이션 방식으로 `@Transactional`을 선언하여 사용하는 방법이 일반적이며, 선언적 트랜잭션이라 부른다.
+
+클래스, 메서드위에 `@Transactional` 이 추가되면, 이 클래스에 트랜잭션 기능이 적용된 프록시 객체가 생성된다.
+
+이 프록시 객체는 `@Transactional`이 포함된 메소드가 호출 될 경우, PlatformTransactionManager를 사용하여     
+트랜잭션을 시작하고, 정상 여부에 따라 Commit 또는 Rollback 한다.
+      
+<br>
+
+트랜잭션을 중구난방으로 적용하는 것은 좋지 않다. 
+
+대신 특정 계층의 경계를 트랜잭션 경계와 일치시키는 것이 좋은데,                 
+일반적으로 비지니스 로직을 담고 있는 **서비스** 계층의 메소드와 결합시키는 것이 좋다.          
+
+왜냐하면 데이터 저장 계층으로부터 읽어온 데이터를 사용하고 변경하는 등의 작업을 하는 곳이 서비스 계층이기 때문이다. 
+      
+<br>
+
+트랜잭션 사용에 대해 잘 정리 된 글이 있어 참고한다.               
+[[Java]@Transactional Annotation 알고 쓰자](https://velog.io/@kdhyo/JavaTransactional-Annotation-%EC%95%8C%EA%B3%A0-%EC%93%B0%EC%9E%90-26her30h)              
 
 <br>
 
@@ -195,4 +318,10 @@ mapper안에 정의된 xml 파일에는 요청한 정보를 처리하기 위한 
 [JPA와 Spring Data JPA의 차이](https://velog.io/@evelyn82ny/JPA-vs-Spring-Data-JPA)                        
 [Java에서 추상화 란 무엇인가 – 예제로 배우기](https://ko.myservername.com/what-is-abstraction-java-learn-with-examples)                      
 [[OOP] 추상화(Abstraciton)란?](https://steady-coding.tistory.com/453)           
-[리포지터리](https://wikidocs.net/160890)
+[리포지터리](https://wikidocs.net/160890)                          
+
+[[Spring] Transactional 정리 및 예제](https://goddaehee.tistory.com/167)                     
+[[개발자 블로그] Spring에서 Service ServiceImpl 사용해야하는지](https://jeonyoungho.github.io/posts/spring%EC%97%90%EC%84%9C-Service-ServiceImpl%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%95%BC%ED%95%98%EB%82%98/)                              
+[서비스 구현 시 인터페이스를 구현하는 형태로 하는 이유 (spring AOP)](https://velog.io/@suhongkim98/%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B5%AC%ED%98%84-%EC%8B%9C-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0-spring-AOP)                    
+[[DB] 트랜잭션(Transaction)이란? ACID란?](https://code-lab1.tistory.com/51)                                  
+[[Spring] Spring에서 트랜잭션의 사용법 - (3/3)](https://mangkyu.tistory.com/170)         
