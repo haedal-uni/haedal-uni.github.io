@@ -1,5 +1,5 @@
 ---
-categories: Study
+categories: Project
 tags: [DB, study, project]
 ---
 
