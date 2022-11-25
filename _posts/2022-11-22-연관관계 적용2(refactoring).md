@@ -1,3 +1,8 @@
+---
+categories: Study
+tags: [DB, study, project]
+---
+
 # 연관관계 적용2
 
 이전([연관관계 적용](https://haedal-uni.github.io/posts/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%A0%81%EC%9A%A9/))에 `Registry`와 `Comment` 연관관계 매핑을 해서 값을 세팅했다.
