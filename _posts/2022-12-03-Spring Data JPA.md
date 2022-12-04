@@ -14,8 +14,7 @@ temp.addAll(allByIdx);
 List<Optional<Registry>> result = new ArrayList<>();
 
 if (temp.isEmpty()) {
-    Registry registry = new Registry("admin", "admin","admin");
-    result.add(Optional.ofNullable(registry));
+    result = Collections.emptyList();
 }
 
 if (temp.toArray().length > 10) {
