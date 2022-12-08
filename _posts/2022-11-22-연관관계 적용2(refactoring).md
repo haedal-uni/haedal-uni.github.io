@@ -488,6 +488,10 @@ test 해보니 post가 잘 되었다. 근데 registry에 registryId를 넣었는
 
 ![image](https://user-images.githubusercontent.com/74857364/203247789-71a9ae84-8a61-445c-9a0f-710dfe37809a.png)
 
+<br>
+
+이 부분은 [연관관계 적용3(궁금증 해결하기)](https://haedal-uni.github.io/posts/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%A0%81%EC%9A%A93(%EA%B6%81%EA%B8%88%EC%A6%9D-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)/) 에서 다뤘다.
+
 <br><br><br>
 
 ### put, delete
