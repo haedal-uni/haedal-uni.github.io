@@ -46,7 +46,7 @@ System.out.println("findById");
 System.out.println(registryRepository.findById(commentDto.getRegistryIdx()));
 System.out.println();
 ```
-![image](https://user-images.githubusercontent.com/74857364/206918932-aca53467-ebc6-4af0-9b93-e1ba8c856b84.png){: width="60%"}
+![image](https://user-images.githubusercontent.com/74857364/206918932-aca53467-ebc6-4af0-9b93-e1ba8c856b84.png){: width="50%"}
 
 `findById()`를 사용하니 select 쿼리가 떴다.
 
@@ -138,11 +138,11 @@ spring boot version 2.7 미만의 경우 `getOne(ID)` is deprecated 되고 `getB
 
 **spring boot version 2.7 미만**       
 
-![image](https://user-images.githubusercontent.com/74857364/204102709-4319feaa-e7fd-4491-91a2-36850457b33d.png){: width="60%"}
+![image](https://user-images.githubusercontent.com/74857364/204102709-4319feaa-e7fd-4491-91a2-36850457b33d.png){: width="65%"}
 
 <br><br>
 
 **spring boot version 2.7 이상**       
 
-![image](https://user-images.githubusercontent.com/74857364/205506648-30bfa185-71e0-47bc-9b7f-4cd733f7abbb.png){: width="60%"}
+![image](https://user-images.githubusercontent.com/74857364/205506648-30bfa185-71e0-47bc-9b7f-4cd733f7abbb.png){: width="50%"}
 
