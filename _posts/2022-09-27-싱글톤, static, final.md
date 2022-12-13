@@ -189,6 +189,31 @@ str = "바이"; // 불가능
 
 🐣 공유 메모리(공유 변수)라고 생각하면 이해가 쉽다.
 
+<br>
+
+```java
+public class Study {
+    static int staticVal = 7;
+    int globalScope = 10;
+
+    public static void main(String[] args) {
+        Study v1 = new Study();
+        Study v2 = new Study();
+        v1.globalScope = 20;
+        v2.globalScope = 30;
+
+        System.out.println(v1.globalScope);  // 20 이 출력된다.
+        System.out.println(v2.globalScope);  // 30 이 출력된다.
+
+        // 기존 설정 : static int staticVal = 7;
+        v1.staticVal = 10;
+        v2.staticVal = 20;
+
+        System.out.println(v1.staticVal);  // 20 이 출력된다.
+        System.out.println(v2.staticVal);  // 20 이 출력된다.
+    }
+}
+```
 <br><br>
 
 #### 변수 앞에 static 키워드가 붙는 케이스
