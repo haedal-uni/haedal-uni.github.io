@@ -9,6 +9,8 @@ tags: [DB, study, project]
 
 이제 refactoring을 통해서 매핑 하기 전에 작성한 `registryId`와 `registryNickname`은 필요없으므로 코드를 수정하기로 했다.     
 
+*[pr 👉🏻 연관관계 refactoring](https://github.com/dal-cho/adme/pull/111/files)   
+
 <br>
 
 - test 코드 수정
