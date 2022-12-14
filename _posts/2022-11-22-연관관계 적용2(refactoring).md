@@ -745,3 +745,15 @@ public void updateComment(String comment) {
 출처         
 [빌더 패턴(Builder pattern)을 써야하는 이유, @Builder](https://pamyferret.tistory.com/67)         
 [올바른 JPA Entity, @Builder 사용법](https://velog.io/@mooh2jj/%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%97%94%ED%8B%B0%ED%8B%B0-Builder-%EC%82%AC%EC%9A%A9%EB%B2%95)
+
+<br><br>
+
+**연관관계 목차**
+- [연관관계](https://haedal-uni.github.io/posts/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84/) 
+- [연관관계 적용](https://haedal-uni.github.io/posts/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%A0%81%EC%9A%A9/)
+- [연관관계 적용2(refactoring)](https://haedal-uni.github.io/posts/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%A0%81%EC%9A%A92(refactoring)/)  👈
+- [연관관계 적용3(궁금증 해결하기)](https://haedal-uni.github.io/posts/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%A0%81%EC%9A%A93(%EA%B6%81%EA%B8%88%EC%A6%9D-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)/)
+- [연관관계 적용4 정리(코드 + MySQL)](https://haedal-uni.github.io/posts/%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%A0%81%EC%9A%A94-%EC%A0%95%EB%A6%AC(%EC%BD%94%EB%93%9C-+-MySQL)/)
+
+
+
