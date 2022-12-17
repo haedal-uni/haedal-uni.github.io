@@ -117,6 +117,18 @@ CommentServiceImpl의 post 코드에서
 
 왜 null이 나오는건지 잘 파악이 안되서 test 코드부터 refactoring을 해보면서 어떻게 작성을 해야할지 감을 잡기로 했다.
 
+<br><br>
+
+참고로 `.get()` 보다 `.orElseThrow()`를 쓰는 것을 권장한다.
+
+orElseThrow() 메소드 : 저장된 값이 존재하면 그 값을 반환하고, 값이 존재하지 않으면 인수로 전달된 예외를 발생시킨다.
+
+👉🏻 `.get()`을 안써도 `.orElseThrow()` 를 이용해서 값을 가져올 수 있고 예외 처리도 가능하기 때문이다.
+
+`Registry registry = registryRepository.findById(comment.getRegistry().getIdx()).orElseThrow();`
+
+[Optional 클래스](http://www.tcpschool.com/java/java_stream_optional)
+
 <br><br><br>
 
 ## test 코드
