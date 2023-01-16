@@ -1,6 +1,6 @@
 ---
 categories: Project
-tags: [JPA, study, project, spring]
+tags: [JPA, study, project, spring, Exception]
 ---
 
 # findById() vs getReferenceById()
@@ -100,7 +100,164 @@ public Comment setComment(CommentDto commentDto) {
 
 <br><br><br>
 
-### LAZY 오류
+## 예외 처리
+[Negative Test]()를 작성하면서 `getReferenceById()`에 관한 예외 처리를 생각하게 되었다.
+
+<br>
+
+### CommentService.java
+```java
+@Override
+public Comment postComment(CommentRequestDto commentDto) {
+    Registry registry = registryRepository.getReferenceById(commentDto.getRegistryIdx());
+    User user = userRepository.findByNickname(commentDto.getNickname()).orElseThrow(UserNotFoundException::new);
+    Comment comment = commentDto.toEntity(registry, user);
+    Comment save = commentRepository.save(comment);
+    return save;
+}
+```
+본 코드에서 *findByNickname*만 사용하는게 아니라 그 위 코드 *getReferenceById*로도 값을 찾는다.
+
+`userRepository.findByNickname()`에 exception 처리가 되어있지만 
+
+`registryRepository.getReferenceById()`에는 exception 처리가 되어있지 않다.
+
+그래서 문득 예외상황에 대한 test 코드를 작성하면서 registry의 idx값도 존재하지 않을 수도 있을텐데? 싶었다.
+
+<br><br>
+
+### getReferenceById??
+
+```java
+@Override
+public Comment postComment(CommentRequestDto commentDto) {
+    System.out.println(" = = = = = = = = = = =  postComment 시작  = = = = = = = = = = =  ");
+
+    Registry registry = registryRepository.getReferenceById(commentDto.getRegistryIdx());
+    System.out.println("registry.getIdx() : " + registry.getIdx());
+
+    System.out.println(" = = = = = = registry = = = = = = = = ");
+    System.out.println("registry :  " + registry);
+
+    System.out.println(" = = = = = = registryRepository.existsById = = = = = = = = = ");
+    registryRepository.existsById(commentDto.getRegistryIdx());
+
+    System.out.println(" = = = = = = = = = = = = = = = = = = = = = = ");
+}
+```
+`getReferenceById()`를 사용하면 실제 테이블을 조회하는 대신 프록시 객체만 가져온다.
+
+프록시 객체만 있는 경우 ID 값을 제외한 나머지 값을 사용하기 전까지는 실제 DB 에 액세스 하지 않기 때문에 SELECT 쿼리가 날아가지 않는다.
+
+그렇기 때문에 `registry.getIdx()`에서는 쿼리문이 로그에 찍히지 않지만
+
+registry 자체로 출력할 때는 로그에 select문이 찍히는 것을 볼 수 있다. (*existsById는 참고로 출력해봤다.)
+
+<br>
+
+![image](https://user-images.githubusercontent.com/74857364/212552851-c9fd6d80-6b41-461f-95e5-cf6adf0cd55d.png){: width="65%"}
+
+<br><br>
+
+그러므로 id 값만 사용할 것이라면 `findById()`보다는 `getReferenceById(ID)`를 쓰는게 쿼리가 덜 날라가기 때문에 좋을 것이다.
+
+![image](https://user-images.githubusercontent.com/74857364/212553053-014af67b-1c18-4b4c-b0a4-1814ae9052c9.png)
+
+<br><br><br>
+
+그런데 문제가 있다.
+
+id값이 있는지 없는지를 따지는게 아니라 그냥 그 값을 가져온다. 
+
+```java
+public Comment postComment(CommentRequestDto commentDto) {
+    System.out.println(" = = = = = = = = = = =  postComment 시작  = = = = = = = = = = =  ");
+    
+    Registry registry = registryRepository.getReferenceById(commentDto.getRegistryIdx());
+    System.out.println("registry.getIdx() :  " + registry.getIdx());
+    
+    if(registry.getIdx() == null) {
+        System.out.println("hello");
+    }
+    
+    User user = userRepository.findByNickname(commentDto.getNickname()).orElseThrow(UserNotFoundException::new);
+    Comment comment = commentDto.toEntity(registry, user);
+    Comment save = commentRepository.save(comment);
+
+    return save;
+}
+```
+registry의 없는 idx값을 test하였으나 `registry.getIdx() :  40`로 출력이 되고 아래와 같이 에러가 떴다.
+
+![image](https://user-images.githubusercontent.com/74857364/212553279-085ea4a2-ba2e-4df5-b948-33e76beebcf0.png)
+
+<br><br><br>
+
+### return
+
+**findById()**
+
+![image](https://user-images.githubusercontent.com/74857364/212559667-338810b3-4d0e-4e48-89b1-e08301273011.png)
+
+매개변수로 전달된 ID에 해당하는 entity를 반환하거나, 해당하는 entity가 없을 경우 Optional.empty()를 반환한다.
+
+즉, 탐색 결과가 없더라도 내부에서 예외를 발생시키지 않는다.
+
+
+Throws를 살펴보면, ID가 null일 경우엔 IllegalArgumentException이 발생할 수 있다.
+
+<br><br>
+
+**getReferenceById()**
+
+![image](https://user-images.githubusercontent.com/74857364/212559690-c85344fd-c981-4e65-9020-0cd31727eba6.png)
+
+`Optional<T>` 가 아닌 T가 반환값이다.
+  
+즉, 매개변수로 전달된 ID에 해당하는 entity를 반환하되, 없을 경우 내부에서 예외를 발생시킨다.
+
+특정 대상이 존재하지 않을 때의 커스텀 예외를 XXNotFoundException이라고 할 수 있다.
+  
+<br><br>  
+
+### 예외 처리 코드 작성
+*[Custom Exception](https://haedal-uni.github.io/posts/Custom-Exception/) 정리 글
+
+```java
+@RestControllerAdvice
+public class CustomExceptionHandler {
+  
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<ErrorResponseEntity> handleSQLException(){
+        return ErrorResponseEntity.toResponseEntity(ErrorCode.DATABASE_ERROR);
+    }
+
+}
+```
+`@ExceptionHandler`를 이용해 Controller에 예외 처리 메소드를 추가했다.
+
+`@ExceptionHandler` 에 설정한 예외가 발생하면 handler가 실행된다. → SQLException 예외를 처리하기 위해 작성
+
+🐣 @Controller, @RestController가 아닌 @Service 나 @Repository 가 적용된 Bean에서는 사용할 수 없다.
+
+<br>
+
+`@ControllerAdvice`는 `@Controller` 어노테이션이 있는 모든 곳에서의 예외를 잡을 수 있도록 해준다.
+
+`@ControllerAdvice` 안에 있는 `@ExceptionHandler`는 모든 컨트롤러에서 발생하는 예외상황을 잡을 수 있다.   
+
+🐣 `@ControllerAdvice` + `@ResponseBody` → `@RestControllerAdvice` : `@ControllerAdvice` + 객체를 반환할 수 있다.
+
+<br><br>
+
+위와 같이 작성하면 없는 id값을 가지고 조회할 때 위처럼 에러가 뜨는 것이 아니라 예외처리가 되어 아래와 같이 출력된다.
+
+![image](https://user-images.githubusercontent.com/74857364/212668238-13a29e52-1375-421c-a1e3-16dca3378501.png)
+
+
+<br><br><br>
+
+## LAZY 오류
 LAZY를 사용하다보면 아래와 같은 오류를 볼 수 있다.
 
 *No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor and no properties discovered to create BeanSerializer*
@@ -114,7 +271,7 @@ LAZY를 사용하다보면 아래와 같은 오류를 볼 수 있다.
 <br>
 
 대표적으로 3가지 해결방법이 있지만 3번을 추천한다. 나머지는 근본적인 해결방법이 아니다.                       
-(*자세한 내용은 [Proxy]()에서 다룰 예정이다.)
+(*자세한 내용은 [Proxy](https://haedal-uni.github.io/posts/Proxy/)에서 다룰 예정이다.)
 
 
 1. application 파일에 *spring.jackson.serialization.fail-on-empty-beans=false* 설정해주기
@@ -146,3 +303,9 @@ spring boot version 2.7 미만의 경우 `getOne(ID)` is deprecated 되고 `getB
 
 ![image](https://user-images.githubusercontent.com/74857364/205506648-30bfa185-71e0-47bc-9b7f-4cd733f7abbb.png){: width="50%"}
 
+
+<br><br><br>
+
+*reference*            
+[find vs get (네이밍 컨벤션과 JPA에서의 내부 동작 차이)](https://creampuffy.tistory.com/162)         
+[ExceptionHandler 와 ControllerAdvice](https://tecoble.techcourse.co.kr/post/2021-05-10-controller_advice_exception_handler/)                                              
