@@ -181,6 +181,8 @@ serialVersionUID는 `private static final` 로 선언하면 된다.
 ## CustomExceptionHandler
 컨트롤러 전역에서 발생하는 Custom에러를 잡아줄 Handler를 만든다.
 
+ExceptionHandler가 붙은 함수는 꼭 protected / private 처리를 해준다. (외부에서 함수를 부르게 되면 그대로 에러 객체를 리턴하기 떄문이다.)
+
 ```java
 @RestControllerAdvice
 public class CustomExceptionHandler {
@@ -294,10 +296,10 @@ public ResRegistryDto getIdxRegistry(Long idx) throws CustomException {
 [[완벽해설] serialVersionUID에 대한 정확한 설명](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=kkson50&logNo=220564273220)                  
 [[Java] "serialVersionUID"이란? 어떤 역할을 가지고 있기에 선언이 되어 있는가?](https://whitekeyboard.tistory.com/496)                                    
 [[Spring Boot] ResponseEntity란 무엇인가?](https://devlog-wjdrbs96.tistory.com/182)                   
-
+[[스프링부트] @ExceptionHandler를 통한 예외처리](https://velog.io/@kiiiyeon/%EC%8A%A4%ED%94%84%EB%A7%81-ExceptionHandler%EB%A5%BC-%ED%86%B5%ED%95%9C-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC)  
 
 [코드 참고 사이트 및 영상]                               
 [[SpringBoot] Custom Exception Response 만들기](https://velog.io/@dot2__/SpringBoot-Custom-Exception-Response-%EB%A7%8C%EB%93%A4%EA%B8%B0)         
 [woowacourse-teams/2022-f12](https://github.com/woowacourse-teams/2022-f12)           
-[서비스 특성에 맞춘 예외 처리 방법 Custom Exception [ 스프링 부트 (Spring Boot) ]](https://www.youtube.com/watch?v=5XHhAhN-9po&t=104s)          
-               
+[서비스 특성에 맞춘 예외 처리 방법 Custom Exception [ 스프링 부트 (Spring Boot) ]](https://www.youtube.com/watch?v=5XHhAhN-9po&t=104s)           
+              
