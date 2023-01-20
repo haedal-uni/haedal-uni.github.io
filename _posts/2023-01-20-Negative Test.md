@@ -1,5 +1,10 @@
+---
+categories: Study
+tags: [spring, test]
+---
+
 # Negative Test
-Test 코드 작성을 다 끝낸 후에 예외에 관한 test도 해봐야한다고 들었다.
+[Mock Test](https://haedal-uni.github.io/posts/Mock-Test/) 코드 작성을 다 끝낸 후에 예외에 관한 test도 해봐야한다고 들었다.
 
 <br><br>
 
