@@ -224,6 +224,138 @@ public Comment setComment(CommentDto commentDto) {
 }
 ```
 
+<br><br><br>
+
+---
+
+
+## of
+이번엔 toEntity의 반대인 entity → dto를 작성해봤다.
+
+아까는 dto에서 entity로 변경할 때 toEntity()를 사용했다면 이번에는 entity에서 dto로 변경하기 위해 of를 활용했다.
+
+<br>
+
+🐣 주로 responseDto에서 활용을 하는 것 같다.
+
 <br><br>
 
+### of 작성하기
+```java
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ResRegistryDto {
+    private Long idx;
+    private String title;
+    private String main;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+    private String nickname;
+
+    // entity → dto
+    public static ResRegistryDto of(Registry registry){
+        return ResRegistryDto.builder()
+                .idx(registry.getIdx())
+                .title(registry.getTitle())
+                .main(registry.getMain())
+                .createdAt(registry.getCreatedAt())
+                .modifiedAt(registry.getModifiedAt())
+                .nickname(registry.getUser().getNickname())
+                .build();
+    }
+}
+```
+
+이렇게 of를 작성한 이유는 entity를 보호하기 위해서이다.
+
+entity로 쓰면 db 내용을 전부 들여다 볼수 있기 때문에 객체 자체 대신 풀어써서 사용했다.
+
+<br><br>
+
+### of 활용하기
+```java
+public ResRegistryDto getIdxRegistry(Long idx) throws NullPointerException {
+    Registry getIdxRegistry = registryRepository.findById(idx).orElseThrow(
+            () -> new NullPointerException("해당 게시글 없음")
+    );
+    return ResRegistryDto.of(getIdxRegistry);
+}
+```
+
+of를 사용하므로써 유지보수에 좋다.
+
+변수가 중간에 제거될 수도 있고 변수 명이 바뀔 때 
+
+of를 사용하지 않는다면 해당 로직을 찾아서 일일히 변경해야하는데 of를 사용하면 한번에 수정이 가능하다.
+
+ex) of를 사용하지 않는다면 더 이상 title을 사용하지 않을 때 ResRegistryDto의 title을 쓰는 코드를 찾아서 일일히 수정해야한다.
+
+<br><br>
+
+### toEntity와 of
+```java
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class RegistryDto {
+    private String title;
+    private String main;
+    private Long userIdx;
+
+    // dto → entity
+    public Registry toEntity(User user){
+        return Registry.builder()
+                .user(user)
+                .title(title)
+                .main(main)
+                .build();
+    }
+}
+```
+
+<br>
+
+```java
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ResRegistryDto {
+    private Long idx;
+    private String title;
+    private String main;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+    private String nickname;
+
+    // entity → dto
+    public static ResRegistryDto of(Registry registry){
+        return ResRegistryDto.builder()
+                .idx(registry.getIdx())
+                .title(registry.getTitle())
+                .main(registry.getMain())
+                .createdAt(registry.getCreatedAt())
+                .modifiedAt(registry.getModifiedAt())
+                .nickname(registry.getUser().getNickname())
+                .build();
+    }
+}
+```
+
+toEntity()는 static을 붙이지 않았고 of는 static을 붙였다.
+
+toEntity()에서 title과 main은 자기 객체에 있는 값을 활용한다.
+
+특정 필드에 접근 하기 때문에 static을 사용할 수 없다.
+
+
+<br><br><br>
+
 [pr - [refactoring] toEntity](https://github.com/dal-cho/adme/pull/117/files)
+
+[pr - ResponsetDto(of)](https://github.com/dal-cho/adme/pull/153/files)
+
+
