@@ -1,3 +1,8 @@
+---
+categories: Project
+tags: [spring, WebSocket]
+---
+
 # WebSocket
 
 그동안 채팅 구현을 하기 위해 이것 저것 보면서 적용하느라 뭐가 뭔지도 모르고 쓴 경향이 있었다.
