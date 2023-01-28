@@ -91,19 +91,19 @@ public class WebSocketHandler extends TextWebSocketHandler{
 
 <br>
 
-![image](https://user-images.githubusercontent.com/74857364/213742193-f8e7bc55-a971-452b-9999-abf619965594.png){: width="70%"}
+![image](https://user-images.githubusercontent.com/74857364/213742193-f8e7bc55-a971-452b-9999-abf619965594.png){: width="85%"}
 
 <br><br><br>
 
 이번엔 `@OnClose`와 handleTransportError에 대해서 살펴봤다. 
 
-![image](https://user-images.githubusercontent.com/74857364/213743192-29403c2e-7504-4c94-bcb5-2aafc886d3b1.png){: width="70%"}
+![image](https://user-images.githubusercontent.com/74857364/213743192-29403c2e-7504-4c94-bcb5-2aafc886d3b1.png){: width="50%"}
 
 `@OnClose`와 session의 패키지가 같아서 session을 쓰면 @OnClose를 쓰는건가? 싶었다.
 
 <br><br>
 
-![image](https://user-images.githubusercontent.com/74857364/213743352-fb6a5b41-8e1c-41a2-8983-2e1afe63d102.png){: width="60%"}
+![image](https://user-images.githubusercontent.com/74857364/213743352-fb6a5b41-8e1c-41a2-8983-2e1afe63d102.png){: width="70%"}
 
 위 사진은 handleTransportError가 포함된 AbstractWebSocketHandler 추상클래스인데 
 
