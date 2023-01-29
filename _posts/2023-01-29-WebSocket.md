@@ -243,6 +243,34 @@ WebSocket은 통신 프로토콜 일뿐이다.
 
 <br><br><br>
 
+### Message Broker란
+
+Message Broker(메시지 브로커)는 Publisher(송신자)로부터 전달받은 메시지를 Subscriber(수신자)로 전달해주는 중간 역할이며 
+
+응용 소프트웨어 간에 메시지를 교환할 수 있게 한다. 
+
+이 때 메시지가 적재되는 공간을 Message Queue(메세지 큐)라고 하며 메시지의 그룹을 Topic(토픽)이라고 한다.
+
+![image](https://user-images.githubusercontent.com/74857364/215319457-0adc8930-5c0f-41d6-beda-4430656b3c46.png)
+
+메시지 브로커는 송신자가 보낸 메시지를 메시지 큐에 적재하고 이를 수신자가 받아서 사용하는 구조이다. 
+
+이러한 구조를 Pulibsh/Subscribe(pub/sub) Pattern이라고 하며, Producer/Consumer Pattern 이라고도 한다.
+
+메시지 브로커는 대표적으로 Apache Kafka, Redis, RabbitMQ, Celery 등이 있다. 
+
+실시간 데이터를 처리할 때 DB에서 조회하는 것보다 메시지 브로커를 이용하여 처리하는 것이 성능이 뛰어나다는 것을 알 수 있는데 단점도 존재한다. 
+
+DB를 사용하는 경우 Query를 이용하여 원하는 데이터만 필터링하여 조회할 수 있지만, 
+
+메시지 브로커를 이용하면 Queue에 적재된 그대로 사용하기 때문에 불가능하다. 
+
+따라서, 적재할 때 필터링된 데이터를 적재하던가 적재된 데이터를 Logstash를 이용하여 필터링해서 사용해야 한다. 
+
+또한, 메시지 큐에 적재된 메시지는 주로 7일을 보관하기 때문에 장기간 보관해야하는 경우 별도의 저장소에 저장해야한다.
+
+<br><br><br>
+
 ## Code
 ### ChatController
 WebSocketConfig에서 "/app"로 시작하는 대상이 있는 클라이언트에서 보낸 모든 메시지는 
@@ -546,4 +574,4 @@ public class ChatMessage {
 [Spring websocket으로 간단 채팅 프로그램 만들기](https://rmcodestar.github.io/websocket/2019/02/11/spring-websocket/)                     
 [[Spring] WebSocket 구현하](https://hyeooona825.tistory.com/89)                     
 [[Spring Boot] WebSocket STOMP 사용시 BroadCast 메시지 전달 방법](https://jinseongsoft.tistory.com/252)                     
-
+[[Tech.] Message Broker란?](https://heodolf.tistory.com/49)                           
