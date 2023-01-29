@@ -377,6 +377,9 @@ WebSocket 서버를 활성화하는 데 사용된다.
 
 ☑️ `/ws` 는 WebSocket 또는 SockJS 클라이언트가 WebSocket Handshake로 커넥션을 생성할 경로이다.
 
+```js
+var socket = new SockJS('/ws');
+```
 <br>
 
 ☑️ ***configureMessageBroker()*** : 한 클라이언트에서 다른 클라이언트로 메시지를 라우팅 하는 데 사용될 메시지 브로커를 구성
@@ -509,7 +512,7 @@ event listner를 이용하여 소켓 연결(socket connect) 그리고 소켓 연
 
 Server에서 Client로 특정 메시지를 BroadCast 해줘야 하는 상황에             
 
-메시지를 보내고자 하는 위치에서 SimpMessagingTemplate 객체를 주입받아 와 같이 사용을 해주면 된다.
+메시지를 보내고자 하는 위치에서 SimpMessagingTemplate 객체를 주입받아 위와 같이 사용을 해주면 된다.
 
 Client에서는 Topic을 subscribe 하고 있을 경우 Message를 받을 수 있게 된다.
 
