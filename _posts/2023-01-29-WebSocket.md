@@ -271,6 +271,32 @@ DB를 사용하는 경우 Query를 이용하여 원하는 데이터만 필터링
 
 <br><br><br>
 
+### 정리
+
+**Websocket**
+
+페이지의 refresh 없이 나 또는 다른 사람이 보낸 채팅을 받을 수 있어야 한다.
+
+즉, 연결이 끊기지 않아야 한다.
+
+<br>
+
+**SockJS**
+
+브라우저에서 Websocket을 지원하지 않거나, 네트워크 Proxy 제약 등으로 인한 Websocket을 사용할 수 없을 경우
+
+fallback option을 제공하는데, 이는 SockJS Protocol에 기반으로 Websocket API를 사용할 수 있도록 한다.
+
+<br>
+
+**STOMP**
+
+웹소켓만 사용했을 땐 직접 세션을 관리해서, 해당 세션으로 채팅 데이터를 전송해야했다면, 
+
+STOMP를 사용함으로써 publish/subscribe (발행/구독) 구조로 간단하게 메세지를 선택적으로 수신할 수 있다.
+
+<br><br><br>
+
 ## Code
 ### ChatController
 WebSocketConfig에서 "/app"로 시작하는 대상이 있는 클라이언트에서 보낸 모든 메시지는 
@@ -434,11 +460,17 @@ destination:/topic/public
 
 <br>
 
-간단한 인 메모리 메시지 브로커를 활성화했다.
+지금은 STOMP가 갖고있는(내장하고 있는) SimpleBroker 를 사용해 간단한 인 메모리 메시지 브로커를 활성화했다.
 
-그러나 RabbitMQ 또는 ActiveMQ와 같은 다른 모든 기능을 갖춘 메시지 브로커를 자유롭게 사용할 수 있다.
+만일 이용자 수가 증가하여 처리해야하는 데이터가 많아진다면,      
 
-<br>
+내장되어있는 SimpleBroker는 철저하게 Spring Boot가 실행되는 (정확하게는 채팅 서버) 곳의 메모리를 잡아먹는다. 
+
+따라서 다른 많은 비즈니스 로직과 채팅에 대한 부담까지 '하나의 서버'가 떠안게 된다.           
+
+→ RabbitMQ 또는 ActiveMQ와 같은 다른 모든 기능을 갖춘 메시지 브로커를 사용하게 되면 채팅 관리 따로 빼서 서버의 부담을 줄일 수 있다.   
+
+<br><br>
 
 ☑️ ***setApplicationDestinationPrefixes("/app");*** : client에서 SEND 요청을 처리한다. (메시지 보낼 때 관련 경로 설정)
 
@@ -575,3 +607,4 @@ public class ChatMessage {
 [[Spring] WebSocket 구현하](https://hyeooona825.tistory.com/89)                     
 [[Spring Boot] WebSocket STOMP 사용시 BroadCast 메시지 전달 방법](https://jinseongsoft.tistory.com/252)                     
 [[Tech.] Message Broker란?](https://heodolf.tistory.com/49)                           
+[[Spring Boot] WebSocket과 채팅 (4) - RabbitMQ](https://dev-gorany.tistory.com/325)                
