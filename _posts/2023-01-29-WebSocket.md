@@ -5,6 +5,7 @@ tags: [spring, WebSocket]
 
 # WebSocket
 
+## 기존에 작성했던 webSocket
 그동안 채팅 구현을 하기 위해 이것 저것 보면서 적용하느라 뭐가 뭔지도 모르고 쓴 경향이 있었다.
 
 그러다보니 이번에 제대로 공부를 하면서 구현하려고 했고 초반에는 어디서는 이 코드만 쓰고 또 어디서는 이 코드만 쓰고
@@ -27,7 +28,7 @@ tags: [spring, WebSocket]
 
 <br>
 
-## Handler
+### Handler
 
 서버-클라이언트 소켓 통신에서 사용하는 메세지 스펙을 정의 한다.
 
@@ -125,7 +126,79 @@ WebSocketSession ( = session)
 
 ---
 
-## STOMP
+## 이론 정리
+### WebSocket이란?
+Websocket을 이해하려면 먼저 http를 알아야한다.
+
+![image](https://user-images.githubusercontent.com/74857364/216779693-d4c84460-422f-43f7-962d-a3c928a1f9ba.png)
+
+*HTTP와 WebSocket이 같은 이미지에 있는 이유는 둘 다 protocol이기 때문이다. 
+
+browser와 server는 http를 이용해서 소통할 수 있다. (인터넷 데이터 교환에서 필수 요소)
+
+<br>
+
+브라우저는 서버에서 http request(요청)을 보낸다.
+
+서버는 해당 request를 보고 브라우저가 홈페이지 정보를 요구하는걸 확인 후 서버는 http response를 브라우저에 보낸다.
+
+<br>
+
+👧🏻(user) → http 요청 [데이터 보내줘] →  🖥️(서버)
+
+👧🏻(user) ← 데이터 ← 🖥️(서버)
+
+<br>
+
+⭐ 서버가 브라우저의 요청(request)에 응답(response)하고 나면 브라우저 - 서버 간 통신은 끝나게 된다.
+
+서버가 브라우저에게 데이터를 보낼 수 있는 것은 브라우저가 요청을 했을 때 뿐이다. 이 때문에 웹 소켓이 생겨났다. 
+
+<br><br>
+
+**WebSocket**
+
+WebSocket 프로토콜은 서버-클라이언트 간에 단일 TCP 커넥션을 이용해서 양방향 통신을 제공한다.
+
+request - response가 있는 것이 아니라 커넥션이 open - close 된 것이다.
+
+ex) 전화 통화는 양방향이므로 나도 메세지를 보내고 받을 수 있고 상대방도 똑같이 할 수 있다.
+
+또한 둘이 전화를 끊기 전까지는 전화 통화는 열려있다.
+
+<br>
+
+Spring Framework는 WebSocket API를 제공한다.
+
+WebSocket 서버는 WebSocketHandler 인터페이스의 구현체를 통해서, 각 경로에 대한 핸들러를 구현할 수 있다.
+
+뿐만 아니라, Message 형식에 따라 TextWebSocketHandler or BinaryWebSocketHandler 핸들러를 확장해 구현할 수도 있다.
+
+![image](https://user-images.githubusercontent.com/74857364/216780090-693af2df-3c03-41d6-bca4-9741cb8bb07e.png)
+
+```java
+public abstract class AbstractoWebSocketHandler implements WebSocketHandler{
+    public AbstractWebSocketHandler(){}
+}
+```
+<br><br>
+
+문자열 메시지 기반으로 진행하기 때문에 TextWebSocketHandler를 상속받아 메시지를 전달받는다.
+```java
+public class WebSocketHandler extends TextWebSocketHandler{}
+```
+
+위에서 처음에 작성했던 코드가 이에 해당한다.
+
+<br><br><br>
+
+### STOMP(Simple Text Oriented Messaging Protocol)
+WebSocket 프로토콜은 두 가지 유형의 메시지를 정의하고 있지만, 그 메시지의 내용까지는 정의하고 있지 않다.
+
+STOMP은 WebSocket 위에서 동작하는 프로토콜로써, 클라이언트와 서버가 전송할 메시지 유형, 형식, 내용들을 정의한다.
+
+STOMP는 텍스트 지향 프로토콜이지만 Message Payload에는 Text 또는 Binary 데이터를 포함할 수도 있다.
+
 STOMP는 TCP 또는 WebSocket 같은 양방향 네트워크 프로토콜 기반으로 동작한다.
 
 STOMP (Simple Text Oriented Messaging Protocol)은 메세징 전송을 효율적으로 하기 위해 탄생한 프로토콜이고, 
@@ -134,7 +207,7 @@ STOMP (Simple Text Oriented Messaging Protocol)은 메세징 전송을 효율적
 
 개발자 입장에서 명확하게 인지하고 개발할 수 있는 이점이 있다. 
 
-<br>
+<br><br>
 
 ➡️ STOMP 프로토콜은 WebSocket 위에서 동작하는 프로토콜로써 
 
@@ -142,7 +215,7 @@ STOMP (Simple Text Oriented Messaging Protocol)은 메세징 전송을 효율적
 
 또한 STOMP를 이용하면 메세지의 헤더에 값을 줄 수 있어 헤더 값을 기반으로 통신 시 인증 처리를 구현하는 것도 가능하다.
 
-<br>
+<br><br>
 
 우체통(Topic)이 있다면 집배원(Publisher)이 신문을 우체통에 배달하는 행위가 있고, 
 
@@ -164,17 +237,25 @@ STOMP (Simple Text Oriented Messaging Protocol)은 메세징 전송을 효율적
 
 Spring framework 및 Spring Security는 STOMP 를 사용하여 WebSocket만 사용할 때보다 더 다채로운 모델링을 할 수 있다.
 
-Messaging Protocol을 만들고 메세지 형식을 커스터마이징 할 필요가 없다.
+스프링에서 지원하는 STOMP을 사용하게 된다면, 스프링 WebSocket 애플리케이션은 STOMP Broker로 동작한다.
 
-RabbitMQ, ActiveMQ 같은 Message Broker를 이용해, Subscription(구독)을 관리하고 메세지를 브로드캐스팅할 수 있다.
+메시지를 @Controller의 메시지 핸들링하는 메서드로 라우팅하거나, 
 
-WebSocket 기반으로 각 Connection(연결)마다 WebSocketHandler를 구현하는 것 보다 
+Simple In-Memory Broker를 이용해서 Subscribe중인 다른 클라이언트들에게 메시지를 브로드캐스팅한다. 
+
+Simple In-Memory Broker는 클라이언트의 Subscribe 정보를 자체적으로 메모리에 유지한다.
+
+또한 RabbitMQ, ActiveMQ 같은 Message Broker를 이용해, Subscription(구독)을 관리하고 메세지를 브로드캐스팅할 수 있다.
+
+<br>
+
+👉🏻 WebSocket 기반으로 각 Connection(연결)마다 WebSocketHandler를 구현하는 것 보다 
 
 `@Controller` 된 객체를 이용해 조직적으로 관리할 수 있다.
 
 <br><br>
 
- 1. SUBSCRIBE `/topic/public/3d41c3ed-8ddb-458d`
+SUBSCRIBE `/topic/public/3d41c3ed-8ddb-458d`
 
 ```
 >>> SUBSCRIBE
@@ -208,7 +289,7 @@ content-length:77
 
 **message**
 
- 2. SEND `app/chat/addUser`
+SEND `app/chat/addUser`
 
 ```
 >>> SEND
@@ -219,7 +300,7 @@ content-length:92
 ```
 <br>
 
-3. MESSAGE `/topic/public/3d41c3ed-8ddb-458d`
+MESSAGE `/topic/public/3d41c3ed-8ddb-458d`
 
 ```
 <<< MESSAGE
@@ -301,6 +382,111 @@ DB를 사용하는 경우 Query를 이용하여 원하는 데이터만 필터링
 따라서, 적재할 때 필터링된 데이터를 적재하던가 적재된 데이터를 Logstash를 이용하여 필터링해서 사용해야 한다. 
 
 또한, 메시지 큐에 적재된 메시지는 주로 7일을 보관하기 때문에 장기간 보관해야하는 경우 별도의 저장소에 저장해야한다.
+
+<br><br><br>
+
+### 메세지 큐란?
+메시지 지향 미들웨어(Message Oriented Middleware: MOM)는 
+
+비동기 메시지를 사용하는 다른 응용프로그램 사이의 데이터 송수신을 의미하는데 
+
+MOM을 구현한 시스템을 메시지큐(Message Queue:MQ)라 한다.
+
+<br>
+
+MOM(Message Oriented Middleware)를 구현한 솔루션으로 비동기 메시지를 사용하는 서비스들 사이에서 데이터를 교환해주는 역할을 한다.
+
+Producer(sender)가 메시지를 큐에 전송하면 Consumer(receiver) 가 처리하는 방식으로, 
+
+producer 와 consumer 에 message 프로세스가 추가되는 것이 특징이다.
+
+MQ를 사용하면 메시지를 비동기로 요청을 처리하고 queue 에 저장하여 consumer 에게 병목을 줄여줄 수 있는 장점이 있다.
+
+→ kafka, Apache ActiveMQ, rabbitMQ
+
+<br><br>
+
+#### kafka
+분산형 스트리밍 플랫폼(A distributed streaming platform)이다.
+
+(발행/구독: pub-sub은 메시지를 특정 수신자에게 직접적으로 보내주는 시스템이 아니고,
+
+메시지를 받기를 원하는 사람이 해당 토픽(topic)을 구독함으로써 메시지를 읽어 올 수 있다.)
+
+<br>
+
+대용량 실시간 로그처리에 특화되어 설계된 메시징 시스템으로 
+
+메시지를 메모리에 저장하는 기존 메시징 시스템과는 달리 파일에 저장을 하는데 
+
+그로 인해 카프카를 재시작해도 메시지 유실 우려가 감소된다.
+
+<br>
+
+기본 메시징 시스템(rabbitMQ, ActiveMQ)에서는 브로커(Broker)가 컨슈머(consumer)에게 메시지를 push해 주는 방식인데, 
+
+카프카는 컨슈머(Consumer)가 브로커(Broker)로부터 메시지를 직접 가져가는 PULL 방식으로 동작하기 때문에 
+
+컨슈머는 자신의 처리 능력만큼의 메시지만 가져와 최적의 성능을 낼 수 있다.
+
+![image](https://user-images.githubusercontent.com/74857364/216780860-296a119c-f43b-4659-9f64-2694918d9cc6.png)
+
+<br><br>
+
+#### Apache ActiveMQ
+ActiveMQ는 JMS를 지원하는 클라이언트를 포함하는 브로커, 자바 뿐만 아니라 다양한 언어를이용하는시스템간의 통신을 할 수 있게 해준다.
+
+클라이언트 간 메시지를 송수신 할 수 있는 오픈 소스 Broker(JMS 서버)다. 
+
+<br>
+
+**JMS란**
+
+JMS 는 자바 기반의 MOM(메시지 지향 미들웨어) API 이며 둘 이상의 클라이언트 간의 메시지를 보낸다.
+
+핵심 개념은 Message Broker 와 Destination 이다.  
+
+- Message Broker : 목적지에 안전하게 메시지를 건네주는 중개자 역할.
+
+- Destination: 목적지에 배달될 2가지 메시지 모델 QUEUE, TOPIC.
+
+- Queue: Point to Point ( Consumer 는 메시지를 받기 위해 경쟁한다.)
+
+- Topic: Publish to Subscribe.
+
+<br><br>
+
+**ActiveMQ 메세지 처리 구조**
+
+기본적으로 Message를 생산하는 Producer, activeMQ Broker(Server), Message를 소비하는 Consumer로  구성되어 있다.
+
+```
+Producer → Broker → Consumer
+```
+Producer(생산자)가 message를 Queue/Topic에 넣어두면 Consumer가 message를 가져와 처리하는 방식
+
+
+<br>
+
+![image](https://user-images.githubusercontent.com/74857364/216781129-281687b2-1c4f-437e-b458-8e809cfe6a86.png)
+
+- QUEUE 모델의 경우 메시지를 받는 Consumer가 다수일 때 연결된 순서로 메시지는 제공된다.
+
+- TOPIC 모델의 경우 메시지를 받는 Consumer가 다수일 때 메시지는 모두에게 제공된다.
+
+<br><br>
+
+#### rabbitMQ
+오픈소스 AMQP 브로커다.
+
+JMS는 API, AMQP는 프로토콜이다. JMS는 메시지의 형식이 아닌 브로커와 통신하는 방법을 정의한다. 
+
+또한 자바 애플리케이션에만 국한돼 있다.
+
+AMQP는 브로커와 통신하는 방법에 대해서 논하지 않지만 메시지가 유선을 통해 큐에 어떻게 넣고 꺼내지는지에 대해 정의한다.
+
+서로 다른 두 가지 애플리케이션이 있을 때,           
+둘 다 자바면 JVMS를 통해 통신할 수 있지만 이중에 하나가 루비라면 JMS는 사용하지 못할것이다.
 
 <br><br><br>
 
@@ -670,13 +856,20 @@ MessageType에 따라서 채팅형식이 달라지게 설정했다.
 
 *reference*               
 [Spring Websocket & STOMP](https://brunch.co.kr/@springboot/695#comment)                     
-[WebSocket](https://velog.io/@koseungbin/WebSocket#sockjsclient)                     
+[WebSocket](https://velog.io/@koseungbin/WebSocket)        
 [Spring WebSocket 소개](https://supawer0728.github.io/2018/03/30/spring-websocket/)                     
 [[Spring Boot] WebSocket과 채팅 (3) - STOMP](https://dev-gorany.tistory.com/235)                     
 [[Spring]Springboot + websocket 채팅[1]](https://ratseno.tistory.com/71)                     
 [[Spring]Springboot + websocket 채팅[2]](https://ratseno.tistory.com/72)                     
 [Spring websocket으로 간단 채팅 프로그램 만들기](https://rmcodestar.github.io/websocket/2019/02/11/spring-websocket/)                     
-[[Spring] WebSocket 구현하](https://hyeooona825.tistory.com/89)                     
-[[Spring Boot] WebSocket STOMP 사용시 BroadCast 메시지 전달 방법](https://jinseongsoft.tistory.com/252)                     
-[[Tech.] Message Broker란?](https://heodolf.tistory.com/49)                           
-[[Spring Boot] WebSocket과 채팅 (4) - RabbitMQ](https://dev-gorany.tistory.com/325)                
+[[Spring] WebSocket 구현하기](https://hyeooona825.tistory.com/89)                      
+[[Spring Boot] WebSocket STOMP 사용시 BroadCast 메시지 전달 방법](https://jinseongsoft.tistory.com/252)                       
+[[Tech.] Message Broker란?](https://heodolf.tistory.com/49)                            
+[[Spring Boot] WebSocket과 채팅 (4) - RabbitMQ](https://dev-gorany.tistory.com/325)       
+[HTTP vs WebSocket 차이점](https://kbj96.tistory.com/46)      
+[[메시지 지향 미들웨어:MOM] ActiveMQ, rabbitMQ, Kafka](https://gwonbookcase.tistory.com/49)         
+
+Youtube           
+[오늘의 테크용어 : 웹소켓이 뭐냐면](https://www.youtube.com/watch?v=yXPCg5eupGM)             
+[WebRTC? WebSockets? 5분 개념정리!](https://www.youtube.com/watch?v=5EhsjtBE7I4)       
+          
