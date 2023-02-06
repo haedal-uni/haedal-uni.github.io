@@ -202,7 +202,6 @@ public class ChatServiceImpl {
         } catch (NullPointerException e) {
             throw new RuntimeException("data 없음! ") ;
         }
-        System.out.println("chatRoomDtos : " + chatRoomDtos);
         return chatRoomDtos;
     }
 
