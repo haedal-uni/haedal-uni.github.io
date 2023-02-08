@@ -1,3 +1,8 @@
+---
+categories: Project
+tags: [spring, WebSocket]
+---
+
 # WebSocket
 [1편](https://haedal-uni.github.io/posts/WebSocket/)에 이어서 채팅기능을 구현했으므로 고객센터를 구현하기 위해 admin과 user를 구분하여 작성했다.
 
