@@ -235,6 +235,41 @@ STOMP (Simple Text Oriented Messaging Protocol)은 메세징 전송을 효율적
 
 <br><br>
 
+#### pub/sub 구조
+Pub/Sub 구조는 비동기식 messaging 패턴이다.
+
+*비동기 : 요청을 보낸 후 결과를 기다리지 않고 바로 다른 동작 수행          
+어떤 일의 수행 즉시 결과가 나온다는 보장이 없다.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/74857364/217882655-0b071ebe-c44e-485c-bdb6-b6ce1af5d998.png)
+
+Publisher(발신자)는 Subscriber(수신자)에 대한 정보를 몰라도 그냥 일단 메세지를 채널에 보내놓는다
+
+이 때 메세지에 맞는 Topic으로 보내놓으면, 해당 Topic을 구독중인 Subscriber에게만 메세지가 가게 된다
+
+<br>
+
+☑️ pub/sub 구조에서 수신자는 발행자에 대한 지식 없이 원하는 메세지만을 수신할 수 있다.
+
+개발 관련 포스트가 새로 작성될 때 마다 해당 정보를 받고 싶어하는 수신자가 있을 때 수신자의 관심사는 해당 정보이지 발행자가 누구인지는 관심이 없다. 발행자와 수신자 사이에는 브로커 또는 버스라고 불리는 중간 컴포넌트가(채널) 있다. 발행자는 중간 컴포넌트의 존재를 안다. 수신자도 중간 컴포넌트를 안다. 하지만 발신자와 수신자는 서로를 모른다. 애초에 서로에게 관심도 없다. 중간 컴포넌트만 알면 되기 때문이다.
+
+<br>
+
+☑️ 발신자의 메세지는 특별한 수신자가 정해져 있지 않다.
+
+특별한 수신자가 따로 정해져 있지 않다. 발신자는 메세지를 구독을 신청한 수신자(들)에게 전달할 뿐이다.     
+구독을 했으면 메세지를 보내고, 안 했으면 안 보낸다.    
+
+<br>
+
+☑️ pub/sub 구조는 비동기 messaging 패러다임이다. 
+
+발행자는 이벤트가 발생했을 때마다 중간 컴포넌트(브로커 또는 버스)에게 알려준다. 그러면 중간 컴포넌트는 각 이벤트들을 잘 필터링해서 받아야 할 수신자들에게 고루 보내준다. 즉 이벤트가 발생했다고 해서 곧바로 수신자가 그 정보를 얻을 수 있는 것은 아니다. 발행자가 이벤트를 중간 컴포넌트에게 알려주고 나면, 발행자는 더 이상 그 이벤트에 신경쓰지 않는다. 중간 컴포넌트에게 이벤트를 알려주는 행위를 하고 난 다음, 그 행위의 결과를 기다리지 않고 바로 다른 자기 할일을 한다.
+
+<br><br><br>
+
 Spring framework 및 Spring Security는 STOMP 를 사용하여 WebSocket만 사용할 때보다 더 다채로운 모델링을 할 수 있다.
 
 스프링에서 지원하는 STOMP을 사용하게 된다면, 스프링 WebSocket 애플리케이션은 STOMP Broker로 동작한다.
@@ -864,10 +899,12 @@ MessageType에 따라서 채팅형식이 달라지게 설정했다.
 [Spring websocket으로 간단 채팅 프로그램 만들기](https://rmcodestar.github.io/websocket/2019/02/11/spring-websocket/)                     
 [[Spring] WebSocket 구현하기](https://hyeooona825.tistory.com/89)                      
 [[Spring Boot] WebSocket STOMP 사용시 BroadCast 메시지 전달 방법](https://jinseongsoft.tistory.com/252)                       
-[[Tech.] Message Broker란?](https://heodolf.tistory.com/49)                            
-[[Spring Boot] WebSocket과 채팅 (4) - RabbitMQ](https://dev-gorany.tistory.com/325)       
-[HTTP vs WebSocket 차이점](https://kbj96.tistory.com/46)      
-[[메시지 지향 미들웨어:MOM] ActiveMQ, rabbitMQ, Kafka](https://gwonbookcase.tistory.com/49)         
+[[Tech.] Message Broker란?](https://heodolf.tistory.com/49)                             
+[[Spring Boot] WebSocket과 채팅 (4) - RabbitMQ](https://dev-gorany.tistory.com/325)        
+[HTTP vs WebSocket 차이점](https://kbj96.tistory.com/46)            
+[[메시지 지향 미들웨어:MOM] ActiveMQ, rabbitMQ, Kafka](https://gwonbookcase.tistory.com/49)           
+[pub/sub 구조란 무엇인가](https://2kindsofcs.tistory.com/6)                
+[[Pub/Sub] Publish/Subscribe 구조(모델)](https://honglab.tistory.com/61)               
 
 Youtube           
 [오늘의 테크용어 : 웹소켓이 뭐냐면](https://www.youtube.com/watch?v=yXPCg5eupGM)             
