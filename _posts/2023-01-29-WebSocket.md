@@ -311,6 +311,22 @@ destination:/topic/public
 <br><br>
 
 
+클라이언트는 메세지를 전송하기 위해 SEND, SUBSCRIBE COMMAND를 사용할 수 있다. 
+
+또한, SEND, SUBSCRIBE COMMAND 요청 Frame에는 메세지가 무엇이고, 누가 받아서 처리할지에 대한 Header 정보가 포함되어 있다.
+
+HTTP의 POST, GET method처럼 여기서는 method대신 command라고 부르는데, 
+
+SEND: 서버로 보내기, SUBSCRIBE: 구독할곳 등록하기, MESSAGE: 다른 subscribers들에게 braodcast하기 정도로 이해하면 된다. 
+
+이런 명령어들은 "destination" 헤더를 요구하는데 이것이 어디에 전송할지, 혹은 어디에서 메세지를 구독할 것 인지를 나타낸다.
+
+위와 같은 과정을 통해 STOMP는 Publish-Subscribe 매커니즘을 제공한다. 
+
+즉 Broker를 통해 타 사용자들에게 메세지를 보내거나 서버가 특정 작업을 수행하도록 메세지를 보낼 수 있게 된다.
+
+<br><br>
+
 **채팅방 입장**
 
 ```
@@ -986,6 +1002,7 @@ MessageType에 따라서 채팅형식이 달라지게 설정했다.
 [[메시지 지향 미들웨어:MOM] ActiveMQ, rabbitMQ, Kafka](https://gwonbookcase.tistory.com/49)           
 [pub/sub 구조란 무엇인가](https://2kindsofcs.tistory.com/6)                
 [[Pub/Sub] Publish/Subscribe 구조(모델)](https://honglab.tistory.com/61)               
+[Spring Boot + STOMP + JWT Socket 인증하기](https://velog.io/@tlatldms/Spring-Boot-STOMP-JWT-Socket-%EC%9D%B8%EC%A6%9D%ED%95%98%EA%B8%B0)                                        
 
 Youtube           
 [오늘의 테크용어 : 웹소켓이 뭐냐면](https://www.youtube.com/watch?v=yXPCg5eupGM)             
