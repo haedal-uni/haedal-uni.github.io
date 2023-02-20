@@ -209,14 +209,6 @@ STOMP (Simple Text Oriented Messaging Protocol)은 메세징 전송을 효율적
 
 <br><br>
 
-➡️ STOMP 프로토콜은 WebSocket 위에서 동작하는 프로토콜로써 
-
-클라이언트와 서버가 전송할 메세지의 유형, 형식, 내용들을 정의하는 매커니즘이다.
-
-또한 STOMP를 이용하면 메세지의 헤더에 값을 줄 수 있어 헤더 값을 기반으로 통신 시 인증 처리를 구현하는 것도 가능하다.
-
-<br><br>
-
 우체통(Topic)이 있다면 집배원(Publisher)이 신문을 우체통에 배달하는 행위가 있고, 
 
 우체통에 신문이 배달되는 것을 기다렸다가 빼서 보는 구독자(Subscriber)의 행위가 있다. 
@@ -228,10 +220,6 @@ STOMP (Simple Text Oriented Messaging Protocol)은 메세징 전송을 효율적
 - 채팅방 입장 : Topic 구독
 
 - 채팅방에서 메세지를 송수신 : 해당 Topic으로 메세지를 송신(pub), 메세지를 수신(sub)
-
-<br>
-
-스프링은 메세지를 외부 Broker에게 전달하고, Broker는 WebSocket으로 연결된 클라이언트에게 메세지를 전달하는 구조가 된다.
 
 <br><br>
 
@@ -310,18 +298,26 @@ destination:/topic/public
 ```
 <br><br>
 
+#### STOMP 형식
+```
+COMMAND
+header:value
 
-클라이언트는 메세지를 전송하기 위해 SEND, SUBSCRIBE COMMAND를 사용할 수 있다. 
+Body
+```
+COMMAND를 통해 SEND 또는 SUBSCRIBE, CONNECT 등의 명령을 지정하고, header를 정의할 수 있다. 그리고 메시지는 Body에 담아서 보내는 형식이다.
 
 또한, SEND, SUBSCRIBE COMMAND 요청 Frame에는 메세지가 무엇이고, 누가 받아서 처리할지에 대한 Header 정보가 포함되어 있다.
 
-HTTP의 POST, GET method처럼 여기서는 method대신 command라고 부르는데, 
+HTTP의 형식과 닮은 것을 알 수 있는데, COMMAND는 Method와 비슷한 역할이라고 보면 된다.
 
 SEND: 서버로 보내기, SUBSCRIBE: 구독할곳 등록하기, MESSAGE: 다른 subscribers들에게 braodcast하기 정도로 이해하면 된다. 
 
 이런 명령어들은 "destination" 헤더를 요구하는데 이것이 어디에 전송할지, 혹은 어디에서 메세지를 구독할 것 인지를 나타낸다.
 
-위와 같은 과정을 통해 STOMP는 Publish-Subscribe 매커니즘을 제공한다. 
+STOMP는 Publisher(발행자)-Subscriber(구독자) 관계를 기반으로 동작한다.
+
+발행자와 구독자를 지정하여 메시지 브로커가 특정 구독 채널에 메시지를 전송하는 방식이다.
 
 즉 Broker를 통해 타 사용자들에게 메세지를 보내거나 서버가 특정 작업을 수행하도록 메세지를 보낼 수 있게 된다.
 
