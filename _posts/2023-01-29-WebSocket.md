@@ -1006,7 +1006,8 @@ MessageType에 따라서 채팅형식이 달라지게 설정했다.
 [pub/sub 구조란 무엇인가](https://2kindsofcs.tistory.com/6)                
 [[Pub/Sub] Publish/Subscribe 구조(모델)](https://honglab.tistory.com/61)               
 [Spring Boot + STOMP + JWT Socket 인증하기](https://velog.io/@tlatldms/Spring-Boot-STOMP-JWT-Socket-%EC%9D%B8%EC%A6%9D%ED%95%98%EA%B8%B0)                                        
-
+[[Spring Boot] 소켓 통신을 위한 Websocket 서버 구성](https://kanoos-stu.tistory.com/57)              
+                      
 Youtube           
 [오늘의 테크용어 : 웹소켓이 뭐냐면](https://www.youtube.com/watch?v=yXPCg5eupGM)             
 [WebRTC? WebSockets? 5분 개념정리!](https://www.youtube.com/watch?v=5EhsjtBE7I4)       
