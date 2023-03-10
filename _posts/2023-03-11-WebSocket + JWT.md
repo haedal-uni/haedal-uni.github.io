@@ -1,3 +1,8 @@
+---
+categories: Project
+tags: [spring, WebSocket, Chat, Security]
+---
+
 # WebSocket + JWT
 내가 채팅방을 작성하면서 security를 구현한 이유는 stomp를 사용하면 헤더에 token을 추가해 보안을 강화할 수 있다는 것
 
