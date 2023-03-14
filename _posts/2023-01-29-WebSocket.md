@@ -843,11 +843,18 @@ public class ChatConfig implements WebSocketMessageBrokerConfigurer {
     }
 }
 ```
+
 ☑️ **`@EnableWebSocketMessageBroker`** : Stomp를 사용하기위해 선언하는 어노테이션
 
 WebSocket 서버를 활성화하는 데 사용된다.
 
 <br>
+
+☑️ **`WebSocketMessageBrokerConfigurer`** 를 상속받아 STOMP로 메시지 처리 방법을 구성한다.    
+
+<br>
+
+**`registerStompEndpoints`** : 클라이언트에서 WebSocket에 접속할 수 있는 endpoint를 지정
 
 ☑️ `/ws` 는 WebSocket 또는 SockJS 클라이언트가 WebSocket Handshake로 커넥션을 생성할 경로이다.
 
@@ -860,7 +867,7 @@ var socket = new SockJS('/ws');
 
 <br>
 
-☑️ ***.enableSimpleBroker("/queue", "/topic");*** : 해당 경로로 SimpleBroker를 등록한다. (메시지 받을 때 관련 경로 설정)
+☑️ ***enableSimpleBroker("/queue", "/topic");*** : 해당 경로로 SimpleBroker를 등록한다. (메시지 받을 때 관련 경로 설정)
 
 SimpleBroker는 해당하는 경로를 SUBSCRIBE하는 client에게 메시지를 전달하는 간단한 작업을 수행한다.
 
@@ -1039,8 +1046,9 @@ MessageType에 따라서 채팅형식이 달라지게 설정했다.
 [[Pub/Sub] Publish/Subscribe 구조(모델)](https://honglab.tistory.com/61)               
 [Spring Boot + STOMP + JWT Socket 인증하기](https://velog.io/@tlatldms/Spring-Boot-STOMP-JWT-Socket-%EC%9D%B8%EC%A6%9D%ED%95%98%EA%B8%B0)                                        
 [[Spring Boot] 소켓 통신을 위한 Websocket 서버 구성](https://kanoos-stu.tistory.com/57)           
-[[02.15]webjar](https://velog.io/@younghwan/webjar)                              
-                      
+[[02.15]webjar](https://velog.io/@younghwan/webjar)                               
+[[WebSocket] Spring Boot + STOMP + Redis Pub/Sub 이용한 채팅 서버 구현](https://velog.io/@ohjinseo/WebSocket-Spring-Boot-stomp-Redis-PubSub-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84)                 
+
 Youtube           
 [오늘의 테크용어 : 웹소켓이 뭐냐면](https://www.youtube.com/watch?v=yXPCg5eupGM)             
 [WebRTC? WebSockets? 5분 개념정리!](https://www.youtube.com/watch?v=5EhsjtBE7I4)        
