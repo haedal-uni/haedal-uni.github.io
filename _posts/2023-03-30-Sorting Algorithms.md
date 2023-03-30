@@ -1,3 +1,7 @@
+---
+categories: Study
+tags: [study, summary, Algorithm, Sorting Algorithms]
+---
 
 ## 선택 정렬 : Selection Sort
 **해당 순서에 원소를 넣을 위치는 이미 정해져 있고, 어떤 원소를 넣을지 선택한다**
