@@ -72,6 +72,7 @@ void selectionSort(int[] arr) {
   }
 }
 ```
+
 <br><br>
 
 *reference*         
@@ -275,7 +276,7 @@ void insertionSort(int[] arr) {
 (피벗을 중심으로 왼쪽: 피벗보다 작은 요소들, 오른쪽: 피벗보다 큰 요소들)로 분할한다.
 
 **정복(Conquer)**: 부분 배열을 정렬한다.               
-부분 배열의 크기가 충분히 작지 않으면 순환 호출 을 이용하여 다시 분할 정복 방법을 적용한다.
+부분 배열의 크기가 충분히 작지 않으면 순환 호출을 이용하여 다시 분할 정복 방법을 적용한다.
 
 **결합(Combine)**: 정렬된 부분 배열들을 하나의 배열에 합병한다.              
               
@@ -365,6 +366,12 @@ public void quickSort(int[] array, int low, int high) {
 
 (피벗을 중심으로 왼쪽 : 피벗보다 작은 요소들, 오른쪽 : 피벗보다 큰 요소들) 로 분할한다.
 
+<br>
+
+'피벗'을 하나 설정하고 피벗보다 작은 값들은 왼쪽에, 큰 값들은 오른쪽에 치중하도록 하는 것이다. 
+
+이 과정을 흔히 파티셔닝(Partitioning)이라고 한다.
+
 - array : 정렬할 배열
 - left : 현재 부분 배열의 왼쪽
 - right : 현재 부분 배열의 오른쪽
@@ -409,7 +416,60 @@ public int partition(int[] array, int left, int right) {
 ```
 <br><br>
 
+```java
+public class QuickSort {
+    public void quickSort(int[] array, int low, int high) {
+        // low가 high보다 크거나 같다면 정렬할 원소가 1개 이하이므로 정렬하지 않고 return한다.
+        if(low >= high){
+            return;
+        }
+
+        // 분할
+        int pivot = partition(array, low, high);
+
+        // 피벗은 제외한 2개의 부분 배열을 대상으로 순환 호출
+        quickSort(array, low, pivot-1);  // 정복(Conquer) 
+        quickSort(array, pivot+1, high); // 정복(Conquer) 
+        System.out.println(Arrays.toString(array));
+    }
+
+    public int partition(int[] array, int left, int right) {
+        int pivot = array[left]; // 가장 왼쪽값을 피벗으로 설정
+        int low = left, high = right;
+
+        while(low < high) { // low가 high보다 작을 때 까지만 반복
+            
+            while(low < high && pivot < array[high]) {
+                high--;
+            }
+            
+            while(low < high && pivot >= array[low]){
+                low++;
+            }
+            swap(array, low, high);
+        }
+        swap(array, left, low);
+        return low;
+    }
+
+    private void swap(int[] a, int i, int j) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {5, 3, 8, 4, 9, 1, 6, 2, 7};
+        QuickSort quickSort = new QuickSort();
+        quickSort.quickSort(arr, 0, arr.length-1);
+    }
+}
+```
+
+<br><br>
+
 *reference*         
 [퀵 정렬(Quick Sort)](https://gyoogle.dev/blog/algorithm/Quick%20Sort.html)         
 [[알고리즘] 퀵 정렬(quick sort)이란](https://gmlwjd9405.github.io/2018/05/10/algorithm-quick-sort.html)    
-[자바 [JAVA] - 퀵 정렬 (Quick Sort)](https://st-lab.tistory.com/250)             
+[자바 [JAVA] - 퀵 정렬 (Quick Sort)](https://st-lab.tistory.com/250)              
+[[알고리즘] 퀵정렬 (Quick Sort) Java Example](https://javaoop.tistory.com/8)        
