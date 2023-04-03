@@ -22,6 +22,8 @@ tags: [spring, WebSocket, Chat]
 
 내용이 길어져서 1편과 2편으로 나눠서 작성했다.
 
+관련 글 : [SSE](https://haedal-uni.github.io/posts/SSE/)        
+
 <br><br>
 
 아래는 기존에 작성했던 코드 일부이다. 현재는 handler를 사용하지 않는다.
