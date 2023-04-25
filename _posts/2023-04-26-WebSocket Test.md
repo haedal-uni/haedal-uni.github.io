@@ -1,3 +1,8 @@
+---
+categories: Project
+tags: [spring, WebSocket, Chat, test]
+---
+
 ## WebSocket Test
 채팅 애플리케이션에서 WebSocket을 이용해 메세지 송수신을 구현한 경우, 해당 기능을 테스트해볼 필요가 있다. 
 
