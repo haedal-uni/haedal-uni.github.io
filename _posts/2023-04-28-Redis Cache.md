@@ -1,3 +1,8 @@
+---
+categories: Project
+tags: [spring, Redis, Cache]
+---
+
 # Redis란
 
 Redis는 인메모리 데이터 저장소로, 다양한 데이터 구조를 지원하며, 속도가 빠르고 Pub/Sub 메시징 시스템을 지원한다. 
