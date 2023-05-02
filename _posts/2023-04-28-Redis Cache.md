@@ -502,36 +502,8 @@ public String getRedis(String nickname){
 terminal에서 keys * 로 조회를 하면 아래와 같이 출력된다. 
 
 1) "roomId:haedal"         
-2) "roomId::roomId:haedal"      
-3) "roomId::roomId:123"    
-
-<br><br>
-
-#### value::key 형태?
-
-Redis에서 key-value 쌍으로 되어있는데 왜 value::key 형태로 저장이 되냐면    
-
-@Cacheable 어노테이션에서 key 속성을 아래와 같이 지정했기 때문이다.
-
-```java
-@Cacheable(value = "roomId", key = "#chatMessage.roomId + ':roomId'")
-```
-
-따라서 "roomId:nickname" 형태로 저장되어 있던 key가 #chatMessage.roomId + ':roomId'에 의해 "nickname:roomId" 형태로 조회된다.   
-
-key-value로 저장을 하고 싶다면 아래와 같이 코드를 수정하면 된다.
-
-```java
-@Cacheable(key = "'roomId:' + #chatMessage.roomId", value = "roomId", unless = "#chatMessage.roomId == null")
-public void addRedis(ChatMessage chatMessage, Long expirationTime){
-    redisTemplate.opsForValue().set(chatMessage.getSender(), chatMessage.getRoomId(), expirationTime, TimeUnit.HOURS);
-}
-
-@Cacheable(value = "roomId", key = "#nickname")
-public String getRedis(String nickname){
-    return redisTemplate.opsForValue().get(nickname);
-}
-```
+2) "roomId::roomId:123"      
+3) "haedal"    
 
 <br><br>
 
@@ -546,20 +518,30 @@ public String getRedis(String nickname){
 
 <br><br>
 
-"roomId::roomId:haedal" 와 "roomId::roomId:123" 은 모두 `@Cacheable` 어노테이션에서 
+"roomId::roomId:123"
 
-"roomId:" + #chatMessage.roomId와 "roomId:" + #nickname를 key로 하여 저장된 key-value 쌍이다. 
+@Cacheable 어노테이션의 동작 원리는 메소드의 파라미터들을 기반으로 key를 생성하고, 이 key로 값을 캐싱한다. 
 
-따라서 "roomId::roomId:haedal"은 "haedal"라는 roomId를 갖는 key에 "roomId:haedal"라는 value가 저장되었고, 
+이때 key는 일반적으로 문자열 형태로 생성된다.
 
-"roomId::roomId:123"은 "123"이라는 roomId를 갖는 key에 "roomId:haedal"라는 value가 저장되었다.
+@Cacheable 어노테이션 코드에서는 key가 "'roomId:' + #chatMessage.roomId"로 설정되어 있다. 
+
+이는 roomId라는 파라미터의 값을 이용하여 "roomId:"이라는 prefix와 roomId 값으로 key를 생성한다는 의미이다.
+
+실제로 캐시된 데이터를 Redis CLI로 조회해보면, "roomId::roomId:123"과 같은 key가 생성된 것을 볼 수 있다. 
+
+이 key는 prefix "roomId:"와 roomId 값 "123"을 조합하여 생성된 것이다. 이렇게 생성된 key에는 roomId 값이 저장되어 있다.
 
 <br>
 
+"haedal"은  `@Cacheable` 어노테이션을 이용해 저장한 것이다. 
 
-@Cacheable 어노테이션에서 저장된 key-value 쌍은 "nickname:roomId" - "123" 이고, 
+@Cacheable 어노테이션은 Spring의 Cache 관련 기능을 사용하는 것으로, 
 
-redisTemplate에서 저장된 key-value 쌍은 "haedal:roomId" - "123" 다.
+key-value 형태로 저장하는 것이 아니라 key를 저장하고 그 key에 대한 value를 메모리에 저장하는 방식을 사용한다. 
+
+따라서 3번에서는 key만 조회할 수 있고, value는 실제로 메모리에 캐싱된 값 중에서 해당 key에 대한 것을 찾아서 반환한다.
+
 
 <br><br><br>
 
