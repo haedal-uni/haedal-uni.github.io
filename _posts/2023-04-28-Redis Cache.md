@@ -423,11 +423,71 @@ LettuceConnectionFactory를 사용하여 Redis 연결을 구성했다.
 
 **Redis 캐시에 TTL을 설정하는 예시**
 ```java
-@Cacheable(key = "'roomId:' + #chatMessage.sender", value = "roomId", unless = "#chatMessage.roomId == null")
-public void addRedis(ChatMessage chatMessage, Long expirationTime){
-    redisTemplate.opsForValue().set(chatMessage.getSender(), chatMessage.getRoomId(), expirationTime, TimeUnit.HOURS);
+@Cacheable(key = "#chatMessage.sender", value = "roomId", unless = "#chatMessage.roomId == null")
+public void addRedis(ChatMessage chatMessage){
+    long expireTimeInSeconds = 24 * 60 * 60;
+    long creationTimeInMillis = System.currentTimeMillis();
+    long remainingTimeInSeconds = expireTimeInSeconds - ((System.currentTimeMillis() - creationTimeInMillis) / 1000);
+    redisTemplate.opsForValue().set(chatMessage.getSender(), chatMessage.getRoomId(), remainingTimeInSeconds, TimeUnit.SECONDS);
+    //redisTemplate의 opsForValue() 메서드를 이용해 chatMessage.getSender()를 key로 하고 chatMessage.getRoomId()를 value로 하는 key-value 쌍을 Redis에 저장하고 있다. 
+    // 그래서 Redis에 저장되는 데이터의 구조는 sender가 key이고 roomId가 value인 형태가 된다.
 }
 ```
+Redis에 저장된 데이터를 가져오기 위해서는 `redisTemplate.opsForValue().get(key)`와 같은 메서드를 사용한다. 
+
+이때 반환되는 값은 Object 타입이므로 적절한 타입으로 형변환하여 사용해야 한다.
+
+스프링에서는 @Cacheable 어노테이션을 사용하여 메서드의 결과를 캐시할 수 있다. 
+
+이때 key와 value는 모두 String 타입이어야 한다. 
+
+@Cacheable 어노테이션의 key 속성은 캐시할 데이터의 key를 지정하고, value 속성은 캐시할 데이터의 value를 지정한다.
+
+@Cacheable 어노테이션에서 key를 설정할 때, SpEL(Sping Expression Language)을 사용하여 동적으로 key를 생성할 수 있다. 이때 SpEL에서는 작은따옴표를 사용하여 문자열을 감싸야 한다.
+
+`@Cacheable(key = "'roomId:' + #chatMessage.roomId", value = "roomId", unless = "#chatMessage.roomId == null")`
+
+@Cacheable 어노테이션에서 value를 설정할 때, 메서드의 반환 타입이 void인 경우, value를 지정할 수 없으므로 value = ""와 같이 빈 문자열로 설정해야 한다.
+
+
+마지막으로, Redis에 저장된 key-value 데이터의 구조는 개발자가 원하는 대로 설정할 수 있다. 
+
+하지만 @Cacheable 어노테이션에서 설정하는 key와 value는 Redis에 저장된 key-value 데이터의 구조와는 무관하다. 
+
+@Cacheable 어노테이션에서 설정하는 key와 value는 캐시를 위한 것이며, Redis에 저장될 데이터의 구조는 redisTemplate의 코드에서 설정하는 대로 저장된다. 
+
+따라서 @Cacheable 어노테이션에서는 캐시를 위한 key와 value를 설정하는 것에 초점을 맞추어야 한다.
+
+<br><br>
+
+ex) sender를 aa, roomId를 123이라고 가정
+
+@Cacheable 어노테이션의 key 값에는 aa라는 문자열이 들어가고 value 값에는 roomId라는 문자열이 들어간다. 
+
+이 때 aa는 redisTemplate에서 저장할 때 사용된 key 값과 동일하며, roomId는 redisTemplate에서 저장된 value 값 중에서도 특정한 의미를 가지는 값이다.
+
+따라서, 캐시 조회 시에는 aa를 key로 사용하여 redisTemplate에서 해당 값을 조회하게 되는데, 
+
+이 때 redisTemplate에서는 aa라는 key에 해당하는 값으로 roomId가 저장되어 있다. 
+
+그렇기 때문에 캐시 조회 결과로는 roomId의 값인 123이 나오는 것이다.
+
+<br>
+
+Redis는 key-value 형태의 In-Memory 데이터 저장소다. 
+
+따라서 redisTemplate은 Redis 데이터베이스에 접근하여 데이터를 저장, 조회, 삭제하는 등의 작업을 수행한다. 
+
+@Cacheable 어노테이션은 이 Redis 데이터베이스에 접근하는 과정에서 자주 사용되는 데이터를 캐시에 저장하여 조회 시간을 단축시키는 기능을 제공한다. 
+
+즉, Redis와 캐시는 서로 다른 개념이며, Redis에 저장된 데이터를 캐시로 활용하는 것이다. 
+
+따라서 캐시에서는 Redis에 저장된 key-value 데이터의 구조와는 무관한 key와 value를 설정하고, 
+
+이를 기반으로 Redis 데이터베이스에서 값을 가져오게 된다.
+
+<br><br>
+
 `redisTemplate.opsForValue().set()` 메서드의 마지막 인자로 TTL을 지정하는 방식으로 Redis 캐시에 TTL을 설정했다. 
 
 캐시에서 저장된 데이터의 TTL은 expirationTime 파라미터 값에 따라 설정된다.
