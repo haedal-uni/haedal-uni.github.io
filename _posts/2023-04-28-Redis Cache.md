@@ -548,9 +548,12 @@ String nickname = "haedal"; 이라고 할 때,
 (ChatMessage.sender와 nickname은 같은 값)        
 
 ```java
-@Cacheable(key = "'roomId:' + #chatMessage.roomId", value = "roomId", unless = "#chatMessage.roomId == null")
-public void addRedis(ChatMessage chatMessage, Long expirationTime){
-    redisTemplate.opsForValue().set("roomId:" + chatMessage.getSender(), chatMessage.getRoomId(), expirationTime, TimeUnit.HOURS);
+@Cacheable(key = "#chatMessage.sender", value = "roomId", unless = "#chatMessage.roomId == null")
+public void addRedis(ChatMessage chatMessage){
+    long expireTimeInSeconds = 24 * 60 * 60;
+    long creationTimeInMillis = System.currentTimeMillis();
+    long remainingTimeInSeconds = expireTimeInSeconds - ((System.currentTimeMillis() - creationTimeInMillis) / 1000);
+    redisTemplate.opsForValue().set(chatMessage.getSender(), chatMessage.getRoomId(), remainingTimeInSeconds, TimeUnit.SECONDS);
 }
 
 @Cacheable(value = "roomId", key = "'roomId:' + #nickname")
