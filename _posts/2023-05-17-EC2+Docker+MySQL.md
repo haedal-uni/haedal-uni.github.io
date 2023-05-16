@@ -6,7 +6,7 @@ tags: [study, summary, Docker, AWS, EC2]
 스터디 - 배포 과정 정리
 
 # EC2 + Docker + MySQL
-ec2 생성하기
+## ec2 생성하기
 
 point
 - ubuntu 클릭
@@ -21,7 +21,7 @@ point
 
 <br><br>
 
-### Spot Instance
+#### Spot Instance
 인스턴스는 AWS의 여유 리소스 또는 EC2 사용자가 사용하지 않는 리소스를 활용하여 제공된다. 
 
 이러한 인스턴스는 경매 방식으로 가격이 결정되며, 현재의 수요와 공급 상황에 따라 가격이 변동한다.
