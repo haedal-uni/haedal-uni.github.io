@@ -1,3 +1,8 @@
+---
+categories: Study
+tags: [study, summary, Docker, AWS, EC2]
+---
+
 스터디 - 배포 과정 정리
 
 # EC2 + Docker + MySQL
