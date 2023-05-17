@@ -41,6 +41,8 @@ Spot 인스턴스는 비용 효율적인 방법으로 EC2 인스턴스를 실행
 ## 인스턴스 연결하기
 {키 페어 이름}.pem을 저장한 위치로 경로를 이동시킨 후 아래 명령어를 입력한다.  
 
+나는 Linux 전용 폴더에 넣어뒀다.
+
 <br>
 
 **keypair 파일의 접근 권한을 변경**
@@ -233,7 +235,8 @@ MySql을 설치했으니 project에 db를 연결해본다.
 
 ec2의 Ipv4 주소를 입력한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f0a63def-8cd1-444a-b180-d2e6a9da71ad)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f4d6c67b-d278-4a6d-ad0a-94a86e6dc73b)
+
 
 user와 password는 MySql 인스턴스를 만들 때 설정한 값을 넣어주면 된다.
 
