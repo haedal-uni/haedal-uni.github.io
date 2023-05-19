@@ -1,3 +1,10 @@
+---
+categories: Study
+tags: [study, summary, Docker, AWS, EC2, CI/CD]
+---
+
+스터디 - 배포 과정 정리
+
 # Git Actions
 
 ## Create an example workflow
