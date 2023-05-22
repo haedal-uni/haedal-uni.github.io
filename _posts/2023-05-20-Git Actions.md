@@ -19,7 +19,7 @@ tags: [study, summary, Docker, AWS, EC2, CI/CD, Git Actions]
 yml 파일 자체는 들여쓰기가 중요하다.
 ```yaml
 name: learn-github-actions
-run-name: `${{ github.actor }} is learning GitHub Actions`
+run-name: ${{ github.actor }} is learning GitHub Actions
 on: [push]
 jobs:
   check-bats-version:
