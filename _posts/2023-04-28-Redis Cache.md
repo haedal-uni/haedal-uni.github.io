@@ -445,7 +445,7 @@ Redis에 저장된 데이터를 가져오기 위해서는 `redisTemplate.opsForV
 
 @Cacheable 어노테이션에서 key를 설정할 때, SpEL(Sping Expression Language)을 사용하여 동적으로 key를 생성할 수 있다. 이때 SpEL에서는 작은따옴표를 사용하여 문자열을 감싸야 한다.
 
-`@Cacheable(key = "'roomId:' + #chatMessage.roomId", value = "roomId", unless = "#chatMessage.roomId == null")`
+`@Cacheable(key = "#chatMessage.sender", value = "roomId", unless = "#chatMessage.roomId == null")`
 
 @Cacheable 어노테이션에서 value를 설정할 때, 메서드의 반환 타입이 void인 경우, value를 지정할 수 없으므로 value = ""와 같이 빈 문자열로 설정해야 한다.
 
@@ -543,9 +543,9 @@ condition, unless 어노테이션 옵션으로 특정 조건에 따른 캐시적
 <br>
 
 ### 저장과 조회 
-String roomId = "123";
-String nickname = "haedal"; 이라고 할 때,           
-(ChatMessage.sender와 nickname은 같은 값)        
+String roomId = "123";                   
+String nickname = "haedal"; 이라고 할 때,                
+(ChatMessage.sender와 nickname은 같은 값)         
 
 ```java
 @Cacheable(key = "#chatMessage.sender", value = "roomId", unless = "#chatMessage.roomId == null")
@@ -561,51 +561,46 @@ public String getRedis(String nickname){
     return redisTemplate.opsForValue().get("roomId:" + nickname);
 }
 ```
- 
-terminal에서 keys * 로 조회를 하면 아래와 같이 출력된다. 
+`@Cacheable`로 값을 저장하고 TTL을 설정하여 일정 시간 동안 유효하게 유지한 후, 
 
-1) "roomId:haedal"         
-2) "roomId::roomId:123"      
-3) "haedal"    
-
-<br><br>
-
-#### 결과가 3개?
-@Cacheable 어노테이션과 redisTemplate에서 저장된 key-value 쌍이 각각 1개, 2개씩 있기 때문이다. 
-
-"roomId:haedal"은 `addRedis()`에서           
-
-`redisTemplate.opsForValue().set(chatMessage.getSender() + ":roomId", chatMessage.getRoomId(), expirationTime, TimeUnit.HOURS)` 라인에서 저장된 key-value 쌍이다. 
-
-여기서 chatMessage.getSender()는 "haedal"이고, chatMessage.getRoomId()는 "123"이므로 "roomId:hello" key에 "123"이 저장되었다.
-
-<br><br>
-
-"roomId::roomId:123"
-
-@Cacheable 어노테이션의 동작 원리는 메소드의 파라미터들을 기반으로 key를 생성하고, 이 key로 값을 캐싱한다. 
-
-이때 key는 일반적으로 문자열 형태로 생성된다.
-
-@Cacheable 어노테이션 코드에서는 key가 "'roomId:' + #chatMessage.roomId"로 설정되어 있다. 
-
-이는 roomId라는 파라미터의 값을 이용하여 "roomId:"이라는 prefix와 roomId 값으로 key를 생성한다는 의미이다.
-
-실제로 캐시된 데이터를 Redis CLI로 조회해보면, "roomId::roomId:123"과 같은 key가 생성된 것을 볼 수 있다. 
-
-이 key는 prefix "roomId:"와 roomId 값 "123"을 조합하여 생성된 것이다. 이렇게 생성된 key에는 roomId 값이 저장되어 있다.
+조회 시에 `@CachePut`을 사용하여 갱신하는 방식은 캐시의 효율적인 활용을 가능하게 했다. 
 
 <br>
 
-"haedal"은  `@Cacheable` 어노테이션을 이용해 저장한 것이다. 
+terminal에서 keys * 로 조회를 하면 아래와 같이 출력된다. 
 
-@Cacheable 어노테이션은 Spring의 Cache 관련 기능을 사용하는 것으로, 
+1) "roomId::haedal"            
+2) "haedal"    
 
-key-value 형태로 저장하는 것이 아니라 key를 저장하고 그 key에 대한 value를 메모리에 저장하는 방식을 사용한다. 
+<br><br>
 
-따라서 3번에서는 key만 조회할 수 있고, value는 실제로 메모리에 캐싱된 값 중에서 해당 key에 대한 것을 찾아서 반환한다.
+#### 결과가 2개?
+첫 번째 호출 시 addRedis 메서드가 호출되어 Redis에 "hello" 값을 저장하고 캐시에도 저장된다. 
 
+따라서 roomId::haedal 로그와 "haedal"라는 값이 반환된다.
 
+두 번째 호출 시 getRedis 메서드가 호출되고, 캐시에서 "haedal" 값을 가져옵니다. 따라서 "haedal"라는 값이 반환된다.
+
+결과적으로 "roomId::haedal" 로그와 "haedal" 값이 두 번 출력된다.  
+
+<br>
+
+캐싱 기능을 사용할 때 `@Cacheable` 어노테이션이 적용된 메서드는 캐시에 저장된 값을 반환하고, 
+
+`@CachePut` 어노테이션이 적용된 메서드는 캐시에 값을 저장하는 역할을 한다.
+
+첫 번째 호출에서 addRedis method가 호출되면서 Redis에 값을 저장하고 캐시에도 저장된다. 
+
+이후에 같은 키(#chatMessage.sender)로 호출되면 @Cacheable 어노테이션이 적용된 getRedis 메서드가 호출되어 캐시에서 값을 가져오게 된다.
+
+따라서 첫 번째 호출은 addRedis 메서드가 호출되고 두 번째 호출부터는 getRedis 메서드가 호출되는 것이다.
+
+<br>
+
+만약 getRedis()에 `@Cacheable`을 사용하여 method를 캐시할 경우, 캐시에 값이 존재하면 해당 값을 반환하고 메서드 실행을 건너뛴다. 
+
+따라서 세 번째 호출에서는 getRedis method가 실행되지 않고, 이전에 캐시에 저장된 값인 "haedal"이 반환될 것이다.
+ 
 <br><br><br>
 
 ### 저장과 조회가 같이 있는 code
