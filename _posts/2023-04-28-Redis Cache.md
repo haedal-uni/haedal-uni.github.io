@@ -556,7 +556,7 @@ public void addRedis(ChatMessage chatMessage){
     redisTemplate.opsForValue().set(chatMessage.getSender(), chatMessage.getRoomId(), remainingTimeInSeconds, TimeUnit.SECONDS);
 }
 
-@Cacheable(value = "roomId", key = "'roomId:' + #nickname")
+@CachePut(value = "roomId", key = "#nickname", unless = "#result == null")
 public String getRedis(String nickname){
     return redisTemplate.opsForValue().get("roomId:" + nickname);
 }
@@ -689,7 +689,7 @@ Serializable 인터페이스를 구현하면 해당 클래스는 직렬화가 �
 ### 만료시간 설정
 
 ```java
-@Cacheable(key = "'roomId:' + #chatMessage.roomId", value = "roomId", unless = "#chatMessage.roomId == null")
+@Cacheable(key = "#chatMessage.sender", value = "roomId", unless = "#chatMessage.roomId == null")
 public void addRedis(ChatMessage chatMessage, Long expirationTime){
     long expireTimeInSeconds = 24 * 60 * 60;
     long creationTimeInMillis = System.currentTimeMillis();
