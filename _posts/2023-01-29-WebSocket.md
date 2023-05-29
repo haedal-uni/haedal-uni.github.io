@@ -5,6 +5,19 @@ tags: [spring, WebSocket, Chat]
 
 # WebSocket
 
+관련 글          
+- [Websocket](https://haedal-uni.github.io/posts/WebSocket/)  👈🏻                               
+- [Websocket + 부가기능](https://haedal-uni.github.io/posts/WebSocket-+%EB%B6%80%EA%B0%80%EA%B8%B0%EB%8A%A5/)                            
+- [Websocket (채팅 기록 json 파일 저장하기)](https://haedal-uni.github.io/posts/WebSocket(%EC%B1%84%ED%8C%85-%EA%B8%B0%EB%A1%9D-Json-%ED%8C%8C%EC%9D%BC-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0)/)                               
+- [Sse](https://haedal-uni.github.io/posts/SSE/)                      
+- [Sse 문제점](https://haedal-uni.github.io/posts/SSE-%EB%AC%B8%EC%A0%9C%EC%A0%90/)                        
+- [Websocket + jwt](https://haedal-uni.github.io/posts/WebSocket-+-JWT/)                         
+- [Websocket test](https://haedal-uni.github.io/posts/WebSocket-Test/)                        
+- [Jmh - 채팅 파일 refactoring](https://haedal-uni.github.io/posts/JMH/)           
+
+
+<br><br>
+
 ## 기존에 작성했던 webSocket
 그동안 채팅 구현을 하기 위해 이것 저것 보면서 적용하느라 뭐가 뭔지도 모르고 쓴 경향이 있었다.
 
