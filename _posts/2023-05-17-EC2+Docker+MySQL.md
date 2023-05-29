@@ -3,7 +3,18 @@ categories: Study
 tags: [study, summary, Docker, AWS, EC2]
 ---
 
+관련 글          
+- [Ec2+docker+mysql](https://haedal-uni.github.io/posts/EC2+Docker+MySQL/) 👈🏻                                        
+- [Cicd 수동](https://haedal-uni.github.io/posts/CICD-%EC%88%98%EB%8F%99/)                                                                   
+- [Git actions](https://haedal-uni.github.io/posts/Git-Actions/)                      
+- [배포 자동화](https://haedal-uni.github.io/posts/%EB%B0%B0%ED%8F%AC-%EC%9E%90%EB%8F%99%ED%99%94/)                           
+- [Nginx](https://haedal-uni.github.io/posts/NGINX/)                                                  
+         
+<br>
+
 스터디 - 배포 과정 정리
+
+<br>
 
 # EC2 + Docker + MySQL
 ## ec2 생성하기
