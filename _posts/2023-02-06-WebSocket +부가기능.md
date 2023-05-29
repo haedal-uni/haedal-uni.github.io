@@ -4,6 +4,19 @@ tags: [spring, WebSocket, Chat]
 ---
 
 # WebSocket
+관련 글          
+- [Websocket](https://haedal-uni.github.io/posts/WebSocket/)                                    
+- [Websocket + 부가기능](https://haedal-uni.github.io/posts/WebSocket-+%EB%B6%80%EA%B0%80%EA%B8%B0%EB%8A%A5/)  👈🏻                            
+- [Websocket (채팅 기록 json 파일 저장하기)](https://haedal-uni.github.io/posts/WebSocket(%EC%B1%84%ED%8C%85-%EA%B8%B0%EB%A1%9D-Json-%ED%8C%8C%EC%9D%BC-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0)/)                               
+- [Sse](https://haedal-uni.github.io/posts/SSE/)                      
+- [Sse 문제점](https://haedal-uni.github.io/posts/SSE-%EB%AC%B8%EC%A0%9C%EC%A0%90/)                        
+- [Websocket + jwt](https://haedal-uni.github.io/posts/WebSocket-+-JWT/)                         
+- [Websocket test](https://haedal-uni.github.io/posts/WebSocket-Test/)                        
+- [Jmh - 채팅 파일 refactoring](https://haedal-uni.github.io/posts/JMH/)           
+
+
+<br><br>
+
 [1편](https://haedal-uni.github.io/posts/WebSocket/)에 이어서 채팅기능을 구현했으므로 고객센터를 구현하기 위해 admin과 user를 구분하여 작성했다.
 
 <br>
