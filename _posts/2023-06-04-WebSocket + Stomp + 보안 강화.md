@@ -1,3 +1,8 @@
+---
+categories: Project
+tags: [spring, WebSocket, Chat, Security]
+---
+
 # WebSocket + Stomp + 보안 강화하기
 WebSocket과 STOMP를 사용하여 실시간 통신을 구현하는 경우, 사용자 인증을 강화하여 보안성을 높이는 것이 중요하다.
 
