@@ -1020,7 +1020,12 @@ event listner를 이용하여 소켓 연결(socket connect) 그리고 소켓 연
 
 사용자가 채팅방을 참여(JOIN)하거나 떠날때(LEAVE)의 이벤트를 logging 하거나 broadcast 할 수 있다.
 
-*`SimpMessageSendingOperations`와 `SimpMessagingTemplate` 둘 중 아무거나 써도 되는 듯 하다.          
+<br>
+
+`SimpMessagingTemplate`와 `SimpMessageSendingOperations`은 모두 Spring의 WebSocket 메시징을 처리하는 인터페이스다.
+
+*`SimpMessagingTemplate`은 `SimpMessageSendingOperations` 인터페이스의 구현체           
+(SimpMessagingTemplate은 SimpMessageSendingOperations의 모든 메소드 사용가능)     
 
 → 특정 Broker로 메세지를 전달(특정 사용자에게 메세지 전송)               
 
