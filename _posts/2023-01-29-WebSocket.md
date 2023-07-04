@@ -1028,7 +1028,7 @@ event listner를 이용하여 소켓 연결(socket connect) 그리고 소켓 연
 
 Redis를 활용해 작성했다면 아래와 같이 작성했을 것이다.  
 ```java
-private final RedisConfig redisConfig;
+private final RedisTemplate<String, ChatMessage> redisTemplate;
 @EventListener
 public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
     // 생략
