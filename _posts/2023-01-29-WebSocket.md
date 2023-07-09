@@ -647,6 +647,9 @@ implementation 'org.webjars:jquery:3.5.1'
 ```
 webjars란 클라이언트에서 사용하는 웹 라이브러리를 JAR 파일 안에 패키징 한 것이다.
 
+*jar 파일은 개발자가 작성한 코드와 해당 코드가 실행되기 위해 필요한 리소스들을 압축하여 단일 실행 가능한 파일로 패키징하는 것을 의미                
+*war 파일은 Web Application Archive의 약자로, 전체 웹 애플리케이션을 압축하여 단일 파일로 패키징하는 것을 의미
+
 <br><br>
 
 `implementation 'org.webjars:webjars-locator-core'`를 입력해서 
