@@ -1,3 +1,8 @@
+---
+categories: Project
+tags: [spring, Redis, Cache]
+---
+
 ## Redis pub/sub
 Pub/Sub은 발행/구독 모델(Publish/Subscribe)을 기반으로 한 통신 방법으로, 
 
