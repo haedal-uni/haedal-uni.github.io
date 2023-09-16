@@ -1,3 +1,7 @@
+---
+categories: Project
+tags: [Java, error]
+---
 
 실습용으로 연습용 project를 하나 만들다가 build 과정에서 오류가 떴다.
 
