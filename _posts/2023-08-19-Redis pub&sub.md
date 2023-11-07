@@ -79,6 +79,25 @@ pub/sub은 항상 redis에 발행 된 데이터가 있는지 확인하고 있어
 ```java
 @Configuration
 public class RedisConfig {
+	@Value("${spring.redis.host}")
+	private String redisHost;
+	@Value("${spring.redis.port}")
+	private int redisPort;
+
+	@Bean
+	public RedisConnectionFactory redisConnectionFactory() {
+		return new LettuceConnectionFactory(redisHost, redisPort);
+	}
+
+	@Bean //Redis 데이터에 쉽게 접근하기 위한 코드
+	public RedisTemplate<?, ?> redisTemplate() { //RedisTemplate 에 LettuceConnectionFactory 을 적용
+		RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setConnectionFactory(redisConnectionFactory());
+		redisTemplate.setKeySerializer(new StringRedisSerializer());//redisTemplate.setKeySerializer(new GenericToStringSerializer<>(Object.class));
+		redisTemplate.setValueSerializer(new StringRedisSerializer());
+		return redisTemplate;
+	}
+
     @Bean
     public RedisTemplate<String, Object> chatMessageRedisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -87,6 +106,7 @@ public class RedisConfig {
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         return redisTemplate;
     }
+
     @Bean // RedisMessageListenerContainer : Redis에서 발행되는 메시지를 수신하고 처리하기 위한 컨테이너
     public RedisMessageListenerContainer redisMessageListenerContainer(RedisConnectionFactory connectionFactory) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -95,6 +115,9 @@ public class RedisConfig {
     }
 }
 ```
+`redisMessageListenerContainer()`는 Redis를 브로커로 사용하기 위한 설정
+
+나머지 메소드들은 Redis 자체의 기본 설정과 관련된 코드다.
 
 <br><br><br>
 
@@ -106,15 +129,14 @@ public class RedisPublisher { // 발행자(Publisher) 추가
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public void publish(ChannelTopic topic, String message) {
+    public void publish(ChannelTopic topic, ChatMessage message) {
         redisTemplate.convertAndSend(topic.getTopic(), message);
     }
 }
 ```
+기존에 `@MessageMapping`으로 메세지를 받는 메소드에서 바로 `redisTemplate.convertAndSend()` 해줬는데
 
-*String 대신 ChatMessage로 작성할 경우 RedisSubscriber에서도 수정해야한다.
-
-`public void publish(ChannelTopic topic, ChatMessage message) {}`
+지금은 RedisPublisher class를 추가해서 `@MessageMapping`에서 `publish()`를 호출한 후 실행된다.
 
 <br><br><br>
 
@@ -125,16 +147,23 @@ public class RedisPublisher { // 발행자(Publisher) 추가
 @RequiredArgsConstructor
 public class RedisSubscriber implements MessageListener { // 구독자
     private final ObjectMapper objectMapper;
-    private final SimpMessageSendingOperations messagingTemplate;
+    private final RedisTemplate<String, ChatMessage> redisTemplate;
 
     @Override // Redis 메시지를 수신하면 호출되는 메소드
     public void onMessage(Message message, byte[] pattern) {
         try{
             // Redis로부터 수신된 메시지 처리 로직을 구현
             String channel = new String(message.getChannel());
-            String msg = new String(message.getBody(), StandardCharsets.UTF_8); // Convert message body to String
-            JsonNode jsonNode = objectMapper.readTree(msg); // JSON 문자열을 파싱
-            messagingTemplate.convertAndSend(channel, jsonNode);
+            log.info("Received message from channel: " + channel);
+
+            String msg = redisTemplate.getStringSerializer().deserialize(message.getBody());
+
+            ChatMessage chatMessage = objectMapper.readValue(msg, ChatMessage.class);
+            log.info("chatMessage : " + chatMessage);
+
+            if(chatMessage.getType().equals(MessageType.TALK)){
+                redisTemplate.convertAndSend(channel, chatMessage);
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -176,7 +205,7 @@ try (Jedis jedis = new Jedis("localhost")) {
 @RequiredArgsConstructor
 @Slf4j
 public class ChatController {
-    private final SimpMessagingTemplate template;
+    private final RedisTemplate<String, Object> template;
     private final RedisMessageListenerContainer redisMessageListener;
     private final RedisPublisher redisPublisher;
     private final RedisSubscriber redisSubscriber;
@@ -191,7 +220,6 @@ public class ChatController {
     public void sendMessage(@Payload ChatMessage chatMessage) {
         ChannelTopic channel = channels.get(chatMessage.getRoomId());
         redisPublisher.publish(channel, chatMessage.getMessage());
-        template.convertAndSend("/topic/public/" + chatMessage.getRoomId(), chatMessage);
     }
 
     @MessageMapping("/chat/addUser")
@@ -222,19 +250,23 @@ public class ChatController {
     }
 }
 ```
-☑️ `RedisTemplate<String, Object>`이 아닌 `SimpMessagingTemplate`을 사용한 이유
+☑️ `RedisTemplate<String, Object>`와 `SimpMessagingTemplate`
 
-**SimpMessagingTemplate**은 WebSocket을 통해 메시지를 바로 클라이언트에게 전달할 수 있기 때문에, 
+`RedisTemplate<String, Object>`은 Spring에서 Redis와 상호작용하기 위한 일반적인 Template class 다. 
 
-채팅과 같은 실시간 통신에 적합하다.
+Redis 서버와의 상호작용을 추상화하고, Redis에 데이터를 저장하고 조회하고 수정할 수 있는 메소드를 제공한다.  
 
-**RedisTemplate**은 주로 분산 시스템이나 여러 서버 간의 메시지 전달, 데이터 공유, 이벤트 처리 등을 위해 사용된다.
+이를 통해 Redis를 데이터 저장소로 사용할 수 있으며, 직렬화 및 역직렬화 메커니즘과 관련된 설정을 지원한다.   
 
-<br>
+Redis 서버와 직접적으로 상호작용하기 위해 사용된다.   
 
-→ client가 **SimpMessagingTemplate**을 통해 메시지를 받지 못했을 때 
+<br><br>
 
-**RedisTemplate**을 사용하여 메시지를 받도록 구현하면 좋을듯함
+`SimpMessagingTemplate`은 Spring의 WebSocket 기능을 지원하는 클래스로, 클라이언트 간 실시간 메시징을 위해 사용된다. 
+
+이는 STOMP (*Simple Text Oriented Messaging Protocol*)를 통해 WebSocket 연결을 통해 메시지를 보내고 받을 수 있도록 도와준다. 
+
+주로 웹 소켓을 통해 클라이언트 간의 메시지 전달 및 실시간 통신에 사용한다.   
 
 <br><br><br>
 
