@@ -148,6 +148,7 @@ public class RedisPublisher { // 발행자(Publisher) 추가
 public class RedisSubscriber implements MessageListener { // 구독자
     private final ObjectMapper objectMapper;
     private final RedisTemplate<String, ChatMessage> redisTemplate;
+    private final SimpMessageSendingOperations messagingTemplate;
 
     @Override // Redis 메시지를 수신하면 호출되는 메소드
     public void onMessage(Message message, byte[] pattern) {
@@ -162,7 +163,7 @@ public class RedisSubscriber implements MessageListener { // 구독자
             log.info("chatMessage : " + chatMessage);
 
             if(chatMessage.getType().equals(MessageType.TALK)){
-                redisTemplate.convertAndSend(channel, chatMessage);
+                messagingTemplate.convertAndSend(channel, chatMessage);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -205,7 +206,7 @@ try (Jedis jedis = new Jedis("localhost")) {
 @RequiredArgsConstructor
 @Slf4j
 public class ChatController {
-    private final RedisTemplate<String, Object> template;
+    private final SimpMessagingTemplate template;
     private final RedisMessageListenerContainer redisMessageListener;
     private final RedisPublisher redisPublisher;
     private final RedisSubscriber redisSubscriber;
