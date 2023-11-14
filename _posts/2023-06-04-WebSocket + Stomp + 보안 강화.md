@@ -290,9 +290,7 @@ public class StompHandler implements ChannelInterceptor {
 #### 변경 후
 기존 코드에서는 StompHandler 클래스에서 JwtTokenProvider 클래스의 `validateToken()` 메서드를 호출하여 인증 정보를 검증했지만, 
 
-변경된 코드에서는 `getUserFromToken()` 메서드를 사용하여 유저 정보를 추출하고, 
-
-이를 사용하여 UsernamePasswordAuthenticationToken 객체를 생성하여 SecurityContextHolder에 인증 정보를 저장하게 된다.
+변경 후에 헤더에서 AccessToken을 추출하고, 해당 토큰을 사용하여 사용자 정보를 가져오는 작업을 수행한다.
 
 <br>
 
@@ -317,15 +315,13 @@ public class StompHandler implements ChannelInterceptor {
       if (StompCommand.CONNECT.equals(headerAccessor.getCommand())) {
          log.info("websocket 연결 - jwt token 검증");
          String accessToken = headerAccessor.getFirstNativeHeader("Authorization");
-         User user = jwtTokenProvider.getUserFromToken(accessToken);
-         if (user != null) {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+         UserDetails userDetails = userDetailsService.loadUserByUsername(jwtTokenProvider.getNickname(accessToken));
+         if (userDetails != null) {
+             log.info("[preSend] 인증 확인");
          } else {
-            throw new BadCredentialsException("Invalid JWT token");
+             throw new BadCredentialsException("Invalid JWT token");
          }
-      }
-
+    }
       return message;
    }
 }
