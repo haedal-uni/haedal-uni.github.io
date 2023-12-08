@@ -1,3 +1,8 @@
+---
+categories: Error
+tags: [Java]
+---
+
 # The given id must not be null!
 
 The given id must not be null! 이라는 오류가 떴다.
@@ -221,7 +226,9 @@ Spring에서 HTTP 요청 본문 데이터를 처리하기 위해 *HttpMessageCon
 
 JSON 데이터를 Java 객체로 역직렬화하거나 Java 객체를 JSON으로 직렬화하는 역할을 수행한다.        
 
-내부적으로 *MappingJackson2HttpMessageConverter*는 Jackson 라이브러리의 ObjectMapper를 활용하여 JSON 값을 Java 객체로 역직렬화한다.   
+내부적으로 *MappingJackson2HttpMessageConverter*는 Jackson 라이브러리의 ObjectMapper를 활용하여 
+
+JSON 값을 Java 객체로 역직렬화한다.   
 
 <br>
 
