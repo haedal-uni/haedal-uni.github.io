@@ -1,6 +1,6 @@
 ---
 categories: Coding Test
-tags: [java, 코테]
+tags: [Java, 코테]
 ---
 
 ## BigInteger
