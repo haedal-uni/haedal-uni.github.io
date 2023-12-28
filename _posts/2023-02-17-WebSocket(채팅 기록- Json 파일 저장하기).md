@@ -1,5 +1,5 @@
 ---
-categories: Project WebSocket
+categories: Project Chat
 tags: [spring, WebSocket, Chat]
 ---
 
