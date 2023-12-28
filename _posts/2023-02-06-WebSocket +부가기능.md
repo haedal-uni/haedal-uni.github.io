@@ -1,5 +1,5 @@
 ---
-categories: Project Redis
+categories: Project 채팅
 tags: [spring, WebSocket, Chat]
 ---
 
