@@ -1,3 +1,8 @@
+---
+categories: Intellij
+tags: [Intellij]
+---
+
 # 11 → 17 변경
 Java 버전은 17인데 프로젝트의 JDK는 11로 되어있었고 spring boot 버전은 2.x였다.
 
