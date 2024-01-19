@@ -1,3 +1,8 @@
+---
+categories: Project Chat
+tags: [Chat, Network]
+---
+
 ## 채팅 HTTPS 적용하기  
 server와 client 간의 websocket 연결은 `HTTP 프로토콜`을 통해 이루어진다.  
 
@@ -64,7 +69,7 @@ $ keytool -genkey -alias bns-ssl -storetype PKCS12 -keyalg RSA -keysize 2048 -ke
 
 생성이 끝났다면 다음과 같이 파일이 프로젝트 디렉토리 안에서 생성되어야만 한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/4f757271-ffca-4c4d-825e-6d52dad57826)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/4f757271-ffca-4c4d-825e-6d52dad57826){: width="50%"}
 
 <br><br>
 
@@ -115,10 +120,10 @@ https://localhost:8443
 
 <br><br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d6e3a398-411a-4891-a51f-8da515793bc0)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d6e3a398-411a-4891-a51f-8da515793bc0){: width="50%"}
 
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d84d3bd5-d230-48c6-b0d7-b1a465b6c552)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d84d3bd5-d230-48c6-b0d7-b1a465b6c552){: width="50%"}
 
 localhost(안전하지 않음)으로 이동을 클릭하면 HTTPS가 적용된 사이트를 볼 수 있다.  
 
@@ -225,13 +230,13 @@ server.ssl.key-store-password=changeit
 
 실행시키면 아래와 같이 log가 찍힌다.   
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/92857f0a-63d6-46ca-9853-4bd44d71684f)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/92857f0a-63d6-46ca-9853-4bd44d71684f){: width="60%"}
 
 <br><br>   
 
 실행 페이지
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f46577fb-775b-43ce-9be0-0980f00a38f0)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f46577fb-775b-43ce-9be0-0980f00a38f0){: width="60%"}
 
 <br><br><br><br>
 
