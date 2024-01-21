@@ -1,7 +1,8 @@
 ---
-categories: Project
-tags: [DB, study, project]
+categories: Project JPA
+tags: [JPA, study, project]
 ---
+
 
 # 연관관계 적용2
 
