@@ -69,14 +69,14 @@ ex) `domain/s3-website.ap-northeast-2.amazonaws.com`
 라는 에러를 볼 수 있다.
 
 <br><br><br>
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/64e1373f-8b88-4b5e-804b-e212b5e27262){: width="40%"}    
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/eb261c5f-ee07-4bd4-bb5a-3ee4ad3d778b){: width="50%"}    
 
 뷰어(Client)가 HTTP로 접근하면 HTTPS로 리다이렉트 하겠다는 설정이다.
 
 <br><br><br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/64e1373f-8b88-4b5e-804b-e212b5e27262){: width="40%"}     
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/eb261c5f-ee07-4bd4-bb5a-3ee4ad3d778b){: width="60%"}    
 
 대체 도메인 이름(CNAME) - 선택사항에 구매한 도메인을 넣으면 된다. ex) `www.domain.com`     
 
