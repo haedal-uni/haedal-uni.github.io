@@ -34,7 +34,7 @@ HTTPS 프로토콜을 위한 ACM을 생성한다.
 
 ## CloudFront 적용하기
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d5fb099b-2f4c-41ab-9c5d-726b53e7f558)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d5fb099b-2f4c-41ab-9c5d-726b53e7f558){: width="60%"}  
 
 원본 도메인 탭을 누르면 방금 만든 s3 버킷에 대한 도메인을 자동으로 띄워준다.      
 
@@ -101,7 +101,7 @@ ex) `domain/s3-website.ap-northeast-2.amazonaws.com`
 
 구매한 도메인을 작성하고 나머지는 default 후 호스팅 영역 생성 버튼 클릭
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/477a13d3-5ecb-4853-a028-a15c971dbc22)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/477a13d3-5ecb-4853-a028-a15c971dbc22){: width="60%"}  
 
 <br><br>
 
