@@ -29,28 +29,6 @@ HTTPS 프로토콜을 위한 ACM을 생성한다.
 
 요청을 완료하면 검증 대기중인 인증서가 띄워진다. 
 
-<br><br>    
-
-인증서를 클릭하면 CNAME이름과 CNAME 값이 띄워지는데 
-
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/0e4789ea-08e3-4946-8379-e18edc55ec8c)
-
-<br><br>   
-
-이 값을 가비아 DNS 설정에 가서 레코드 수정 버튼을 누르고 
-
-호스트에 CNAME 이름을, 값/위치에는 CNAME 값을 넣으면 된다.
-
-<br>
-
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/52599eff-d57d-4f0a-8e89-679bc5de1308)
-
-<br>
-
-여기서 CNAME 이름은 가장 처음에 나오는 `.` 부분까지만 작성하고 뒷 부분은 제거 한 후 작성한다. 
-
-ex) `abcdefghijk.www.domain.com.` → `abcdefghijk` 부분만 호스트명에 작성  
-
 <br><br><br><br><br>
 
 
