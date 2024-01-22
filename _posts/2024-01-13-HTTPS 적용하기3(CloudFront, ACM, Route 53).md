@@ -58,13 +58,13 @@ ex) `domain/s3-website.ap-northeast-2.amazonaws.com`
 
 <br><br><br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/64e1373f-8b88-4b5e-804b-e212b5e27262){: width="40%"}     
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/64e1373f-8b88-4b5e-804b-e212b5e27262){: width="50%"}     
 
 뷰어(Client)가 HTTP로 접근하면 HTTPS로 리다이렉트 하겠다는 설정이다.
 
 <br><br><br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/eb261c5f-ee07-4bd4-bb5a-3ee4ad3d778b){: width="60%"}    
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/eb261c5f-ee07-4bd4-bb5a-3ee4ad3d778b){: width="70%"}    
 
 대체 도메인 이름(CNAME) - 선택사항에 구매한 도메인을 넣으면 된다. ex) `www.domain.com`     
 
@@ -101,7 +101,7 @@ ex) `domain/s3-website.ap-northeast-2.amazonaws.com`
 
 구매한 도메인을 작성하고 나머지는 default 후 호스팅 영역 생성 버튼 클릭
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/477a13d3-5ecb-4853-a028-a15c971dbc22){: width="60%"}  
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/477a13d3-5ecb-4853-a028-a15c971dbc22){: width="70%"}  
 
 <br><br>
 
@@ -119,7 +119,7 @@ ACM에서 Route 53 레코드 생성 버튼을 눌러 자동으로 생성된 것�
 
 레코드 생성을 눌러 아래와 같이 작성한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/09ea2054-4d85-4da2-9970-3a13eacd29d2)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/09ea2054-4d85-4da2-9970-3a13eacd29d2){: width="70%"}  
 
 ![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/9c0950d7-a13d-440b-81b1-c7080732a7f6)
 
@@ -132,7 +132,7 @@ ACM에서 Route 53 레코드 생성 버튼을 눌러 자동으로 생성된 것�
 ### 가비아 설정
 가비아 도메인의 네임서버를 NS를 클릭하면 나오는 값 4개로 바꿔야 한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d9f0a9cd-9fe1-4f27-8712-f71013e00b06)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d9f0a9cd-9fe1-4f27-8712-f71013e00b06){: width="70%"}  
 
 
 가비아 홈페이지 > 이용 중인 서비스 > 도메인 > (내가 구입한 도메인) 관리 로 들어간다.
