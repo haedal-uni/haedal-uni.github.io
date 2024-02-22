@@ -376,9 +376,9 @@ CacheManagerBuilder에서 roomId 캐시에 대한 설정을 지정하기 위한 
 
 <br><br>
 
-**"roomId"??** (아래 code 예시 참고)
+**`.withCacheConfiguration("roomId", cacheConfig)`** (아래 code 예시 참고)
 
-@Cacheable 어노테이션에서 value 속성으로 설정된 값과 일치해야한다. 
+`@Cacheable`에서 value 속성으로 설정된 값과 일치해야한다. 
 
 즉, value = "roomId"로 설정된 `@Cacheable` 어노테이션에서 사용하는 캐시 이름이 roomId이므로 
 
@@ -471,6 +471,10 @@ public ChatRoomDto createRoom(String nickname) {
 
 `@Cacheable` 어노테이션의 key 속성은 캐시할 데이터의 key를 지정하고, value 속성은 캐시할 데이터의 value를 지정한다.              
 
+여기서 key는 사용자의 nickname이 되고 value는 `createRoom()`의 반환값이 저장 될 것이다.
+
+<br>  
+
 `@Cacheable` 어노테이션에서 key를 설정할 때, SpEL(Sping Expression Language)을 사용하여 동적으로 key를 생성할 수 있다.
 
 이때 SpEL에서는 작은따옴표를 사용하여 문자열을 감싸야 한다.        
@@ -524,19 +528,31 @@ public void addRedis(ChatMessage chatMessage){
     long creationTimeInMillis = System.currentTimeMillis();
     long remainingTimeInSeconds = expireTimeInSeconds - ((System.currentTimeMillis() - creationTimeInMillis) / 1000);
     redisTemplate.opsForValue().set(chatMessage.getSender(), chatMessage.getRoomId(), remainingTimeInSeconds, TimeUnit.SECONDS);
-    // redisTemplate의 opsForValue() 를 이용해 chatMessage.getSender()를 key로 하고 chatMessage.getRoomId()를 value로 하는 key-value 쌍을 Redis에 저장하고 있다. 
-    // 그래서 Redis에 저장되는 데이터의 구조는 sender가 key이고 roomId가 value인 형태가 된다.
 }
 
 public String getRedis(String nickname){
     return redisTemplate.opsForValue().get("roomId:" + nickname);
 }
 ```
+redisTemplate의 `opsForValue()` 를 이용해 `chatMessage.getSender()`를 key로 하고 
+
+`chatMessage.getRoomId()`를 value로 하는 key-value 쌍을 Redis에 저장하고 있다. 
+
+그래서 Redis에 저장되는 데이터의 구조는 sender가 key이고 roomId가 value인 형태가 된다.
+
+<br><br>
 
 `redisTemplate.opsForValue().set()`의 마지막 인자로 TTL을 지정하는 방식으로 Redis 캐시에 TTL을 설정했다. 
 
 24시간을 기준으로 현재시간으로 부터 남은 시간을 초 단위로 계산해서 만료시간 설정한다.
 
+<br><br>
+
+RedisTemplate을 사용하여 캐시를 저장할 때는 직접 값을 지정해야 하지만, 
+
+`redisTemplate.opsForValue().set(key, value);`
+
+`@CachePut`과 같이 어노테이션을 사용할 때는 메서드의 반환 값이 자동으로 캐시에 저장된다.
 
 <br><br><br><br>
 
