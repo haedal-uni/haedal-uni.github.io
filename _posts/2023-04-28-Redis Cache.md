@@ -97,14 +97,13 @@ implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 ```
 #redis cache
 spring.cache.type = redis
-spring.cache.redis.cache-null-values=true
 
 # redis docker
 spring.redis.host = host.docker.internal
 spring.redis.port = 6379
 ```
 
-`spring.cache.redis.cache-null-values=true` : null을 반환하는 경우에도 캐시에 해당 값을 저장
+참고) `spring.cache.redis.cache-null-values=true` : null을 반환하는 경우에도 캐시에 해당 값을 저장
 
 
 <br><br>  
@@ -201,19 +200,21 @@ Redis에 얼마동안 데이터가 보존되는지 정해지지 않기 때문에
 ### 캐시 구성
 TTL은 "Time To Live"의 약자로, 캐시된 데이터가 유효한 시간을 의미한다.
 
-TTL(Time To Live)을 사용하면 캐시된 데이터가 일정 기간 이후에 자동으로 삭제되어 원본 데이터를 정확하게 반영할 수 있다.
+TTL(Time To Live)을 사용하면 캐시된 데이터가 일정 기간 이후에 자동으로 삭제되어 원본 데이터를 반영할 수 있다.
 
-그러나, 데이터가 없는 경우 캐시에 null 값을 저장할 경우에는 TTL이 적용되지 않기 때문에, 
+<br>
 
-이 경우에는 캐시된 데이터가 null 일 때도 TTL을 적용하도록 설정하는 것이 좋다. 
+데이터가 없는 경우 캐시에 null 값을 저장할 경우에는 TTL이 적용되지 않는다.  
 
-이를 위해서는 `RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()`를 사용한다.  
+캐시된 데이터가 null 일 때도 TTL을 적용하도록 설정하고 싶다면
+
+`RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()`를 사용하면 된다.  
 
 <br>
 
 또한, TTL을 일부 코드에만 적용할 수 있으므로 TTL을 사용할 코드와 사용하지 않을 코드를 구분하여 작성할 수 있다. 
 
-아래는 TTL을 적용한 캐시와 TTL을 적용하지 않은 캐시를 따로 정의하고, 
+아래는 TTL을 적용한 캐시와 TTL을 적용하지 않은 캐시를 따로 작성하고, 
 
 RedisCacheManager를 이용해 roomId 캐시에는 TTL을 적용하고, 그 외 캐시에는 TTL을 적용하지 않도록 구성한 코드이다.  
 
@@ -223,64 +224,60 @@ RedisCacheManager를 이용해 roomId 캐시에는 TTL을 적용하고, 그 외 
 **TTL을 일부 코드에만 적용할 수 있으므로 TTL을 사용할 코드와 사용하지 않을 코드를 구분해서 작성**
 
 roomId 캐시에는 TTL이 적용되어 있고, 기본적인 캐시(default cache)에는 TTL이 적용되지 않은 상태
-
 ```java
 @Bean
 public CacheManager cacheManager() {
-    long expireTimeInSeconds = 24 * 60 * 60;
-    long creationTimeInMillis = System.currentTimeMillis();
-    long remainingTimeInSeconds = expireTimeInSeconds - ((System.currentTimeMillis() - creationTimeInMillis) / 1000);
-    RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
-        .entryTtl(Duration.ofMinutes(30))
-        .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-    RedisCacheConfiguration cacheConfigWithoutNullValues = RedisCacheConfiguration.defaultCacheConfig()
-        .disableCachingNullValues()
-        .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+    RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+
+    RedisCacheConfiguration roomIdCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+            .entryTtl(Duration.ofHours(5)) // roomId 캐시의 TTL을 5시간으로 설정
+            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+
     return RedisCacheManager.builder(redisConnectionFactory())
-        .cacheDefaults(cacheConfigWithoutNullValues)
-        .withCacheConfiguration("roomId", cacheConfig)
-        .build();
+            .cacheDefaults(defaultCacheConfig)
+            .withCacheConfiguration("roomId", roomIdCacheConfig) // roomId 캐시에 대한 설정 적용
+            .build();
 }
 ```
-위 코드에서는 `RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()`를 사용한다.  
-
-cacheConfigWithoutNullValues와 TTL을 적용한 cacheConfig를 따로 정의하고, 
-
-`RedisCacheManager.builder()`를 이용해 roomId 캐시에는 cacheConfig를, 
-
-그 외 캐시에는 cacheConfigWithoutNullValues를 적용하여 조합하도록 구성했다.
-
-<br>
-
-따라서, TTL을 일부 코드에만 적용할 수 있으므로 TTL을 사용할 코드와 사용하지 않을 코드를 구분하는 것이 가능하다. 
+TTL을 일부 코드에만 적용할 수 있으므로 TTL을 사용할 코드와 사용하지 않을 코드를 구분하는 것이 가능하다. 
 
 단, 여러 개의 캐시가 필요할 경우 이러한 방식을 사용하기보다는 
 
-각각의 캐시에 대해 RedisCacheConfiguration을 따로 정의하여 구성하는 것이 더 명확하고 좋다.
-
-<br>
-
-`.withCacheConfiguration("roomId", cacheConfig)` : roomId 캐시에 대한 설정을 cacheConfig로 지정
-
-CacheManagerBuilder에서 roomId 캐시에 대한 설정을 지정하기 위한 것이다.   
-
-만약 TTL이 적용되어야 할 캐시에 대해 TTL을 적용하지 않은 경우, 해당 캐시는 기대한 대로 작동하지 않을 수 있다. 
-
-따라서 TTL이 적용되어야 할 캐시에 대해서는 TTL을 꼭 적용하는 것이 좋다
+각각의 캐시에 대해 RedisCacheConfiguration을 따로 정의하여 작성하는 것이 더 깔끔해진다.  
 
 <br><br>
 
-**`.withCacheConfiguration("roomId", cacheConfig)`** (아래 code 예시 참고)
+**일부 코드에서만 TTL을 다르게 적용**
+```java
+@Bean
+public CacheManager cacheManager() {
+    RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+            .entryTtl(Duration.ofHours(3)) // 기본 TTL은 3시간
+            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
-`@Cacheable`에서 value 속성으로 설정된 값과 일치해야한다. 
+    RedisCacheConfiguration roomIdCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+            .entryTtl(Duration.ofHours(5)) // roomId 캐시의 TTL을 5시간으로 설정
+            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
-즉, value = "roomId"로 설정된 `@Cacheable` 어노테이션에서 사용하는 캐시 이름이 roomId이므로 
+    return RedisCacheManager.builder(redisConnectionFactory())
+            .cacheDefaults(defaultCacheConfig)
+            .withCacheConfiguration("roomId", roomIdCacheConfig) // ROOMID 캐시에 대한 설정 적용
+            .build();
+}
+```
 
-`withCacheConfiguration()`를 사용하여 해당 캐시에 대한 캐시 구성을 지정하는 것이다. 
+`.withCacheConfiguration("roomId", roomIdCacheConfig)` : roomId 캐시에 대한 설정을 cacheConfig로 지정
 
-Redis에 저장된 값은 `chatMessage.getRoomId()`로 지정된다.
+CacheManagerBuilder에서 roomId 캐시에 대한 설정을 지정하기 위한 것이다.   
+
+어노테이션을 활용해서 Cache를 적용할 때 value 값으로 "roomId"를 설정하면
+
+해당 method의 return값은 TTL이 5시간 적용되어 활용된다.  
 
 <br><br>
 
@@ -289,17 +286,14 @@ Redis에 저장된 값은 `chatMessage.getRoomId()`로 지정된다.
 ```java
 @Bean
 public CacheManager cacheManager() {
-    long expireTimeInSeconds = 24 * 60 * 60;
-    long creationTimeInMillis = System.currentTimeMillis();
-    long remainingTimeInSeconds = expireTimeInSeconds - ((System.currentTimeMillis() - creationTimeInMillis) / 1000);
     RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
-        .entryTtl(Duration.ofMinutes(30))
+        .entryTtl(Duration.ofHours(3))
         .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
         .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
     return RedisCacheManager.builder(redisConnectionFactory())
         .cacheDefaults(cacheConfig) // 기본 캐시에 TTL 적용
         .build();
-}
+}   
 ```
 
 <br><br><br>
@@ -630,4 +624,4 @@ RedisTemplate을 사용하여 캐시를 저장할 때는 직접 값을 지정해
 - [SpringBoot기반 Redis Cache 활용법](https://yonguri.tistory.com/82)                   
 - [Cache 기능 Redis로 구현하기](https://pamyferret.tistory.com/25)   
 - [[Spring] Spring에서 Redis로 Cache 사용하기 (CrudRepository, RedisTemplate)](https://loosie.tistory.com/807)       
-
+- [Springboot: redis를 통해 캐시 기능 간단 적용](https://khdscor.tistory.com/m/99)      
