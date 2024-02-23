@@ -250,7 +250,7 @@ TTL을 일부 코드에만 적용할 수 있으므로 TTL을 사용할 코드와
 
 <br><br>
 
-**일부 코드에서만 TTL을 다르게 적용**
+**일부 코드만 TTL을 다르게 적용**
 ```java
 @Bean
 public CacheManager cacheManager() {
@@ -278,6 +278,12 @@ CacheManagerBuilder에서 roomId 캐시에 대한 설정을 지정하기 위한 
 어노테이션을 활용해서 Cache를 적용할 때 value 값으로 "roomId"를 설정하면
 
 해당 method의 return값은 TTL이 5시간 적용되어 활용된다.  
+
+<br>
+
+여기서 roomId는 아래 코드 처럼 value에 적힌 값이 된다.
+
+`@Cacheable(key = "#chatMessage.sender", value = "roomId", unless = "#chatMessage.roomId == null")`
 
 <br><br>
 
