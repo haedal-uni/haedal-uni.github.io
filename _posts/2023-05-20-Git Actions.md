@@ -365,7 +365,7 @@ Docker hub 대신 GitHub Container Registry를 사용하여 Docker 이미지를 
 <br><br><br>
 
 ### 파일 작성하기   
-```java  
+```  
 name: Run Gradle
 on: workflow_dispatch
 jobs:
@@ -416,8 +416,8 @@ jobs:
           uses: docker/login-action@v2
           with:
             registry: ghcr.io
-            username: ${{ github.repository_owner }}
-            password: ${{ secrets.GITHUB_TOKEN }}
+            username: `${{ github.repository_owner }}`
+            password: `${{ secrets.GITHUB_TOKEN }}`
         -
           name: Build and push
           uses: docker/build-push-action@v4
@@ -425,7 +425,7 @@ jobs:
             # 현재 디렉토리 지정
             context: .
             push: true
-            tags: ghcr.io/${{ github.repository }}:latest
+            tags: ghcr.io/`${{ github.repository }}`:latest
 ```
 
 기본으로 제공되는 변수 알아보기 → [GitHub Docs](https://docs.github.com/ko/actions/learn-github-actions/variables)
