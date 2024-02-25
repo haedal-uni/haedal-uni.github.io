@@ -269,6 +269,12 @@ Redis 서버와 직접적으로 상호작용하기 위해 사용된다.
 
 주로 웹 소켓을 통해 클라이언트 간의 메시지 전달 및 실시간 통신에 사용한다.   
 
+<br><br>
+
+RedisTemplate :  Redis에 메시지를 저장
+
+SimpMessagingTemplate : 웹 소켓 클라이언트에게 메시지를 전송
+
 <br><br><br>
 
 ### client에서 받기
