@@ -111,8 +111,8 @@ public class RedisConfig {
 	}
 
     @Bean
-    public RedisTemplate<String, Object> chatMessageRedisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, ChatMessage> chatMessageRedisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, ChatMessage> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
@@ -139,7 +139,7 @@ public class RedisConfig {
 @RequiredArgsConstructor
 public class RedisPublisher { // 발행자(Publisher) 추가
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, ChatMessage> redisTemplate;
 
     public void publish(ChannelTopic topic, ChatMessage message) {
         redisTemplate.convertAndSend(topic.getTopic(), message);
@@ -167,7 +167,6 @@ public class RedisSubscriber implements MessageListener { // 구독자
         try{
             // Redis로부터 수신된 메시지 처리 로직을 구현
             String channel = new String(message.getChannel());
-            log.info("Received message from channel: " + channel);
 
             String msg = redisTemplate.getStringSerializer().deserialize(message.getBody());
 
