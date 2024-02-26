@@ -729,17 +729,11 @@ public class ChatController {
 
 <br>
 
-특정 사용자가 "/chat/sendMessage"라는 경로로 메세지를 보내면 
+특정 사용자가 "app/chat/sendMessage"라는 경로로 메세지를 보내면 
 
 "/topic/public" 라는 토픽을 구독하는 사용자들에게 메세지를 전달한다.
 
-<br>
-
-@SendTo → 1:n - 경로는 "/topic"으로 시작된다.
-
-@SendToUser → 1:1 - 경로는 "/queue"로 시작한다.
-
-<br>
+<br><br>
 
 client : 
 ```js
@@ -769,6 +763,7 @@ public class ChatController {
     }
 }
 ```
+
 
 client : 
 ```js
@@ -961,7 +956,7 @@ destination:/topic/public/3d41c3ed-8ddb-458d
 
 "/app" 시작되는 메시지가 message-handling methods으로 라우팅 되어야 한다는 것을 명시
 
-<br>
+<br><br>  
 
 client : 
 ```js
@@ -989,10 +984,10 @@ content-length:77
 
 {"roomId":"3d41c3ed-8ddb-458d","sender":"ss","type":"JOIN"}
 ```
-@Controller에서는 `/app` desination prefix를 제외한 경로 `/chat/addUser`를 @MessageMapping하면 된다.
+@Controller에서는 `/app` desination prefix를 제외한 경로 `/chat/addUser`를 `@MessageMapping`하면 된다.
 
-<br>
-
+<br><br>
+  
 예시 2)
 ```js
 var chatMessage = {
@@ -1047,7 +1042,7 @@ event listner를 이용하여 소켓 연결(socket connect) 그리고 소켓 연
 
 사용자가 채팅방을 참여(JOIN)하거나 떠날때(LEAVE)의 이벤트를 logging 하거나 broadcast 할 수 있다.
 
-<br>
+<br>     
 
 `SimpMessagingTemplate`와 `SimpMessageSendingOperations`은 모두 Spring의 WebSocket 메시징을 처리하는 인터페이스다.
 
