@@ -63,6 +63,18 @@ Publish/Subscribe 구조에서 사용되는 Queue를 일반적으로 Topic이라
 <br><br><br>
 
 ## code
+참고로 기존에 설정했던 broker는 제거했다.
+```java
+public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        //config.enableSimpleBroker("/topic"); // sub
+        config.setApplicationDestinationPrefixes("/app"); // pub
+    }
+}
+```
+
+<br><br>
 
 ### build.gradle
 Redis 의존성 추가
@@ -228,7 +240,7 @@ public class ChatController {
         String roomId = chatMessage.getRoomId();
         ChannelTopic channel = new ChannelTopic(roomId);
         redisMessageListener.addMessageListener(redisSubscriber, channel);
-        channels.put(roomId, channel);
+        channels.put("/topic/public/"+ roomId, channel);
 
         chatMessage.setSender(user.getNickname());
         chatMessage.setType(ChatMessage.MessageType.JOIN);
