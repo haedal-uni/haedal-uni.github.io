@@ -1,6 +1,6 @@
 ---
 categories: Project
-tags: [spring]
+tags: [spring, Security]
 ---  
     
 # Spring Security: 인증과 권한 관리
