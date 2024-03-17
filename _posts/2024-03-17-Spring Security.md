@@ -1,3 +1,8 @@
+---
+categories: Project
+tags: [spring]
+---  
+    
 # Spring Security: 인증과 권한 관리
 back과 front를 분리하면서 해당 권한에 해당하는 api 주소를 back에 맞게 변경했다.
 
