@@ -1,6 +1,6 @@
 ---
 categories: Error  
-tags: [Cloud, 배포, error]
+tags: [Cloud, Deployment, error]
 ---
 
 # Connection timed out: connect. 
