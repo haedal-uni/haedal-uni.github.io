@@ -1,0 +1,391 @@
+<!DOCTYPE html><html lang="ko" data-mode="light" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.3" /><meta property="og:title" content="Api를 작성하는 다양한 방법" /><meta property="og:locale" content="ko" /><meta name="description" content="API를 작성하는 다양한 방법 HTTP Code 2xx 성공적으로 요청이 처리되었음을 의미." /><meta property="og:description" content="API를 작성하는 다양한 방법 HTTP Code 2xx 성공적으로 요청이 처리되었음을 의미." /><link rel="canonical" href="https://haedal-uni.github.io//posts/API%EB%A5%BC-%EC%9E%91%EC%84%B1%ED%95%98%EB%8A%94-%EB%8B%A4%EC%96%91%ED%95%9C-%EB%B0%A9%EB%B2%95/" /><meta property="og:url" content="https://haedal-uni.github.io//posts/API%EB%A5%BC-%EC%9E%91%EC%84%B1%ED%95%98%EB%8A%94-%EB%8B%A4%EC%96%91%ED%95%9C-%EB%B0%A9%EB%B2%95/" /><meta property="og:site_name" content="Dal Blog" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-09-24T00:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Api를 작성하는 다양한 방법" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-12-15T16:15:18+09:00","datePublished":"2022-09-24T00:00:00+09:00","description":"API를 작성하는 다양한 방법 HTTP Code 2xx 성공적으로 요청이 처리되었음을 의미.","headline":"Api를 작성하는 다양한 방법","mainEntityOfPage":{"@type":"WebPage","@id":"https://haedal-uni.github.io//posts/API%EB%A5%BC-%EC%9E%91%EC%84%B1%ED%95%98%EB%8A%94-%EB%8B%A4%EC%96%91%ED%95%9C-%EB%B0%A9%EB%B2%95/"},"url":"https://haedal-uni.github.io//posts/API%EB%A5%BC-%EC%9E%91%EC%84%B1%ED%95%98%EB%8A%94-%EB%8B%A4%EC%96%91%ED%95%9C-%EB%B0%A9%EB%B2%95/"}</script><title>Api를 작성하는 다양한 방법 | Dal Blog</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Dal Blog"><meta name="application-name" content="Dal Blog"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="https://raw.githubusercontent.com/cotes2020/chirpy-images/main/commons/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Dal Blog</a></div><div class="site-subtitle font-italic">한 걸음씩</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <a href="https://github.com/haedal-uni" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['example','doamin.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>Api를 작성하는 다양한 방법</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper" class="d-flex justify-content-center"><div id="main" class="container pl-xl-4 pr-xl-4"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4 pb-5"><div class="post pl-1 pr-1 pl-md-2 pr-md-2"><h1 data-toc-skip>Api를 작성하는 다양한 방법</h1><div class="post-meta text-muted"> <span> Posted <em class="" data-ts="1663945200" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Sep 24, 2022 </em> </span> <span> Updated <em class="" data-ts="1702624518" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Dec 15, 2023 </em> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/haedal-uni">haedal-uni</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="3254 words"> <em>18 min</em> read</span></div></div></div><div class="post-content"><h1 id="api를-작성하는-다양한-방법">API를 작성하는 다양한 방법</h1><h2 id="http-code"><span class="mr-2">HTTP Code</span><a href="#http-code" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="2xx"><span class="mr-2">2xx</span><a href="#2xx" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>성공적으로 요청이 처리되었음을 의미.</p><ul><li>200 [OK] : 처리 완료.<li>201 [Created] : 생성 완료.<li>204 [No Content] : 성공적으로 처리했지만 컨텐츠 제공이 없을 때.</ul><h3 id="3xx"><span class="mr-2">3xx</span><a href="#3xx" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>리다이렉션이 이루어져야 한다는 의미.</p><ul><li>301 [Moved Permanently] : 영구적으로 컨텐츠가 이동했을 때.<li>302 [Found] : 일시적으로 컨텐츠가 이동했을때.<li>304 [Not Modified] : 요청된 리소스를 재전송할 필요가 없음. 캐시된 자원 사용.</ul><h3 id="4xx"><span class="mr-2">4xx</span><a href="#4xx" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>요청이 올바르지 않음을 의미.</p><ul><li>400 [Bad Request] : 요청 자체가 잘못되었을 때 사용.<li>401 [Unauthorized] : ‘인증’ 없이 접근할 경우 발생.<li>403 [Forbidden] :서버가 요청을 거부할 때 발생. 권한(인가)이 없을 때.<li>404 [Not Found] : 찾는 리소스가 없을 때.<li>405 [Method Not Allowed] : 서버에서 허용되지 않은 메소드로 요청시 사용.<li>415 [Unsupported Media Type] : 사용자가 요청한 미디어타입이 서버에서 지원하지 않는 타입일 때.<li>429 [Too Many Requests] : 일정 시간 동안 너무 많은 요청을 보냈을 때.</ul><h3 id="5xx"><span class="mr-2">5xx</span><a href="#5xx" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>서버 오류.</p><p><strong>클라이언트가 500번 대 응답을 받지 않도록 상황에 맞게 400번 대 응답으로 처리할 것.</strong></p><p><br /><br /></p><hr /><h2 id="controller--restcontroller"><span class="mr-2">@Controller &amp; @RestController</span><a href="#controller--restcontroller" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p><strong>@Controller</strong> <br /> view(화면)을 return 해준다.</p><p><br /></p><p><strong>@RestController</strong> <br /> 객체를 반환하기만 하면 객체 데이터는 json/xml 형식의 http 응답을 작성하여 return한다.</p><p>data를 return하는 용도</p><p>@RestController 안에 @Controller 와 @ResponseBody 가 포함되어 있다.</p><p><br /></p><p><strong>@ResponseBody</strong> <br /> 응답을 JSON 형식으로 바꿔주는 역할.</p><p>HTTP Body에 정보를 전달하기 전에 객체를 JSON 형식으로 변환하여 보내주는 역할</p><p><br /></p><p><code class="language-plaintext highlighter-rouge">@RestController</code> 는 응답으로 객체를 전달할 때 JSON 형식으로 변환하고 헤더의 Content-Type을 application/json으로 설정해 전달한다.</p><p>*header에 application/json으로 설정해주는 것이 ResponseBody 때문이다.</p><p><br /><br /><br /></p><h2 id="dto"><span class="mr-2">DTO</span><a href="#dto" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>DTO (Data Transfer Object) 는 다른 레이어 간의 데이터 교환에 활용된다.</p><p>따라서 DTO에는 별도의 로직을 포함시키지 않는다.</p><p><br /><br /></p><hr /><h2 id="parameter"><span class="mr-2">Parameter</span><a href="#parameter" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Get 메서드와 Delete 메서드의 경우 일반적으로 URL에 데이터를 담는다.</p><p><br /></p><p>특정 uri로 요청을 보내면 Controller에서 어떠한 방식으로 처리할지 정의를 한다.</p><p>이때 들어온 요청을 특정 메서드와 매핑하기 위해 사용하는 것이 <code class="language-plaintext highlighter-rouge">@RequestMapping</code>이다.</p><p><br /><br /></p><h3 id="pathvariable"><span class="mr-2"><em>@PathVariable</em></span><a href="#pathvariable" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>🐣 URL 경로 자체에 담겨진 데이터</p><p>@RequestMapping의 URI의 경로 변수를 넣어주는 역할</p><p>ex 1)</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
+    <span class="c1">// http://localhost:8080/api/hello/coco</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/hello/{name}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> <span class="n">name</span><span class="o">;</span> <span class="c1">// Hello, coco</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>ex2)</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
+    <span class="c1">// http://localhost:8080/api/hello/coco</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/hello/{name}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">userName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> <span class="n">userName</span><span class="o">;</span> <span class="c1">// Hello, coco</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>@GetMapping에 지정한 변수의 이름과 메소드 매개변수의 이름을 동일하게 맞추기 어려울 때 예시 2와 같이 작성</p><p><br /><br /></p><h3 id="requestparam"><span class="mr-2"><em>@RequestParam</em></span><a href="#requestparam" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>🐣 쿼리 형식으로 담겨진 데이터</p><p>클라이언트가 전달하는 HTTP 요청 Parameter 혹은 HTTP Body의 정보를 전달받기 위해서 사용</p><p>@RequestParam은 1개의 HTTP 요청 파라미터를 받기 위해서 사용한다. <br /> @RequestParam은 필수 여부가 true이기 때문에 반드시 해당 파라미터가 전송되어야 하며, <br /> 파라미터가 전송되지 않으면 400 에러가 발생한다.</p><p>반드시 필요한 값이 아니라면 required를 false로 설정해주면 되고, <br /> defaultValue 옵션을 사용하면 기본값 역시 지정할 수 있다.</p><blockquote><p>예시 : <code class="language-plaintext highlighter-rouge">http://www.sample.com/test?key=value&amp;mode=test</code></p></blockquote><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
+    <span class="c1">// http://localhost:8080/api/hello?name=coco&amp;age=5</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/hello"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"age"</span><span class="o">)</span> <span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">", "</span> <span class="o">+</span> <span class="n">age</span><span class="o">;</span> <span class="c1">// Hello, coco, 5</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p><h3 id="requestbody"><span class="mr-2"><em>@RequestBody</em></span><a href="#requestbody" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>클라이언트가 전송하는 Json(application/json) 형태의 HTTP Body를 MessageConverter를 통해 Java 객체로 변환시켜주는 역할</p><p>→ Body가 존재하지 않는 HTTP Get 메소드에 @RequestBody를 활용하려고 한다면 에러가 발생</p><p>🐣 Post 메서드와 Put 메서드는 Get과 Delete 메서드와 달리 URL에 값을 담아 보내지 않고 HTTP Body에 담아 보낸다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/user"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">MyDTO</span> <span class="nf">postUser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">MyDTO</span> <span class="n">myDTO</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">myDTO</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><blockquote><p>DTO와 같이 객체를 리턴해주는 경우 getter가 없다면 값에 접근하지 못한다. <em>HttpMediaTypeNotAcceptableException</em> 발생</p></blockquote><p><br /></p><p>url상에서 데이터를 전달하는 경우 <code class="language-plaintext highlighter-rouge">@RequestParam</code>을 이용하고, 그 외의 경우 @RequestBody 를 이용한다.</p><p><br /></p><p><a href="https://haedal-uni.github.io/posts/The-given-id-must-not-be-null!/"><code class="language-plaintext highlighter-rouge">@RequestBody</code> 관련 작성 글</a></p><p><br /><br /></p><h3 id="modelattribute"><span class="mr-2"><em>@ModelAttribute</em></span><a href="#modelattribute" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>클라이언트가 전송하는 form 형태의 HTTP Body와 요청 파라미터들을 생성자나 Setter로 바인딩하기 위해 사용된다.</p><p>기본적으로 생성자로 값이 설정되고, 생성자로 설정되지 않은 필드는 Setter로 설정된다.</p><ul><li>클라이언트가 전달하는 값을 객체로 mapping 해주는 역할을 한다.<li>HTTP Body 데이터 혹은 HTTP 파라미터를 주입한다.</ul><p><br /></p><div class="language-js highlighter-rouge"><div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="kd">let</span> <span class="nx">form_data</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FormData</span><span class="p">()</span>
+<span class="nx">form_data</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">comment</span><span class="dl">"</span><span class="p">,</span> <span class="nf">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#comment</span><span class="dl">"</span><span class="p">).</span><span class="nf">val</span><span class="p">())</span>
+<span class="nx">form_data</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">nickname</span><span class="dl">"</span><span class="p">,</span> <span class="nx">nickname</span><span class="p">)</span>
+<span class="nx">form_data</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">registryIdx</span><span class="dl">"</span><span class="p">,</span> <span class="nf">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#RegistryId</span><span class="dl">"</span><span class="p">).</span><span class="nf">html</span><span class="p">())</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/comment"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">Comment</span> <span class="nf">setComment</span><span class="o">(</span><span class="nd">@ModelAttribute</span> <span class="nc">CommentDto</span> <span class="n">commentDto</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">commentService</span><span class="o">.</span><span class="na">setComment</span><span class="o">(</span><span class="n">commentDto</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /></p><p>@ModelAttribute에는 매핑시키는 파라미터의 타입이 객체의 타입과 일치하는지 등을 포함한</p><p>다양한 검증(Validiation) 작업이 추가적으로 진행되는데,</p><p>int형 index 변수에 “1번” 이라는 String형을 넣으려고 한다면, BindException이 발생하게 된다.</p><p><br /><br /></p><h3 id="responseentity"><span class="mr-2">ResponseEntity</span><a href="#responseentity" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>헤더와 Body로 구성된 HTTP 요청과 응답을 구성하는 HttpEntity.</p><p>ResponseEntity는 이 HttpEntity를 상속받아 구현.</p><ul><li>헤더(Header)와 Body로 구성된 HTTP 요청과 응답을 구성하는 역할 수행<li>서버에 들어온 요청에 대한 응답 데이터를 구성해서 전달<li>HttpEntity로 부터 HttpHeaders와 Body를 가지고 자체적으로 HttpStatus를 구현</ul><p><br /><br /></p><p>RestController는 별도의 view를 제공하지 않는 형태로 서비스를 실행한다.</p><p>이로인해 결과 데이터가 예외적인 상황에서 문제가 발생할 수 있다.</p><p>ResponseEntity는 개발자가 직접 결과 데이터와 HTTP 상태 코드를 직접 제어할 수 있는 클래스로</p><p>개발자는 404나 500 ERROR와 같은 HTTP 상태 코드를 전송하고 싶은 데이터와 함꼐 전송할 수 있기 때문에</p><p>세밀한 제어가 필요한 경우 사용된다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="c1">// ResponseEntity : 데이터 + HTTP status code</span>
+<span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
+    <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/user"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">MyDTO</span><span class="o">&gt;</span> <span class="nf">postUser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">MyDTO</span> <span class="n">myDTO</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">ResponseEntity</span>
+                <span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">ACCEPTED</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="n">myDTO</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="nd">@PutMapping</span><span class="o">(</span><span class="s">"/member3"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">ResponseEntity</span><span class="o">&lt;</span><span class="nc">MemberDto</span><span class="o">&gt;</span> <span class="nf">postMemberDto3</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">MemberDto</span> <span class="n">memberDto</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nc">ResponseEntity</span>
+        <span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">ACCEPTED</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="n">memberDto</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><strong>HttpStatus.ACCEPTED : 응답코드 202를 갖는다.</strong></p><p>→ 요청이 성공적으로 접수되었으나, 아직 해당 요청에 대해 처리 중이거나 처리 시작 전임을 의미<br /> → HTTP가 나중에 요청 처리 결과를 나타내는 비동기 응답을 보낼 방법이 없다는 것을 의미<br /> → 다른 프로세스나 서버가 요청을 처리하는 경우 또는 일괄 처리를 위한 것이다.</p><p><br /><br /></p><hr /><h2 id="uri-mapping"><span class="mr-2">URI Mapping</span><a href="#uri-mapping" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>특정 uri로 요청을 보내면 Controller에서 어떠한 방식으로 처리할지 정의를 한다.</p><p>이때 들어온 요청을 특정 메서드와 매핑하기 위해 사용하는 것이 <code class="language-plaintext highlighter-rouge">@RequestMapping</code>이다.</p><p><code class="language-plaintext highlighter-rouge">@RequestMapping</code>에서 가장 많이사용하는 부분은 <em>value</em>와 <em>method</em>이다.</p><p>*value : 요청 받을 url <br /> *method :어떤 요청으로 받을지 정의(POST, GET, PUT, DELETE 등등)</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre><td class="rouge-code"><pre><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StudyController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/study"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">studyPost</span><span class="o">(...)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/study"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">studyGet</span><span class="o">(...)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/study"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">PUT</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">studyPut</span><span class="o">(...)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/study"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">DELETE</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">studyDelete</span><span class="o">(...)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /></p><h3 id="간편하게-설정하기"><span class="mr-2">간편하게 설정하기</span><a href="#간편하게-설정하기" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>공통적인 url은 class에 @RequestMapping으로 설정</p><p>스프링 4.3 부터는 @PostMapping, @GetMapping, @PutMapping, @DeleteMapping 어노테이션들로 <br /> HTTP 메서드 매핑을 한 번에 설정해 줄 수 있다.</p><p>*뒤에 추가적으로 url을 붙이고 싶다면 @PostMapping, @GetMapping, @PutMapping, @DeleteMapping에 url 작성</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/study"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StudyController</span> <span class="o">{</span>    
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/ch3"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">studyNoCh3</span><span class="o">(...)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>studyNoCh3에 들어가기 위해서는 <code class="language-plaintext highlighter-rouge">/study/ch3</code>으로 들어가야 한다.</p><p>*@RequestMapping은 Class와 Method에 붙일 수 있고 <br /> @GetMapping, @PostMapping, @PutMapping, @DeleteMapping들은 Method에만 붙일 수 있다.</p><p><br /><br /></p><hr /><h2 id="method"><span class="mr-2">Method</span><a href="#method" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="post-method"><span class="mr-2">POST Method</span><a href="#post-method" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ul><li>애플리케이션을 통해 데이터베이스 등의 저장소에 리소스를 저장할 때 사용<li>API에서는 저장하고자 하는 리소스나 값을 *HTTP 바디(body)에 담아 서버에 전달.<br /> → 눈에 보이지 않아서 보안에 좋다. , 로그인 같은 경우 (보안이 필요한 경우)<li>@RequestBody + Map or Dto</ul><p><br /><br /></p><h4 id="requestmapping"><span class="mr-2">@RequestMapping</span><a href="#requestmapping" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/domain"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span> <span class="c1">//요청 형식을 POST로만 설정</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">postExample</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">"Hello Post API"</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p><h4 id="requestbody--map"><span class="mr-2">@RequestBody + Map</span><a href="#requestbody--map" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><ul><li>리소스를 HTTP Body에 값을 넣어 전송 ( 일반적으로 JSON형식)<div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="c1">//http://localhost:8080/api/v1/post-api/member</span>
+<span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/member"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">postMember</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">postData</span><span class="o">)</span> <span class="o">{</span>
+  <span class="nc">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+
+  <span class="n">postData</span><span class="o">.</span><span class="na">entrySet</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="n">map</span> <span class="o">-&gt;</span> <span class="o">{</span>
+      <span class="n">sb</span><span class="o">.</span><span class="na">appen</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">getKey</span><span class="o">()</span> <span class="o">+</span> <span class="s">" : "</span> <span class="o">+</span> <span class="n">map</span><span class="o">.</span><span class="na">getValue</span><span class="o">()</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">);</span>
+  <span class="o">});</span>
+      <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p></ul><h4 id="requestbody--dto"><span class="mr-2">@RequestBody + Dto</span><a href="#requestbody--dto" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1">//http://localhost:8080/api/v1/post-api/member2</span>
+<span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/member2"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">postMember</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">MemberDto</span> <span class="n">memberDto</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">memberDto</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /><br /></p><h3 id="get-method"><span class="mr-2">GET Method</span><a href="#get-method" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ul><li>애플리케이션 서버(데이터 베이스)에서 값을 가져올때 사용<li>@PathVariable, @RequestParam</ul><p><br /><br /></p><h4 id="requestmapping-1"><span class="mr-2">@RequestMapping</span><a href="#requestmapping-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><ul><li>요청 *URL을 어떤 메서드가 처리할지 여부를 결정하는 것<div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/api/v1/get-api"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GetCrontroller</span> <span class="o">{</span>
+  <span class="c1">//http://localhost:8080/api/v1/get-api/hello</span>
+  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/hello"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span> <span class="c1">//요청 형식을 GET으로만 설정</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getHello</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="s">"Hello World"</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p></ul><h4 id="매개변수가-없는-get-메서드"><span class="mr-2">매개변수가 없는 GET 메서드</span><a href="#매개변수가-없는-get-메서드" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1">// http://localhost:8080/api/v1/get-api/name</span>
+<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/name"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">"Flature"</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><h4 id="pathvariable-1"><span class="mr-2">@PathVariable</span><a href="#pathvariable-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1">// http://localhost:8080/api/v1/get-api/variable1/{String 값}</span>
+<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/variable1/{variable}"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getVariable</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">variable</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">variable</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1">// http://localhost:8080/api/v1/get-api/variable1/{String 값}</span>
+<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/variable1/{variable}"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getVariable</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"variable"</span><span class="o">)</span> <span class="nc">String</span> <span class="kt">var</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="kt">var</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><h5 id="동작-설명"><span class="mr-2">동작 설명</span><a href="#동작-설명" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h5><ol><li>/variable1/<code class="language-plaintext highlighter-rouge">{String 값}</code> 요청이 들어오면 <code class="language-plaintext highlighter-rouge">{String 값}</code> 에 맞게 <code class="language-plaintext highlighter-rouge">getVariable()</code> 메소드 동작<li><code class="language-plaintext highlighter-rouge">@PathVariable</code> : URI 경로에 변수를 넣어준다.<li><code class="language-plaintext highlighter-rouge">{String 값}</code>을 넣어주지 않으면 오류가 발생한다. (NPE 발생)</ol><p><strong>해결법</strong></p><ul><li>URL에 <code class="language-plaintext highlighter-rouge">"/variable1”</code> (<code class="language-plaintext highlighter-rouge">{String 값}</code>이 없는 경로)을 추가<li>@PathVariable(required = false) 설정 후 <strong>if 처리</strong> 또는 <strong>*Optional 이용</strong></ul><p><strong>규칙)</strong></p><ol><li>@GetMapping 어노테이션의 값으로 URI를 입력할 때 중괄호를 사용해 <strong>어느 위치에서 값을 받을지</strong> 지정해야한다.<li>메서드의 매개변수와 그 값을 연결하기 위해 @PathVariable을 명시 해야한다.<li>@GetMapping 어노테이션과 @PathVariable에 지정된 변수의 이름을 동일하게 맞춰야 한다.</ol><p><br /><br /><br /></p><h4 id="requestparam-1"><span class="mr-2">@RequestParam</span><a href="#requestparam-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="c1">// http:localhost:8080/api/v1/get-api/request1?name=value1&amp;email=value2&amp;organization=value3</span>
+<span class="nd">@GetMappint</span><span class="o">(</span><span class="s">"/request1"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getRequestParam1</span><span class="o">(</span>
+    <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span><span class="o">,</span>
+    <span class="nd">@RequestParam</span> <span class="nc">String</span> <span class="n">email</span><span class="o">,</span>
+    <span class="nd">@RequestParam</span> <span class="nc">String</span> <span class="n">organization</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">email</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">oranization</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><strong>[출력]</strong><br /> value1 value2 value3</p><p><br /><br /></p><h4 id="requestparam-map-활용"><span class="mr-2">@RequestParam Map 활용</span><a href="#requestparam-map-활용" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="c1">// http:localhost:8080/api/v1/get-api/request2?key1=value1&amp;key2=value2</span>
+<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/request2"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getRequestParam2</span><span class="o">(</span><span class="nd">@RequestParam</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">param</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+    <span class="n">param</span><span class="o">.</span><span class="na">entrySet</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="n">map</span> <span class="o">-&gt;</span> <span class="o">{</span>
+	    <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">getKey</span><span class="o">()</span> <span class="o">+</span> <span class="s">" : "</span> <span class="o">+</span> <span class="n">map</span><span class="o">.</span><span class="na">getValue</span><span class="o">()</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">);</span>
+    <span class="o">});</span>
+		
+    <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>→ 매개변수의 값이 일정하지 않을 경우 사용</p><p>[<strong>출력</strong>]<br /> key1 : value1<br /> key2 : value2</p><p><br /><br /></p><h4 id="dto-객체를-활용"><span class="mr-2">DTO 객체를 활용</span><a href="#dto-객체를-활용" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="c1">// http:localhost:8080/api/v1/get-api/request3?name=value1&amp;email=value2&amp;organization=value3</span>
+<span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/request3"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getRequestParam1</span><span class="o">(</span><span class="nc">MemberDto</span> <span class="n">memberDto</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// return memberDto.getName() + " " + memberDto.getEmail() + " " + memberDto.getOranization();</span>
+    <span class="k">return</span> <span class="n">memberDto</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>[<strong>출력</strong>]<br /> MemberDto에서 설정한 toString() 으로 출력 → @toString으로 생략가능 <br /> ex) MemberDto(name=’value1’ , email=’value2’ , organization=’value3’}</p><p><br /><br /><br /><br /></p><h3 id="put-method"><span class="mr-2">PUT Method</span><a href="#put-method" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ul><li>저장소에 존재하는 리소스 값을 업데이트 하는데 사용<li>@RequestBody + Map or Dto (ResponseEntity)</ul><p><br /><br /></p><h4 id="requestbody--map-1"><span class="mr-2">@RequestBody + Map</span><a href="#requestbody--map-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><ul><li>@RestController 어노테이션이 지정된 클래스면 생략 가능<div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="c1">//http://localhost:8080/api/v1/put-api/member</span>
+<span class="nd">@PutMapping</span><span class="o">(</span><span class="s">"/member"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">postMamber</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">putData</span><span class="o">)</span> <span class="o">{</span>
+
+  <span class="nc">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+
+  <span class="n">postData</span><span class="o">.</span><span class="na">entrySet</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="n">map</span> <span class="o">-&gt;</span> <span class="o">{</span>
+      <span class="n">sb</span><span class="o">.</span><span class="na">appen</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">getKey</span><span class="o">()</span> <span class="o">+</span> <span class="s">" : "</span> <span class="o">+</span> <span class="n">map</span><span class="o">.</span><span class="na">getValue</span><span class="o">()</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">);</span>
+  <span class="o">});</span>
+
+  <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></table></code></div></div></ul><p><br /><br /></p><h4 id="requestbody--dto-1"><span class="mr-2">@RequestBody + Dto</span><a href="#requestbody--dto-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1">//http://localhost:8080/api/v1/put-api/member1</span>
+<span class="nd">@PutMapping</span><span class="o">(</span><span class="s">"/member1"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">postMamber</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">MemberDto</span> <span class="n">memberDto</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">memberDto</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>[출력]<br /> memberDto 의 <code class="language-plaintext highlighter-rouge">toString</code> 메소드 결괏값 출력</p><p><br /><br /><br /></p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1">//http://localhost:8080/api/v1/put-api/member2</span>
+<span class="nd">@PutMapping</span><span class="o">(</span><span class="s">"/member2"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">postMamber</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">MemberDto</span> <span class="n">memberDto</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">memberDto</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>[출력]</p><div class="language-html highlighter-rouge"><div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>{
+    name : “Flature” ,
+    email : “aaaa@gmail.com” ,
+    organization : “Around Hub Studio
+} 
+</pre></table></code></div></div><p><br /><br /><br /><br /></p><h3 id="delete-method"><span class="mr-2">DELETE Method</span><a href="#delete-method" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ul><li>서버를 거쳐 데이터베이스 등의 저장소에 있는 리소스를 삭제할때 사용<li>@PathVariable , @RequestParam</ul><p><br /><br /></p><h4 id="pathvariable-2"><span class="mr-2">@PathVariable</span><a href="#pathvariable-2" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1">// http://localhost:8080/api/v1/delete-api/{String 값}</span>
+<span class="nd">@DeleteMapping</span><span class="o">(</span><span class="s">"/{variable}"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">DeleteVariable</span><span class="o">(</span><span class="nd">@PathVariable</span> <span class="nc">String</span> <span class="n">variable</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">variable</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p><h4 id="requestparam-2"><span class="mr-2">@RequestParam</span><a href="#requestparam-2" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1">// http://localhost:8080/api/v1/delete-api/request1?email=value</span>
+<span class="nd">@DeleteMapping</span><span class="o">(</span><span class="s">"/request1"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getRequestParam1</span><span class="o">(</span><span class="nd">@RequestParam</span> <span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">"e-mail : "</span> <span class="o">+</span> <span class="n">email</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><p><em>reference</em> <br /> <a href="https://mungto.tistory.com/436">[Spring] @RequestMapping이란?</a> <br /> <a href="https://mangkyu.tistory.com/72">[Spring] @RequestBody, @ModelAttribute, @RequestParam의 차이</a> <br /> <a href="https://dingdingmin-back-end-developer.tistory.com/entry/Springboot-MVC-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B08-ModelAttribute-RequestParam-PathVariable-%EB%8F%99%EC%9E%91-%EA%B3%BC%EC%A0%95">Springboot MVC 파헤치기(8) @ModelAttribute, @RequestParam, @PathVariable @ResponseBody @RequestBody 동작 과정</a> <br /> <a href="https://devmoony.tistory.com/103">[Spring]RestController, ResponseEntity란?</a> <br /> <a href="https://ocblog.tistory.com/49">Spring / @RequestBody vs @RequestParam 이해하기</a></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/study/'>Study</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/spring/" class="post-tag no-text-decoration" >spring</a> <a href="/tags/study/" class="post-tag no-text-decoration" >study</a> <a href="/tags/summary/" class="post-tag no-text-decoration" >summary</a> <a href="/tags/ch3/" class="post-tag no-text-decoration" >ch3</a> <a href="/tags/api/" class="post-tag no-text-decoration" >API</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Api%EB%A5%BC+%EC%9E%91%EC%84%B1%ED%95%98%EB%8A%94+%EB%8B%A4%EC%96%91%ED%95%9C+%EB%B0%A9%EB%B2%95+-+Dal+Blog&url=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FAPI%25EB%25A5%25BC-%25EC%259E%2591%25EC%2584%25B1%25ED%2595%2598%25EB%258A%2594-%25EB%258B%25A4%25EC%2596%2591%25ED%2595%259C-%25EB%25B0%25A9%25EB%25B2%2595%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Api%EB%A5%BC+%EC%9E%91%EC%84%B1%ED%95%98%EB%8A%94+%EB%8B%A4%EC%96%91%ED%95%9C+%EB%B0%A9%EB%B2%95+-+Dal+Blog&u=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FAPI%25EB%25A5%25BC-%25EC%259E%2591%25EC%2584%25B1%25ED%2595%2598%25EB%258A%2594-%25EB%258B%25A4%25EC%2596%2591%25ED%2595%259C-%25EB%25B0%25A9%25EB%25B2%2595%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FAPI%25EB%25A5%25BC-%25EC%259E%2591%25EC%2584%25B1%25ED%2595%2598%25EB%258A%2594-%25EB%258B%25A4%25EC%2596%2591%25ED%2595%259C-%25EB%25B0%25A9%25EB%25B2%2595%2F&text=Api%EB%A5%BC+%EC%9E%91%EC%84%B1%ED%95%98%EB%8A%94+%EB%8B%A4%EC%96%91%ED%95%9C+%EB%B0%A9%EB%B2%95+-+Dal+Blog" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div><script src="https://utteranc.es/client.js" repo="haedal-uni/comments" issue-term="title" label="comments" theme="github-light" crossorigin="anonymous" async> </script></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/Apache-Jmeter/">Apache jmeter</a><li><a href="/posts/%EB%B0%B0%ED%8F%AC-%ED%9B%84-OAUTH2-%EC%88%98%EC%A0%95/">배포 후 oauth2 수정</a><li><a href="/posts/Connection-timed-out-connect/">Connection timed out: connect</a><li><a href="/posts/%EB%B0%B0%ED%8F%AC%ED%95%98%EB%A9%B4%EC%84%9C-%EC%83%9D%EA%B8%B4-%EC%B1%84%ED%8C%85-%EA%B4%80%EB%A0%A8-%EC%98%A4%EB%A5%98/">배포하면서 생긴 채팅 관련 오류</a><li><a href="/posts/%EB%B0%B0%ED%8F%AC_Redis/">배포_redis</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/study/">study</a> <a class="post-tag" href="/tags/summary/">summary</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/chat/">Chat</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/websocket/">WebSocket</a> <a class="post-tag" href="/tags/jpa/">JPA</a> <a class="post-tag" href="/tags/data-structure/">Data-Structure</a> <a class="post-tag" href="/tags/security/">Security</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4"><div id="related-posts" class="mb-2 mb-sm-4"><h3 class="pt-2 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/Spring-Boot/"><div class="card-body"> <em class="small" data-ts="1663772400" data-df="ll" > Sep 22, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Spring boot</h3><div class="text-muted small"><p> Spring Boot? Spring Framework IoC (Inversion of Control) : 제어 역전 사용할 객체를 직접 생성하지 않고 객체의 생명주기 관리를 외부에 위임 외부란? 스프링 컨테이너 또는 IoC 컨테이너. IoC를 통해 DI (Dependency Injection) : 의존성 주입, ...</p></div></div></a></div><div class="card"> <a href="/posts/%EA%B8%B0%EC%B4%88-%EC%A7%80%EC%8B%9D/"><div class="card-body"> <em class="small" data-ts="1663858800" data-df="ll" > Sep 23, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>기초 지식</h3><div class="text-muted small"><p> 서버 간 통신 스프링 부트의 동작 방식 용어 Servlet [서블릿] : 클라이언트의 요청을 처리하고 결과를 반환하는 자바 웹 프로그래밍 기술 Servlet Container [서블릿 컨테이너] : 서블릿 인스턴스를 생성, 관리. 스프링 부트의 경우 톰캣이 WAS의 역할과 서블릿 컨테이너의 역할...</p></div></div></a></div><div class="card"> <a href="/posts/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%97%B0%EB%8F%99/"><div class="card-body"> <em class="small" data-ts="1664031600" data-df="ll" > Sep 25, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>데이터베이스 연동</h3><div class="text-muted small"><p> DB *스프링 부트 핵심 가이드 책으로 스터디 진행 관련 글 : Controller, Service, Repository ORM(Object Relational Mapping) : 객체 관계 매핑 객체지향 언어에서 의미하는 객체(클래스)와 RDB(관계형 데이터 베이스 : Relational Database)의 테이블을 자동으로 매...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/%EA%B8%B0%EC%B4%88-%EC%A7%80%EC%8B%9D/" class="btn btn-outline-primary" prompt="Older"><p>기초 지식</p></a> <a href="/posts/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%97%B0%EB%8F%99/" class="btn btn-outline-primary" prompt="Newer"><p>데이터베이스 연동</p></a></div></div></div><footer class="row pl-3 pr-3"><div class="col-12 d-flex justify-content-between align-items-center text-muted pl-0 pr-0"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/haedal-uni">haedal-uni</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/study/">study</a> <a class="post-tag" href="/tags/summary/">summary</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/chat/">Chat</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/websocket/">WebSocket</a> <a class="post-tag" href="/tags/jpa/">JPA</a> <a class="post-tag" href="/tags/data-structure/">Data-Structure</a> <a class="post-tag" href="/tags/security/">Security</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a><div id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-animation="true" data-autohide="false"><div class="toast-header"> <button type="button" class="ml-2 ml-auto close" data-dismiss="toast" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div><div class="toast-body text-center pt-0"><p class="pl-2 pr-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></div><script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/ko.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-K7KC8XYH0P"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-K7KC8XYH0P'); }); </script>
