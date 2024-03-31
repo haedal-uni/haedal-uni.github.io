@@ -2,6 +2,7 @@
 categories: Project Redis
 tags: [spring, Redis]
 ---
+
 # Spring의 내장 브로커에서 Redis 브로커로 마이그레이션
 **1. 확장성 및 메시지 처리량 향상**
 
