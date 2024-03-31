@@ -1,6 +1,6 @@
 ---
 categories: Project Redis
-tags: [spring, Redis]
+tags: [spring, Redis, Chat]
 ---
 
 # Spring의 내장 브로커에서 Redis 브로커로 마이그레이션
