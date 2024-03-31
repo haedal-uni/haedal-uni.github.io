@@ -1,6 +1,6 @@
 ---
 categories: Project Redis
-tags: [spring, Redis, Cache]
+tags: [spring, Redis, Cache, Chat]
 ---
 
 # Redis란
