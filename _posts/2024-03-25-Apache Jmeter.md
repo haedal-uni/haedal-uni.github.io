@@ -44,7 +44,7 @@ JMeter를 재시작 하면 아래와 같이 플러그인을 설치할 수 있게
 ### Thread 설정  
 JMeter에서 Test Plan 우클릭 → add → Thread(Users) → Thread Group을 하여 Thread Group을 생성한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/282b4e92-a4df-4071-b957-58055ca2bb2f)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/282b4e92-a4df-4071-b957-58055ca2bb2f){: width="60%"}   
 
 1) Number of Threads (users) : 쓰레드 개수 → 사용자 수
 
@@ -191,7 +191,7 @@ import org.apache.jmeter.protocol.http.control.Header;
 
 sampler.getHeaderManager().add(new Header("Authorization",vars.get("token")));
 ```
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/c0e7aa32-96ef-4b71-b742-5eef8be3e922){: width="50%"}  
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/c0e7aa32-96ef-4b71-b742-5eef8be3e922){: width="60%"}  
 
 <br><br><br><br> 
 
@@ -210,13 +210,13 @@ sampler.getHeaderManager().add(new Header("Authorization",vars.get("token")));
 
 전체 보기
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/592eca09-ad07-4776-80c0-44cf1dd9c650){: width="50%"} 
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/592eca09-ad07-4776-80c0-44cf1dd9c650){: width="40%"} 
 
 <br><br> 
 
 참고로 모든 요청에 HTTP Header Manager를 생성하여 아래와 같이 작성했다.
-
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/11b8d7f3-b0f8-410a-b9fd-ef5a78737249){: width="50%"} 
+    
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/11b8d7f3-b0f8-410a-b9fd-ef5a78737249){: width="60%"} 
 
 *simpSessionId는 아래에서 설명 예정
     
@@ -236,7 +236,7 @@ Stomp 프로토콜을 사용하여 통신하는 엔드포인트는 `/ws` 다.
 
 이를 Server URL에 작성하면 ws, localhost, 8080으로 작성할 수 있다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/cc3f25c5-c24e-4318-aa2e-167e54b00ffd){: width="50%"} 
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/cc3f25c5-c24e-4318-aa2e-167e54b00ffd){: width="60%"} 
 
 <br><br> 
 
@@ -257,7 +257,7 @@ Stomp 프로토콜을 사용하여 통신하는 엔드포인트는 `/ws` 다.
 
 100~999 랜덤 숫자
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/9e5a66fd-9e7c-4684-b334-12f6907a65b6){: width="50%"} 
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/9e5a66fd-9e7c-4684-b334-12f6907a65b6){: width="40%"} 
 
 <br><br><br> 
 
@@ -268,9 +268,9 @@ a~z 중 랜덤 8자리
 
 Name = `sessionId`, Value = `${__RandomString(8,abcdefghijklmnopqrstuvwxyz)}`
    
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/71a83346-ad5a-42fe-b89e-a2b8b89feded)
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/71a83346-ad5a-42fe-b89e-a2b8b89feded){: width="50%"} 
            
-<br><br> 
+<br><br>  
 
 따라서 path는 `/ws/${num}/${sessionId}/websocket`로 설정할 수 있다.
 
@@ -292,7 +292,7 @@ Name = `sessionId`, Value = `${__RandomString(8,abcdefghijklmnopqrstuvwxyz)}`
 ### Send Connect : WebSocket Single Write Sampler
 > Thread Group > Add > Sampler > WebSocket Single Write Sampler
   
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/5694743c-57cc-450b-9157-a50be79444e0){: width="60%"} 
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/5694743c-57cc-450b-9157-a50be79444e0){: width="50%"} 
 
 WebSocket Open Connection"으로 연결을 열어둔 상태에서 
 
@@ -310,7 +310,7 @@ Request data :`["CONNECTED\nversion:1.2\n\n\u0000"]`
 ### SEND SUBSCRIBE : WebSocket Single Write Sampler 
 > Thread Group > Add > Sampler > WebSocket Single Write Sampler          
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/a19dcfb0-cac6-46c8-b57c-f5270c8b8ff7){: width="50%"}  
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/a19dcfb0-cac6-46c8-b57c-f5270c8b8ff7){: width="60%"}  
          
 구독하는 url : `/topic/public/${roomId}`
 
