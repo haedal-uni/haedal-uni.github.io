@@ -268,7 +268,7 @@ a~z 중 랜덤 8자리
 
 Name = `sessionId`, Value = `${__RandomString(8,abcdefghijklmnopqrstuvwxyz)}`
    
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/71a83346-ad5a-42fe-b89e-a2b8b89feded){: width="50%"} 
+![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/71a83346-ad5a-42fe-b89e-a2b8b89feded){: width="60%"} 
            
 <br><br>  
 
