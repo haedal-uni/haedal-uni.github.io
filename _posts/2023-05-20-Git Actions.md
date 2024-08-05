@@ -361,10 +361,13 @@ Docker hub 대신 GitHub Container Registry를 사용하여 Docker 이미지를 
             ghcr.io/user/app:latest
             ghcr.io/user/app:1.0.0
 ```
+![image](https://github.com/user-attachments/assets/dfa52ff0-d23b-4468-8383-e9fbce55738f)
 
 <br><br><br>
 
 ### 파일 작성하기   
+
+
 ```  
 name: Run Gradle
 on: workflow_dispatch
@@ -377,6 +380,7 @@ jobs:
       with:
         distribution: temurin
         java-version: 11
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew     
         
@@ -406,6 +410,7 @@ jobs:
         - 
           name: Set up QEMU
           uses: docker/setup-qemu-action@v2
+
         -
           name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v2
@@ -418,6 +423,8 @@ jobs:
             registry: ghcr.io
             username: `${{ github.repository_owner }}`
             password: `${{ secrets.GITHUB_TOKEN }}`
+
+        # Build 및 GitHub Package 에 이미지 업로드 
         -
           name: Build and push
           uses: docker/build-push-action@v4
@@ -427,6 +434,7 @@ jobs:
             push: true
             tags: ghcr.io/`${{ github.repository }}`:latest
 ```
+![image](https://github.com/user-attachments/assets/1857970f-ecae-4908-9787-42d903ea0bd2)
 
 기본으로 제공되는 변수 알아보기 → [GitHub Docs](https://docs.github.com/ko/actions/learn-github-actions/variables)
 
@@ -459,8 +467,6 @@ jobs:
 - `tags` : 이미지에 대한 식별 가능한 값을 넣을 수 있다.(버전, release명 등)
   
   - `latest`는 이미지의 최신 버전을 가리키는 태그
-
-
 
 <br><br><br>
 
