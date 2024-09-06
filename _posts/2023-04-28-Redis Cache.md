@@ -173,7 +173,8 @@ LettuceConnectionFactory를 사용하여 Redis 연결을 구성했다.
 
 <br><br>
 
-## Annotation  
+## Annotation을 활용한 Cache 적용
+
 ```java
 @Configuration
 @EnableCaching
@@ -200,16 +201,71 @@ public class RedisConfig {
     }
 }
 ```
-어노테이션을 활용해 cache를 적용하는 경우
 
-Redis에 얼마동안 데이터가 보존되는지 정해지지 않기 때문에 config에 설정해줘야한다.
+### RedisCacheConfiguration으로 설정 객체 생성
+`cacheManager()` 에서는 Redis 캐싱 기능을 구현하기 위한 설정을 해준다.
 
-<br><br>
+```java
+@Bean
+public CacheManager cacheManager() {
+    RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
+    RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
+        .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))// Value Serializer 변경
+        .entryTtl(Duration.ofMinutes(30));
+    builder.cacheDefaults(configuration);
+    return builder.build();
+}
+```
+Redis 캐싱 기능을 사용하기 위해서는 **RedisCacheConfiguration**을 이용하여 설정 객체를 생성해야 한다. 
+
+이 객체는 `defaultCacheConfig()`를 이용하여 생성하며, key 값과 value 값을 어떻게 직렬화할지를 정의한다. 
+
+직렬화 방법을 정의하지 않으면 캐시 데이터를 저장할 수 없는 에러가 발생할 수 있다.
+
+<br><br>   
+
+`serializeKeysWith()`: key 값을 어떻게 직렬화할지 정의한다. 
+
+`RedisSerializationContext` : 직렬화할 수 있는 방법을 제공하는 인터페이스를 이용한다. 
+
+`RedisSerializationContext.SerializationPair.fromSerializer()` : 직렬화에 사용할 어댑터를 함수 안에 넣은 타입에 맞게 반환하는 static 함수
+
+<br><br>   
+
+예를 들어, **StringRedisSerializer**를 이용하여 key 값을 직렬화한다면, 
+
+key String 값을 byte로 변환하여 저장하고, 가져올 때는 다시 변환하여 가져온다.
+
+<br>
+
+`GenericJackson2JsonRedisSerializer`는 캐시 데이터(Object)를 JSON으로 직렬화하여 Redis에 저장하고, 
+
+가져올 때는 JSON을 Object로 변환하여 가져온다. 
+
+이 방식을 사용하면 객체를 그대로 Redis에 저장할 수 있다.
+
+<br><br>  
+
+RedisCacheManagerBuilder를 이용하여 RedisCacheManager를 생성하고, 
+
+RedisCacheManagerBuilder의 `cacheDefaults()` 를 이용하여 설정 객체를 설정한다. 
+
+마지막으로 RedisCacheManager를 반환하여 캐시 매니저를 생성한다. 
+
+이때, `RedisConnectionFactory()`를 이용하여 Redis에 연결한다.
+
+
+<br><br><br>
 
 ### 캐시 구성
 TTL은 "Time To Live"의 약자로, 캐시된 데이터가 유효한 시간을 의미한다.
 
 TTL(Time To Live)을 사용하면 캐시된 데이터가 일정 기간 이후에 자동으로 삭제되어 원본 데이터를 반영할 수 있다.
+
+어노테이션을 활용해 cache를 적용하는 경우
+
+Redis에 얼마동안 데이터가 보존되는지 정해지지 않기 때문에 config에 설정해줘야한다.
 
 <br>
 
@@ -432,7 +488,7 @@ value를 지정할 수 없으므로 value = ""와 같이 빈 문자열로 설정
 
 <br><br><br><br>
 
-## RedisTemplate  
+## RedisTemplate을 활용한 Cache 적용  
 kEY와 VALUE
 ```java
 @Configuration
