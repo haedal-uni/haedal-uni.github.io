@@ -201,6 +201,7 @@ public class RedisConfig {
     }
 }
 ```
+<br>
 
 ### RedisCacheConfiguration으로 설정 객체 생성
 `cacheManager()` 에서는 Redis 캐싱 기능을 구현하기 위한 설정을 해준다.
@@ -489,7 +490,7 @@ value를 지정할 수 없으므로 value = ""와 같이 빈 문자열로 설정
 <br><br><br><br>
 
 ## RedisTemplate을 활용한 Cache 적용  
-kEY와 VALUE
+
 ```java
 @Configuration
 @EnableCaching
