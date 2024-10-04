@@ -96,33 +96,79 @@ final이 상수이기 때문에 한번 초기화 시켜줘야한다.(*상수란 
 ---
 
 # final
-자료형에 값을 단 한번만 설정할수 있게 강제하는 키워드이다.
+final은 값을 한 번만 설정할 수 있도록 강제하는 키워드다. 
 
-즉, 값을 한번 설정하면 그 값을 다시 설정할 수 없다는 말이다.
-
-<br>
-<br>
-
-## final 쓰는 이유?
-final 을 선언함으로 인해 상수라는 개념을 가지게 된다.
-
-상수라는 것은 절대 변하지않는 값을 뜻한다.                  
+즉, 한 번 초기화된 값은 다시 변경할 수 없다.
 
 <br><br>
 
-예를 하나 들어본다.
+## final의 특징
+- 기본 자료형(int, String 등)
+  
+  final로 선언되면 값 자체를 변경할 수 없다.
+
+```java
+final String str = "하이";
+str = "바이"; // 불가능 : 참조 변경이 불가능
+str.charAt(0); // 가능 : 객체의 메서드 호출은 참조 변경이 아님
+
+// 객체의 메서드 호출이 str = "바이"; 처럼 객체 값을 변경하는게 아니니까
+```
+메서드 호출은 객체의 내부 상태를 읽는 작업이므로 가능하다.
+
+<br>
+
+- 객체
+  final로 선언된 객체의 참조는 변경할 수 없지만 객체 내부 상태는 변경할 수 있다.
+
+```java
+public class A {
+    private int x = 4;
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getX() {
+        return x;
+    }
+}
+
+public class Service {
+    private final A a = new A(); // a는 한 번 초기화되면 다른 객체로 재할당할 수 없음
+
+    public void updateX() {
+        a.setX(8); // a의 내부 상태는 변경 가능
+    }
+
+    public int getX() {
+        return a.getX(); // 변경된 값 확인 가능
+    }
+}
+```
+a 객체의 참조는 변경할 수 없지만 객체 내부의 x 값은 변경 가능하다.
+
+따라서 final은 상수가 아니라 한 번만 초기화가 가능하다고 보면 된다.
+
+*상수 : 변경되지 않는 값   
+
+<br><br>
+
+### 예시
 
 `private final UserService userService;`                  
 
-위 코드에서는 final로 UserSerivce를 두고 있는데 이는 서비스 고정 의미를 담고 있다.                  
+위 코드에서는 final로 UserSerivce를 두고 있는데 이는 userService 참조를 고정한다는 의미를 담고 있다.                  
 
-UserService를 쓰려고 했는데 BoardService가 오면 안되니깐 이를 고정하는 것이다.
+다른 서비스(예: BoardService)로 userService를 대체할 수 없지만 userService 내부 상태는 변할 수 있다.
                   
 <br><br>
 
-또 하나 예를 들어본다.
+**final이 제한하는 것은 참조의 변경이지 객체 내부 상태의 변경은 아니다.**
 
-`private final UserService userService;`
+```java
+userService.setName("name"); // 가능: 메서드 호출로 내부 상태는 변경 가능
+```
 
 `userService.setName("name")`으로 값을 지정하는데 final은 값을 지정 못하지 않을까?                  
 
@@ -134,27 +180,26 @@ final 이 제한을 두는 건 userService 의 대한 변화를 제한하는 것
 
 즉 `userService.setName();` 같은 메서드 호출은 userSerivce 에 영향을 주는 로직이 아니기 때문에 관련이 없다.
 
-```java
-final String str = "하이";
-str.charAt(0); // 가능
-str = "바이"; // 불가능
-// 객체의 메서드 호출이 str = "바이"; 처럼 객체 값을 변경하는게 아니니까
-```
+
 <br><br>
 
 ## 사용 방법              
 
 `final + 초기화`                  
 
-*final*이 있으면 객체 선언이 필수이고                  
+**final**로 선언된 변수는 반드시 한 번만 초기화되어야 한다.             
 
-*final*이 없으면 객체 선언 자유이지만 쓸 경우에는 초기화가 필수이다.                  
+초기화는 선언과 동시에 하거나, 생성자에서 초기화할 수 있다.
+```java
+public class Example {
+    private final int x; // final이므로 반드시 초기화 필요
 
-<br>
-
-초기화가 변수를 선언하고 값을 넣어준다. 그리고 값 변경x                  
-
-사용하기 전에 final 초기화 코드를 작성하면 된다.                
+    public Example(int value) {
+        this.x = value; // 생성자에서 초기화 가능
+    }
+}
+```
+<br>       
 
 초기화 코드 작성 전에 해당 코드를 사용하면 컴파일 에러가 뜬다.                  
 
