@@ -223,7 +223,11 @@ public class Example {
 ---
 
 # static
-`static`을 사용하면 메모리에 한 번 할당되어 프로그램이 종료될 때 해제되는 것을 의미한다.
+static은 메모리에 한 번만 할당되고, 프로그램이 종료될 때 해제된다. 
+
+해당 변수를 클래스 레벨에서 공유하도록 한다.
+
+*클래스 레벨: 해당 클래스에서 모든 인스턴스가 동일한 값을 공유하는 것
 
 <br>
 
@@ -247,18 +251,19 @@ public class Study {
         v1.globalScope = 20;
         v2.globalScope = 30;
 
-        System.out.println(v1.globalScope);  // 20 이 출력된다.
-        System.out.println(v2.globalScope);  // 30 이 출력된다.
+        System.out.println(v1.globalScope);  // 20 
+        System.out.println(v2.globalScope);  // 30 
 
-        // 기존 설정 : static int staticVal = 7;
         v1.staticVal = 10;
         v2.staticVal = 20;
 
-        System.out.println(v1.staticVal);  // 20 이 출력된다.
-        System.out.println(v2.staticVal);  // 20 이 출력된다.
+        System.out.println(v1.staticVal);  // 20 
+        System.out.println(v2.staticVal);  // 20 
     }
 }
 ```
+`static`을 사용하면 모든 인스턴스가 같은 값을 공유한다.
+
 <br><br>
 
 #### 변수 앞에 static 키워드가 붙는 케이스
@@ -277,70 +282,52 @@ public static int plus ( int x , int y ){
 
 <br><br><br>
 
-## static 쓰는 경우?
-static 키워드를 붙이면 자바는 메모리 할당을 딱 한번만 하게 되어 메모리 사용에 이점이 있다.                  
+## static의 장점
+메모리 효율성 : 메모리에 한 번만 할당되어 여러 인스턴스가 공유하므로, 메모리 사용이 효율적이다.
 
-static을 사용하는 또 한가지 이유로 **공유**개념을 들 수 있다.
+공유 메모리 : static 변수를 사용하면 모든 인스턴스가 같은 값을 공유한다. 
 
-static 으로 설정하면 같은 곳의 메모리 주소만을 바라보기 때문에 static 변수의 값을 공유하게 되는 것이다.
-
-또한, 객체 생성없이 클래스를 통해 메서드를 직접 호출할 수 있다.
-
-<br><br>
-
-**객체를 여러 번 쓸 상황이 생길 때**
-
-final 과 같은 예를 들어본다.
-
-Service를 활용해서 여러 번 사용할 것이기 때문에 static을 사용하면 될까?
-                  
-`private final UserService userService;`                  
-
-먼저 빈을 주입하는 경우에는 static을 쓰면 안된다. (ex. *@Component*)                      
-
-*static을 쓰면 객체를 생성안해도 되는데 bean 주입하는 경우에는 static을 쓰면 안된다.                  
-
-<br>
-
-여기서 userService.setName("이름") 으로 객체 생성 없이 바로 사용할 수 있던거 아닌가? 라는 생각이 든다면 🙅🏻‍♀️                  
-                  
-그런 경우 `@RequiredArgsConstructor` 같은 어노테이션이 있는지 확인해본다.  
-
-생성자를 만들어야 객체를 만들 수 있는데 위에서 객체 생성 없이 바로 `클래스.메소드`를 사용할 수 있었던 이유는      
-
-`@RequiredArgsConstructor` 같은 생성자 어노테이션이 객체 생성을 생략해주는 것이다. 
-
-<br>
-
-**어노테이션 작성x**
-```java
-public class UserController {
-  private final UserService userService;
-  
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
-
-}
-```
-
-<br>
-
-**어노테이션 작성**
-```java
-@RequiredArgsConstructor
-public class UserController {
-  private final UserService userService;
-}
-```
+객체 생성없이 클래스를 통해 메서드를 직접 호출할 수 있다.
 
 <br><br><br>
 
-### 접근제어자
-static이 붙은 [메소드 or 변수]를 쓸 때 다른 파일에 있으면                  
-패키지랑 사용하고자 하는 [메소드 or 변수] 의 접근제어자를 본다.              
+## static과 final
+`static final`을 함께 사용하면 클래스 레벨에서 공유되면서 변경할 수 없는 상수를 의미한다. 
 
-패키지가 일단 *public*이어야 [메소드 or 변수] 의 접근제어자를 보겠쥬?                  
+```java
+public static final double PI = 3.14;
+```
+<br><br>
+
+### final 멤버 변수에 static을 사용하지 않는 경우
+→ DI(Dependency Injection) 기법을 사용해 클래스 내부에 외부 클래스 의존성을 집어넣는 경우
+
+bean을 주입하는 경우에는 static을 쓰면 안된다. (ex. `@Component`)    
+```java
+@Controller
+public class UserController {
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+}
+```               
+DI(의존성 주입)의 목적은 유연성과 확장성이다.
+
+각 객체는 독립적으로 관리되고 환경에 따라 다른 의존성을 주입받아야 할 수 있다.
+
+static은 모든 인스턴스가 동일한 객체를 공유하므로 유연성이 떨어진다.
+                  
+→ 모든 사용자에게 동일한 객체가 적용되어 각자의 상태를 독립적으로 관리할 수 없게된다.
+
+<br>
+
+참고로 생성자를 만들어야 객체를 만들 수 있는데 
+
+위에서 객체 생성 없이 바로 `클래스.메소드`를 사용할 수 있었던 이유는    
+
+Spring IoC 컨테이너는 객체(Bean)를 생성하고 관리하며, 의존성을 주입해주기 때문이다. 
 
 <br><br><br>
 
@@ -535,8 +522,9 @@ public class JvmStack {
 <br><br><br>
 
 
-출처                                  
-[final 을 쓰는 이유가 궁금합니다.](https://okky.kr/articles/239853)                   
-[03-11 형변환과 final](https://wikidocs.net/158529)                   
-[07-03 정적(static) 변수와 메소드](https://wikidocs.net/228)                 
-[Java에서 자주 보이는 Static이란 무엇일까?](https://honbabzone.com/java/java-static/)          
+REFERENCE                                           
+- [final 을 쓰는 이유가 궁금합니다.](https://okky.kr/articles/239853)                    
+- [03-11 형변환과 final](https://wikidocs.net/158529)                    
+- [07-03 정적(static) 변수와 메소드](https://wikidocs.net/228)                  
+- [Java에서 자주 보이는 Static이란 무엇일까?](https://honbabzone.com/java/java-static/)           
+- [왜 자바에서 final 멤버 변수는 관례적으로 static을 붙일까?](https://djkeh.github.io/articles/Why-should-final-member-variables-be-conventionally-static-in-Java-kor/)                         
