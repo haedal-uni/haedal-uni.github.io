@@ -383,13 +383,13 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 <br><br>
 
 #### Service
-- 단어에 해당하는 뜻에 해당하는 예문을 db에 저장한다.
-- map에는 단어와 예문을 저장
-- map에 해당하는 예문이 없다면?
-  - map에 단어와 예문을 저장
+단어에 해당하는 뜻에 해당하는 예문을 db에 저장한다.         
+map에는 단어와 예문을 저장한다.      
+- map에서 단어에 해당하는 예문이 없다면?
+  - map에 단어와 예문을 저장한다. 
   - Meaning 테이블에서 해당 단어에 해당하는 뜻을 가져온다.        
     (그냥 뜻을 가져와버리면 해당 단어가 아닌 다른 단어의 동일한 뜻을 가져와버릴 수 있다.)  
-  - 해당 단어의 뜻과 예문이 중복되어있는지 체크한다.
+  - 해당 단어의 뜻과 예문이 중복되어있는지 db에서 체크한다.
 
 ```java
 public void saveSentence(MultipartFile file) throws IOException {
