@@ -1,5 +1,5 @@
 ---
-categories: Coding Test
+categories: Log
 tags: [Java, 코테]
 ---
 
