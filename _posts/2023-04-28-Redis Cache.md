@@ -419,7 +419,7 @@ condition, unless 어노테이션 옵션으로 특정 조건에 따른 캐시적
      
 ### Service
 ```java
-@Cacheable(key = "#nickname", value = "createRoom", unless = "#nickname == 'null'", cacheManager = "cacheManager")
+@Cacheable(key = "#nickname", value = "createRoom", unless = "#result == 'null'", cacheManager = "cacheManager")
 public ChatRoomDto createRoom(String nickname) {
     User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
     ChatRoomDto chatRoom = new ChatRoomDto();
@@ -436,25 +436,24 @@ public ChatRoomDto createRoom(String nickname) {
     }
 }
 ```
-- `unless = "#nickname == 'null'"` : nickname가 null일 때 캐시를 저장x                                          
 
+- `unless = "#result == null"` : 반환값 null 제외 
+  - `unless = "#nickname == 'null'"` : nickname가 null일 때 캐시를 저장x                                          
 - `cacheManager = "cacheManager"` : 위의 config에서 작성한 cacheManager 사용
 
 <br><br>  
 
-`@Cacheable` 어노테이션의 key 속성은 캐시할 데이터의 key를 지정하고, value 속성은 캐시할 데이터의 value를 지정한다.              
+`@Cacheable`의 key 속성은 캐시할 데이터의 key를 지정하고, value 속성은 캐시할 데이터의 value를 지정한다.              
 
 여기서 key는 사용자의 nickname이 되고 value는 `createRoom()`의 반환값이 저장 될 것이다.
 
 <br>  
 
-`@Cacheable` 어노테이션에서 key를 설정할 때, SpEL(Sping Expression Language)을 사용하여 동적으로 key를 생성할 수 있다.
+`@Cacheable`에서 key를 설정할 때, SpEL(Sping Expression Language)을 사용하여 동적으로 key를 생성할 수 있다.
 
 이때 SpEL에서는 작은따옴표를 사용하여 문자열을 감싸야 한다.        
 
 <br>
-
-`@Cacheable(key = "#chatMessage.sender", value = "roomId", unless = "#chatMessage.roomId == null")`
 
 `@Cacheable` 어노테이션에서 value를 설정할 때 mehtod의 반환 타입이 void인 경우 
 
@@ -486,6 +485,25 @@ value를 지정할 수 없으므로 value = ""와 같이 빈 문자열로 설정
 값이 변경되는 경우에도 항상 메서드의 로직이 실행되고, 그 결과가 캐시에 저장되기 때문에 정상적으로 값을 가져올 수 있다.
 
 따라서 `@Cacheable`을 사용해서 값이 올바르게 가져와지지 않는 문제로 인해 null이 뜬 것이 아닐까? 
+
+그래서 null 값을 방지 하기 위해 `unless = "#result == null"`로 작성하고
+
+RedisConfig에서도 추가했다.
+
+```java
+@Bean
+public CacheManager cacheManager() {
+    RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+            .disableCachingNullValues() // null value cache X
+            .entryTtl(Duration.ofHours(3))
+            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+    return RedisCacheManager.builder(redisConnectionFactory())
+            .cacheDefaults(cacheConfig) // 기본 캐시에 TTL 적용
+            .build();
+}
+```
+
 
 <br><br><br><br>
 
