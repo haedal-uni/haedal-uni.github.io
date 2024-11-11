@@ -90,7 +90,7 @@ public class RedisConfig {
     }
 
     @Bean
-    public CacheManager cacheManager() {
+    public CacheManager cacheManager() { // Spring 어노테이션 사용할 때 작성하는 설정 
         RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
@@ -111,7 +111,7 @@ public class RedisConfig {
 
 <br><br><br>
 
-### 4. 캐시 적용하기 : annotaion 활용
+### 4. 캐시 적용하기 : annotation 활용
 사용할 서비스 method에 annotation 적용하면 된다.
 
 - `@Cacheable` : 메서드의 결과를 캐시에 저장하고, 이후에 동일한 인자로 메서드가 호출될 때 캐시에서 결과를 반환
