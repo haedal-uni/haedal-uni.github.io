@@ -102,12 +102,23 @@ public class RedisConfig {
 }
 ```
 
-- `serializeKeysWith()`: key 직렬화 방식 설정 
+- `serializeKeysWith()`: Redis에 저장되는 key의 직렬화 방식을 설정.        
+    `StringRedisSerializer`를 사용해 문자열로 직렬화
 
-- `GenericJackson2JsonRedisSerializer` : JSON 형식으로 직렬화하여 객체를 저장할 수 있게 한다.
+- `serializeValuesWith()` : Redis에 저장되는 value의 직렬화 방식을 설정.       
+     `GenericJackson2JsonRedisSerializer`를 사용해 JSON 형식으로 직렬화하여 객체 데이터를 JSON으로 저장
 
-- `entryTtl` : 캐시 데이터의 유효 시간 설정
+- `entryTtl` : 캐시 데이터의 유효 시간 설정 → 30분 
 
+<br>
+
+참고)
+
+CacheManager 설정은 Spring 어노테이션 기반 캐시와 연동되므로 
+
+RedisTemplate으로 Redis를 제어할 때는 이 설정을 따르지 않는다. 
+
+RedisTemplate에서는 TTL 등 설정을 개별적으로 코드 내에서 정의할 수 있다. 
 
 <br><br><br>
 
@@ -161,7 +172,7 @@ value를 지정할 수 없으므로 value = ""와 같이 빈 문자열로 설정
 
 <br><br>     
 
-#### 문제점  
+#### 4.1 문제점  
 기존에 `@Caceable`을 사용했으나 값을 제대로 가져올 때가 있고 없을 때가 있었다.
 
 처음엔 cacheManager 설정도 바꿔보다가 
@@ -270,8 +281,12 @@ public CacheManager cacheManager() {
 
 <br><br><br><br>
 
-## RedisTemplate을 활용한 Cache 적용  
+### 6. RedisTemplate을 활용한 Cache 적용  
 RedisTemplate을 사용하면 데이터 접근과 제어를 세부적으로 설정할 수 있다. 
+
+<br>
+
+#### 6.1 RedisTemplate 설정 
 ```java
 @Configuration
 @EnableCaching
@@ -298,7 +313,7 @@ public class RedisConfig {
 
 <br><br><br>
 
-### 데이터 저장과 조회                          
+#### 6.2 데이터 저장과 조회                          
 ChatMessage.sender와 nickname은 같은 값              
 
 ```java
