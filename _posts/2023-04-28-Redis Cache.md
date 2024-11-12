@@ -155,7 +155,9 @@ public ChatRoomDto createRoom(String nickname) {
 `@Cacheable`은 캐시에 이미 데이터가 있으면 메서드 로직을 실행하지 않고 캐시에서 데이터를 반환한다. 
 
 `@CachePut`을 사용하면 매번 메서드 로직이 실행되어 최신 상태가 유지된다.
-  
+
+<br>
+ 
 - `unless = "#result == null"` : 반환값이 null일 경우 캐시 저장을 하지 않도록 설정
                                    
 - `cacheManager = "cacheManager"` : 위의 config에서 작성한 cacheManager 사용
