@@ -57,7 +57,7 @@ if (만약 오늘 날짜가 아니라면) {
 <br><br><br><br>  
 
 ## 구현 과정
-![image](https://github.com/user-attachments/assets/d2158a7a-2cf5-488d-a1b2-604eec198515){: width="50%"}      
+![image](https://github.com/user-attachments/assets/d2158a7a-2cf5-488d-a1b2-604eec198515){: width="70%"}      
 
 <br>
 
