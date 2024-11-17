@@ -1,3 +1,8 @@
+---
+categories: Eng-Project
+tags: [log, Redis]
+---
+    
 # Redis Cache 적용 : Redis Cache를 활용한 학습 데이터 TTL 관리
 
 단어 학습 기능을 구현하며 **오늘 학습할 단어**는 **반복 조회**가 가능해야하고
@@ -52,6 +57,10 @@ if (만약 오늘 날짜가 아니라면) {
 <br><br><br><br>  
 
 ## 구현 과정
+![image](https://github.com/user-attachments/assets/d2158a7a-2cf5-488d-a1b2-604eec198515){: width="50%"}      
+
+<br>
+
 ### 1. Entity
 `Study` 테이블에 학습 날짜를 구분하기 위한 `date` 컬럼을 추가했다. 
 ```java
