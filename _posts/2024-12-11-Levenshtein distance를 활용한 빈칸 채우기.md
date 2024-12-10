@@ -1,3 +1,8 @@
+---
+categories: Eng-Project
+tags: [log]
+---
+
 # Levenshtein distance를 활용한 빈칸 채우기  
 빈칸 채우기 문제는 예문에서 특정 단어를 빈칸으로 대체해 퀴즈를 구성하는 방식이다.
 
