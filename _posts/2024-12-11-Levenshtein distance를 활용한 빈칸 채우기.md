@@ -59,7 +59,7 @@ tags: [log]
 
 `table[i][j]`= min(삽입 비용,삭제 비용,교체 비용)
 
-테이블의 마지막 셀인 `table[length(a)][length(b)]` 값이 두 문자열의 편집 거리를 나타낸다.     
+테이블의 마지막 값인 `table[length(a)][length(b)]`가 두 문자열의 편집 거리를 나타낸다.     
 
 
 <br><br><br><br>  
