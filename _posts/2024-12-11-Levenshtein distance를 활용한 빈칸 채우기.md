@@ -6,7 +6,7 @@ tags: [log]
 # Levenshtein distance를 활용한 빈칸 채우기  
 빈칸 채우기 문제는 예문에서 특정 단어를 빈칸으로 대체해 퀴즈를 구성하는 방식이다.
 
-그러나 문제 단어의 변형이 예문에 포함될 경우 
+그러나 db에 저장된 단어가 예문에서 변형되어 작성된 경우  
 
 기존 로직으로는 이를 처리하지 못해 예문이 퀴즈로 인식되지 않고 그대로 출력되는 문제가 발생했다.
 
@@ -16,7 +16,7 @@ tags: [log]
 
 <br>
 
-![AC_ 20241210-041827](https://github.com/user-attachments/assets/56937a76-7be1-4745-8e89-864fe6d6f01b)
+![AC_ 20241210-041827](https://github.com/user-attachments/assets/56937a76-7be1-4745-8e89-864fe6d6f01b){: width="50%"} 
 
 <br><br>
 
@@ -281,7 +281,7 @@ if(card.sentence.indexOf(card.word)!==-1){
 
 코드 적용 후 예문에 포함된 단어의 변형도 문제로 출제 되는 것을 확인할 수 있다. 
 
-![AC_ 20241210-042244](https://github.com/user-attachments/assets/fe56ad2e-a594-4207-9caa-f937a564f1d5)
+![AC_ 20241210-042244](https://github.com/user-attachments/assets/fe56ad2e-a594-4207-9caa-f937a564f1d5){: width="50%"} 
 
 <br><br><br><br>
 
