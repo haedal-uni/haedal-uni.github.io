@@ -12,11 +12,11 @@ tags: [log]
 
 <br>
 
-예를 들어 문제 단어가 `run`일 때 예문에 `running`이 포함되어 있으면 기존 로직으로는 이를 처리하지 못했다.  
+예를 들어 문제 단어가 `run`일 때 예문에는 `running`이 작성되어 있으면 기존 로직으로는 이를 처리하지 못했다.  
 
 <br>
 
-![AC_ 20241210-041827](https://github.com/user-attachments/assets/56937a76-7be1-4745-8e89-864fe6d6f01b){: width="50%"} 
+![AC_ 20241210-041827](https://github.com/user-attachments/assets/56937a76-7be1-4745-8e89-864fe6d6f01b){: width="55%"} 
 
 <br><br>
 
@@ -281,7 +281,7 @@ if(card.sentence.indexOf(card.word)!==-1){
 
 코드 적용 후 예문에 포함된 단어의 변형도 문제로 출제 되는 것을 확인할 수 있다. 
 
-![AC_ 20241210-042244](https://github.com/user-attachments/assets/fe56ad2e-a594-4207-9caa-f937a564f1d5){: width="50%"} 
+![AC_ 20241210-042244](https://github.com/user-attachments/assets/fe56ad2e-a594-4207-9caa-f937a564f1d5){: width="55%"} 
 
 <br><br><br><br>
 
