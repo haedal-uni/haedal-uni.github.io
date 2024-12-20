@@ -122,16 +122,16 @@ public class RedisConfig {
 **1.** 가장 최근 날짜를 조회하기 위해 `max()` 사용
 
 ```java
-@Query("SELECT max(s.date) FROM Study s")
-LocalDate findLastDay();
+@Query("SELECT max(s.date) FROM Study s WHERE s.user.id = :userId")
+LocalDate findLastDay(Long userId);
 ```
 
 <br><br>
 
 **2.** 오늘 날짜의 학습 데이터 조회 
 ```java
-@Query("select s from Study s where s.date = :today")
-List<Study> findLastDayForStudy(LocalDate today);
+@Query("select s from Study s where s.date = :today and s.user.id = :userId")
+List<Study> findLastDayForStudy(LocalDate today, Long userId);
 ```
 
 <br><br>
@@ -148,13 +148,13 @@ Sentence findBySentence(Long meaningId);
 ```java
 @Cacheable(key="#username", value = "getStudyWord", unless = "#result==null", cacheManager = "cacheManager")
 public List<StudyResponseDto> getStudyWord(String username) {
-    LocalDate date = studyRepository.findLastDay();
+    LocalDate date = studyRepository.findLastDay(user.getId());
     LocalDate today = LocalDate.now();
     if( date==null || !date.isEqual(today) ){ // 오늘 날짜가 아니라면 학습하지 않은 데이터 10개 조회
         // 기존 로직 생략
         studyRepository.saveAll(studyList); // study 테이블에 데이터 저장  
     } else { // 오늘 날짜라면 Study 테이블에서 조회
-        List<Study> study = studyRepository.findLastDayForStudy(today);
+        List<Study> study = studyRepository.findLastDayForStudy(today, user.getId());
     }
 }
 ```
