@@ -77,7 +77,7 @@ utterance.rate = parseFloat(rateInput.value); // rate 설정
 synth.speak(utterance); // 음성 재생
 ```
  
-![image](https://github.com/user-attachments/assets/4a28c32b-d149-40ba-a1af-5fecc02a8398)
+![image](https://github.com/user-attachments/assets/4a28c32b-d149-40ba-a1af-5fecc02a8398){: width="50%"}  
 
 <br><br><br>      
  
@@ -135,7 +135,7 @@ tts를 활용해 단어를 학습할 때 자동으로 예문을 읽어주고 더
 ```
 <br><br>
 
-https://github.com/user-attachments/assets/ba4197bf-5e5e-4140-89a4-ba4a7edc761b
+![image](https://github.com/user-attachments/assets/ba4197bf-5e5e-4140-89a4-ba4a7edc761b)
 
 
 <br><br><br><br>   
