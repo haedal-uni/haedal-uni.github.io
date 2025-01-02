@@ -29,8 +29,8 @@ window.speechSynthesis.cancel();
 
 <br><br><br>     
 
-### `SpeechSynthesisUtterance`
-**SpeechSynthesisUtterance**는 읽을 텍스트와 읽기 옵션(속도, 음높이, 음량 등)을 설정하는 객체다.
+### SpeechSynthesisUtterance
+`SpeechSynthesisUtterance`는 읽을 텍스트와 읽기 옵션(속도, 음높이, 음량 등)을 설정하는 객체다.         
 
 - 속도(rate): 0.1 ~ 10 사이 값 설정          
 - 음높이(pitch): 0 ~ 2 사이 값 설정         
@@ -77,7 +77,7 @@ utterance.rate = parseFloat(rateInput.value); // rate 설정
 synth.speak(utterance); // 음성 재생
 ```
  
-![image](https://github.com/user-attachments/assets/4a28c32b-d149-40ba-a1af-5fecc02a8398){: width="50%"}  
+![image](https://github.com/user-attachments/assets/4a28c32b-d149-40ba-a1af-5fecc02a8398){: width="40%"}  
 
 <br><br><br>      
  
@@ -110,7 +110,6 @@ function speakText() {
     const lang = "en-US"; // 언어 설정  
     const utterance = new SpeechSynthesisUtterance(sentence.textContent);
 
-
     utterance.lang = lang;
     // pitch와 rate 설정
     utterance.pitch = parseFloat(pitchInput.value);
@@ -135,13 +134,9 @@ tts를 활용해 단어를 학습할 때 자동으로 예문을 읽어주고 더
 ```
 <br><br>
 
-
 <video controls autoplay loop muted style="max-width: 100%; height: auto;">
   <source src="https://github.com/user-attachments/assets/ba4197bf-5e5e-4140-89a4-ba4a7edc761b" type="video/mp4">
-  vvv
 </video>
-
-
 
 <br><br><br><br>   
 
