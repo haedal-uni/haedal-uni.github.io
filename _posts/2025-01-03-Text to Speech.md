@@ -135,7 +135,12 @@ tts를 활용해 단어를 학습할 때 자동으로 예문을 읽어주고 더
 ```
 <br><br>
 
-![image](https://github.com/user-attachments/assets/ba4197bf-5e5e-4140-89a4-ba4a7edc761b)
+
+<video controls autoplay loop muted style="max-width: 100%; height: auto;">
+  <source src="https://github.com/user-attachments/assets/ba4197bf-5e5e-4140-89a4-ba4a7edc761b" type="video/mp4">
+  vvv
+</video>
+
 
 
 <br><br><br><br>   
