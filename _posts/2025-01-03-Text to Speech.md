@@ -1,3 +1,8 @@
+---
+categories: Eng-Project
+tags: [log]
+---
+
 # TTS(Text to Speech) 
 영어 학습 시 예문을 음성으로 들을 수 있도록 TTS를 적용했다.   
 
