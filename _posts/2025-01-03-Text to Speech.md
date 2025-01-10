@@ -140,6 +140,8 @@ tts를 활용해 단어를 학습할 때 자동으로 예문을 읽어주고 더
 
 <br><br><br><br>   
 
-**REFERENCE**          
+---
+
+REFERENCE          
 - [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)    
 - [Web Speech API로 프론트엔드에서 TTS 구현하기](https://wormwlrm.github.io/2024/03/09/Web-Speech-API.html)    
