@@ -285,6 +285,8 @@ if(card.sentence.indexOf(card.word)!==-1){
 
 <br><br><br><br>
 
+---
+
 **REFERENCE**    
 Levenshtein distance      
 - [[Algorithm] 문장의 유사도 분석 - 편집 거리 알고리즘 (Levenshtein Distance)](https://jino-dev-diary.tistory.com/20)
