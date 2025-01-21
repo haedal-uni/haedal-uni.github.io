@@ -1,3 +1,8 @@
+---
+categories: Eng-Project
+tags: [log, Python, Flask, SocketIO, NLTK]
+---
+
 # Python-SocketIO와 NLTK를 사용한 챗봇 구현
 Python-SocketIO를 활용하여 실시간 양방향 통신을 구현하고 NLTK를 사용한 간단한 챗봇 기능을 추가했다.
 
