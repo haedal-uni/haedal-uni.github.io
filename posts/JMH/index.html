@@ -1,0 +1,751 @@
+<!DOCTYPE html><html lang="ko" data-mode="light" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.4" /><meta property="og:title" content="Jmh" /><meta property="og:locale" content="ko" /><meta name="description" content="JMH를 통한 벤치마킹 테스트 관련 글 Websocket Websocket + 부가기능 Websocket (채팅 기록 json 파일 저장하기) Sse Sse 문제점 Websocket + jwt Websocket test Jmh - 채팅 파일 refactoring 👈🏻" /><meta property="og:description" content="JMH를 통한 벤치마킹 테스트 관련 글 Websocket Websocket + 부가기능 Websocket (채팅 기록 json 파일 저장하기) Sse Sse 문제점 Websocket + jwt Websocket test Jmh - 채팅 파일 refactoring 👈🏻" /><link rel="canonical" href="https://haedal-uni.github.io//posts/JMH/" /><meta property="og:url" content="https://haedal-uni.github.io//posts/JMH/" /><meta property="og:site_name" content="Dal Blog" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2023-05-08T00:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Jmh" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-12T01:08:14+09:00","datePublished":"2023-05-08T00:00:00+09:00","description":"JMH를 통한 벤치마킹 테스트 관련 글 Websocket Websocket + 부가기능 Websocket (채팅 기록 json 파일 저장하기) Sse Sse 문제점 Websocket + jwt Websocket test Jmh - 채팅 파일 refactoring 👈🏻","headline":"Jmh","mainEntityOfPage":{"@type":"WebPage","@id":"https://haedal-uni.github.io//posts/JMH/"},"url":"https://haedal-uni.github.io//posts/JMH/"}</script><title>Jmh | Dal Blog</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Dal Blog"><meta name="application-name" content="Dal Blog"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="https://raw.githubusercontent.com/cotes2020/chirpy-images/main/commons/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Dal Blog</a></div><div class="site-subtitle font-italic">한 걸음씩</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <a href="https://github.com/haedal-uni" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['example','doamin.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>Jmh</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper" class="d-flex justify-content-center"><div id="main" class="container pl-xl-4 pr-xl-4"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4 pb-5"><div class="post pl-1 pr-1 pl-md-2 pr-md-2"><h1 data-toc-skip>Jmh</h1><div class="post-meta text-muted"> <span> Posted <em class="" data-ts="1683471600" data-df="ll" data-toggle="tooltip" data-placement="bottom"> May 8, 2023 </em> </span> <span> Updated <em class="" data-ts="1731341294" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Nov 12, 2024 </em> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/haedal-uni">haedal-uni</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="6694 words"> <em>37 min</em> read</span></div></div></div><div class="post-content"><h1 id="jmh를-통한-벤치마킹-테스트">JMH를 통한 벤치마킹 테스트</h1><p>관련 글</p><ul><li><a href="https://haedal-uni.github.io/posts/WebSocket/">Websocket</a><li><a href="https://haedal-uni.github.io/posts/WebSocket-+%EB%B6%80%EA%B0%80%EA%B8%B0%EB%8A%A5/">Websocket + 부가기능</a><li><a href="https://haedal-uni.github.io/posts/WebSocket(%EC%B1%84%ED%8C%85-%EA%B8%B0%EB%A1%9D-Json-%ED%8C%8C%EC%9D%BC-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0)/">Websocket (채팅 기록 json 파일 저장하기)</a><li><a href="https://haedal-uni.github.io/posts/SSE/">Sse</a><li><a href="https://haedal-uni.github.io/posts/SSE-%EB%AC%B8%EC%A0%9C%EC%A0%90/">Sse 문제점</a><li><a href="https://haedal-uni.github.io/posts/WebSocket-+-JWT/">Websocket + jwt</a><li><a href="https://haedal-uni.github.io/posts/WebSocket-Test/">Websocket test</a><li><a href="https://haedal-uni.github.io/posts/JMH/">Jmh - 채팅 파일 refactoring</a> 👈🏻</ul><p><br /><br /></p><h2 id="성능-테스트jmh"><span class="mr-2">성능 테스트(JMH)</span><a href="#성능-테스트jmh" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>JMH는 Java Microbenchmark Harness의 약자로, Java 코드의 성능을 측정하고 비교하기 위한 도구다.</p><p>JMH를 사용하면 매우 정확하고 안정적인 벤치마크를 작성할 수 있다.</p><p>이를 통해 코드 변경에 따른 성능 변화를 측정하거나, 다양한 구현 방법의 성능을 비교 분석할 수 있다.</p><p>JMH는 측정 대상이 되는 코드가 얼마나 빠르게 동작하는지 측정하기 위해 성능 측정 도구를 사용한다.</p><p>JMH는 매우 정교하고 통계학적으로 유효한 측정 결과를 얻기 위해 다양한 성능 측정 방법과 통계 기법을 적용한다.</p><p>JMH는 Oracle의 JIT Compiler 개발자가 만든 것이기 때문에 타 Benchmark Framework 보다 신뢰할 수 있다는 장점이 존재한다.</p><p><br /><br /></p><h3 id="설정"><span class="mr-2">설정</span><a href="#설정" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><img data-src="https://user-images.githubusercontent.com/74857364/236685977-523da060-534f-432e-8fff-a4992dc45056.png" alt="image" data-proofer-ignore></p><p><br /></p><p>위와 같이 src directory 하위에 jmh 폴더를 만들고 main과 같은 형태로 폴더를 구성했다.</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>프로젝트 폴더
+    └─── src
+          └─── jmh
+                ├─── java
+                └─── resources
+</pre></table></code></div></div><p><br /></p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span> <span class="s">"me.champeau.jmh"</span> <span class="n">version</span> <span class="s">"0.6.4"</span>
+<span class="o">}</span>
+<span class="n">jmh</span><span class="o">{</span>
+    <span class="n">fork</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">warmupIterations</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="mi">10</span>  
+<span class="o">}</span>
+</pre></table></code></div></div><p>jmh는 성능 측정을 위한 도구이며, 위 설정은 jmh 프로파일러가 성능 측정을 어떻게 수행할지 제어하는 데 사용된다.</p><ul><li><p>fork: 측정할 코드를 포크할 횟수를 지정한다.</p><p>몇 번의 자식 프로세스를 만들어서 벤치마크를 실행할 것인지를 결정한다.(default 1)</p><p>이 값이 1이면 측정할 코드를 한 번만 포크하며, 이 값이 높을수록 측정 결과의 신뢰성이 높아진다.</p><p>하지만 여러 개의 JVM에서 동일한 벤치마크를 실행하고 결과를 평균화하는 것이 더 정확할 수도 있다. <br /> <br /></p><li><p>warmupIterations: 실제 측정을 시작하기 전에 성능 측정을 위한 샘플 데이터를 생성하는 데 사용되는 반복 횟수를 지정한다. (default 10)</p><p>벤치마크를 실행하기 전에 JVM이 최적화를 수행할 수 있도록 JVM을 미리 ‘워밍업’하는 데 필요한 반복 횟수를 결정한다.</p><p>이 값은 높으면 더 많은 최적화가 이루어지므로 정확도가 높아진다.</p><p>하지만 반복이 길어지므로 실행 시간이 늘어난다.</p></ul><p><br /></p><ul><li><p>iterations: 실제 측정을 수행하는 반복 횟수를 지정한다. (default 10)</p><p>이 값이 높을수록 측정 결과의 신뢰성이 높아진다.</p><p>하지만 높은 값은 실행 시간이 길어지므로 효율성을 떨어뜨릴 수 있다.</p></ul><p><br /></p><p>보통은 fork는 1이나 2로 설정하고, warmupIterations와 iterations는 기본값으로 두는 것이 좋다.</p><p>그리고 실제로 최적화된 결과를 얻기 위해서는 여러 차례의 실행을 거쳐 평균값을 구해야 한다.</p><p><br /></p><p>*참고 : JMH의 최신 버전 직접 반영해주는 방법</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="c1">// JMH</span>
+    <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">openjdk</span><span class="o">.</span><span class="na">jmh</span><span class="o">:</span><span class="n">jmh</span><span class="o">-</span><span class="nl">core:</span><span class="mf">1.32</span><span class="err">'</span>
+    <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">openjdk</span><span class="o">.</span><span class="na">jmh</span><span class="o">:</span><span class="n">jmh</span><span class="o">-</span><span class="n">generator</span><span class="o">-</span><span class="nl">annprocess:</span><span class="mf">1.32</span><span class="err">'</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><h3 id="warmup"><span class="mr-2">Warmup</span><a href="#warmup" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>JVM warm-up은 코드 실행 전에 JVM을 최적화하고 성능을 향상시키는 과정을 말한다.</p><p>이 과정은 JIT(Just-In-Time) 컴파일러와 관련이 있는데,</p><p>컴파일러는 프로그램 실행 중에 실제로 사용되는 코드 블록을 감지하고 네이티브 코드로 컴파일하여 성능을 향상시킨다.</p><p><br /></p><p>네이티브 코드는 컴퓨터의 특정 플랫폼에서 직접 실행할 수 있는 기계어 코드를 말한다.</p><p>자바 코드는 JVM(Java Virtual Machine)에서 실행되므로 플랫폼에 구애받지 않고 실행될 수 있다.</p><p><br /></p><p>JIT(Just-In-Time) 컴파일러는 프로그램 실행 중에</p><p>필요한 코드 블록을 선택하여 해당 부분을 네이티브 코드로 변환하여 실행 속도를 높인다.</p><p>네이티브 코드로 변환된 코드는 해당 플랫폼에서 직접 실행되므로 보통 실행 속도가 빠르다.</p><p><br /></p><p>간단한 예로, 자바 프로그램에서 작성한 코드는 먼저 자바 바이트 코드로 변환된다.</p><p>JVM은 필요에 따라 JIT(Just-In-Time) 컴파일러를 사용하여 바이트 코드를 해당 플랫폼의 네이티브 코드로 변환한다.</p><p>네이티브 코드로 변환되면 해당 플랫폼에서 직접 실행될 수 있으며 실행 속도가 빨라진다.</p><p><br /></p><p>기계어 코드는 CPU가 직접 이해하고 실행하는 이진 형식의 코드다.</p><p>이 코드는 0과 1로 표현되며, CPU가 직접 해석하여 실행한다.</p><p>따라서 기계어 코드는 특정 CPU 아키텍처에 의해 이해되고 실행된다.</p><p><br /></p><p>그러나 JIT 컴파일러는 프로그램의 초기 실행에서는 모든 코드를 네이티브 코드로 컴파일하지 않고,</p><p>필요한 부분만 선택적으로 컴파일한다.</p><p>이로 인해 초기 실행의 성능이 최적화되지 않은 상태로 유지될 수 있다.</p><p><br /></p><p>Warmup을 사용하면 자주 사용되는 클래스를 호출하여 클래스를 메모리에 로딩하고 코드 캐시를 생성한다.</p><p>이를 통해 코드의 실행 속도를 향상시키고 성능 차이를 최소화할 수 있다.</p><p><br /></p><p>주로 운영환경에서 서버를 재가동하거나,</p><p>성능 측정 테스트를 수행하기 전에 warm-up을 실행하여 JVM을 최적화하고 안정화된 상태로 성능 측정을 진행한다.</p><p>이를 통해 초기 실행의 성능 저하를 최소화하고 일관된 성능 측정 결과를 얻을 수 있다.</p><p><br /><br /></p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span> <span class="s">"me.champeau.jmh"</span> <span class="n">version</span> <span class="s">"0.6.4"</span>
+<span class="o">}</span>
+<span class="n">jmh</span><span class="o">{</span>
+    <span class="n">fork</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">warmupIterations</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="mi">10</span>  
+<span class="o">}</span>
+</pre></table></code></div></div><p>이 전에 warmupIterations를 10으로 설정했는데 특정 class에서 5로 설정하고 싶다면</p><p><code class="language-plaintext highlighter-rouge">@Warmup(iterations = 5)</code>와 같이 적으면 된다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="nd">@Warmup</span><span class="o">(</span><span class="n">iterations</span> <span class="o">=</span> <span class="mi">5</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Benchmark</span> <span class="o">{</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><h3 id="jmh-작성-방법"><span class="mr-2">JMH 작성 방법</span><a href="#jmh-작성-방법" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><code class="language-plaintext highlighter-rouge">@BenchmarkMode</code>: 벤치마크 결과를 나타내는 모드를 설정한다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/2400ffbd-980f-46a5-8b47-460824cac6d0" alt="image" width="50%" data-proofer-ignore></p><ul><li>Mode.Throughput : 시간당 처리량 측정<li>Mode.AverageTime : 평균 실행 시간 측정<li>Mode.SampleTime : 실행 시간 샘플링 측정<li>Mode.SingleShotTime : 단일 실행 시간 측정<li>Mode.All : 모든 시간 측정</ul><p>ex. <code class="language-plaintext highlighter-rouge">@BenchmarkMode(Mode.AverageTime)</code>으로 설정하면 평균 실행 시간이 결과로 나타난다.</p><p><br /><br /></p><p><code class="language-plaintext highlighter-rouge">@OutputTimeUnit</code>: 결과의 시간 단위를 설정한다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/4515d621-c43b-48ea-b8ae-ca09033cc6cf" alt="image" width="40%" data-proofer-ignore></p><ul><li>TimeUnit.NANOSECONDS : 나노<li>TimeUnit.MICROSECONDS : 마이크로<li>TimeUnit.MILLISECONDS : 밀리<li>TimeUnit.SECONDS : 초<li>TimeUnit.MINUTES : 분<li>TimeUnit.HOURS : 시간<li>TimeUnit.DAYS : 일</ul><p>ex) <code class="language-plaintext highlighter-rouge">@OutputTimeUnit(TimeUnit.MILLISECONDS)</code>와 같이 설정하면 결과를 밀리초 단위로 출력한다.</p><p><br /><br /></p><p><code class="language-plaintext highlighter-rouge">@State</code> : 벤치마크할 상태를 설정한다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/cabc6c72-c0b6-4ef5-87be-9a507d14135a" alt="image" width="35%" data-proofer-ignore></p><ul><li>Scope.Benchmark : 벤치마크 전체에서 공유<li>Scope.Thread : 각 스레드마다 별도로 생성. 멀티스레드 환경에서 안전<li>Scope.Group : 벤치마크 실행 그룹에서 공유</ul><p><code class="language-plaintext highlighter-rouge">@State(Scope.Benchmark)</code>: 벤치마크 메서드마다 객체를 새로 생성하지 않고 상태를 유지하며 벤치마크를 수행한다.</p><p><br /><br /></p><p><code class="language-plaintext highlighter-rouge">@Setup</code>: 벤치마크 메서드 실행 전에 초기화 작업을 수행한다.</p><p>주로 파일 경로 설정 등의 환경 설정 작업을 수행한다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f706db1e-be2c-4b06-979b-93da54a7837b" alt="image" width="30%" data-proofer-ignore></p><ul><li>Level.Trial : 벤치마크 전체에서 한 번만 실행 (default)<li>Level.Iteration : 벤치마크 반복마다 실행<li>Level.Invocation : 각 메서드 호출마다 실행</ul><p><br /><br /></p><p><code class="language-plaintext highlighter-rouge">@TearDown</code> : 벤치마크 메서드 실행 후에 정리 작업을 수행한다.</p><ul><li>Scope.Benchmark : 벤치마크 전체에서 공유<li>Scope.Thread : 각 스레드마다 별도로 생성. 멀티스레드 환경에서 안전<li>Scope.Group : 벤치마크 실행 그룹에서 공유</ul><p><br /><br /><br /></p><p><strong>1.</strong> 클래스에 <code class="language-plaintext highlighter-rouge">@State(Scope.Benchmark)</code> 어노테이션을 붙여 벤치마크할 상태를 지정한다.</p><p><strong>2.</strong> 클래스에 <code class="language-plaintext highlighter-rouge">@BenchmarkMode(Mode.AverageTime)</code> 어노테이션을 붙여 벤치마크 결과를 나타내는 모드를 설정한다.</p><p><strong>3.</strong> 클래스에 <code class="language-plaintext highlighter-rouge">@OutputTimeUnit(TimeUnit.MILLISECONDS)</code> 어노테이션을 붙여 결과의 시간 단위를 설정한다.</p><p><strong>4.</strong> 각 벤치마크 대상 메소드에 <code class="language-plaintext highlighter-rouge">@Benchmark</code> 어노테이션을 붙인다.</p><p><strong>5.</strong> 필요한 경우 <code class="language-plaintext highlighter-rouge">@Setup</code> 어노테이션을 이용해 벤치마크 실행 전에 필요한 초기화 작업을 수행한다.</p><p>이렇게 기존 로직을 가지고 똑같이 작성하되 jmh에 필요한 어노테이션을 붙여 벤치마크를 작성하면 된다.</p><p><br /><br /></p><h3 id="jmh-실행-방법"><span class="mr-2">JMH 실행 방법</span><a href="#jmh-실행-방법" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>terminal에서 gradlew가 있는 최상위 디렉토리로 이동한 후 아래 명령어 입력</p><div class="language-console highlighter-rouge"><div class="code-header"> <span data-label-text="Console"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="go">./gradlew jmh
+</span></pre></table></code></div></div><p><br /></p><p>위와 같이 입력하면 terminal에 실행 결과가 뜨지만 아래와 같이 입력해도 된다.</p><div class="language-console highlighter-rouge"><div class="code-header"> <span data-label-text="Console"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="go">cat build/results/jmh/results.txt
+</span></pre></table></code></div></div><p><br /></p><p>JMH 기록을 모두 지우려면 아래와 같이 작성한다.</p><div class="language-console highlighter-rouge"><div class="code-header"> <span data-label-text="Console"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="go">./gradlew clean
+
+</span></pre></table></code></div></div><p><br /><br /><br /></p><h3 id="파일-마지막-글만-조회하기"><span class="mr-2">파일 마지막 글만 조회하기</span><a href="#파일-마지막-글만-조회하기" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><h4 id="1차-수정"><span class="mr-2">1차 수정</span><a href="#1차-수정" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>*전체코드는 길어서 생략 → github 참고하거나 파일 조회 코드(제일 하단)에 설명 작성한 것 보기</p><p><br /></p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">jmh</span><span class="o">{</span>
+    <span class="n">fork</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">warmupIterations</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><img data-src="https://user-images.githubusercontent.com/74857364/236685888-084dd7d9-277d-49ec-86e9-6789f4cf66de.png" alt="image" width="50%" data-proofer-ignore></p><p>변경 전 코드는 파일의 끝에서부터 7줄을 읽어올 때 파일 포인터를 이용하여 하나씩 읽어오는 방식을 사용한다.</p><p>(가독성이 좋게 변수별로 한 줄 씩 파일에 저장해서 총 7줄을 읽어야 했다.)</p><p>사실 이 부분 때문에 jmh를 사용한 이유기도 하다.</p><p>해당 방식 때문에 채팅 리스트를 여는 시간이 느리다고 판단되었고 파일을 저장하는 방식을 변경했다.</p><p>파일을 저장할 때 한 줄 안에 모든 정보를 저장하게 한 다음 파일을 읽어올 때</p><p>파일 포인터를 끝에서 두 번째 줄로 시작 지점을 이동시킨 다음에 한 줄을 읽고 끝낸다.</p><p>(한 줄을 저장하고 줄을 한칸 띄어 저장하기 때문에)</p><p>이 방식은 파일 포인터 이동 횟수가 적기 때문에 더 빠른 성능을 보이는 것 같다.</p><p><br /><br /></p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">jmh</span><span class="o">{</span>
+    <span class="n">fork</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">warmupIterations</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>위와 같이 설정 후 다시 실행했을 때 차이가 더 커진 것을 볼 수 있다.</p><p><img data-src="https://user-images.githubusercontent.com/74857364/236689876-09a51847-8d8c-4a4a-a254-8e4cfa3a3e5b.png" alt="image" width="50%" data-proofer-ignore></p><p><br /><br /></p><p>샘플 데이터와 실제 데이터를 10으로 설정하고 실행했다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">jmh</span><span class="o">{</span>
+    <span class="n">fork</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">warmupIterations</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="o">}</span>
+</pre></table></code></div></div><ul><li>Cnt : 총 시행 횟수(포크*반복)<li>점수 : 벤치마크 결과<li>오류 : 표준 오류 값. 서로 다른 시행 결과가 얼마나 다른지를 의미</ul><p><a href="https://stackoverflow.com/questions/51607482/what-is-the-meaning-of-columns-in-the-jmh-result-table">stackoverflow</a></p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f8a7dfa5-493d-4a3a-ba43-d91efaf8f323" alt="image" width="70%" data-proofer-ignore></p><p><br /></p><p>“testImproved”의 실행 시간은 평균 1.860 ms/op로 나타났으며, 에러 범위는 ±0.465 ms/op다.</p><p>“testOriginal”의 실행 시간은 평균 154.466 ms/op로 나타났으며, 에러 범위는 ±51.680 ms/op다.</p><p>testImproved와 testOriginal 간의 실행 시간 차이가 대략 150배이며, 에러 범위도 50배 정도 줄었다.</p><p>마지막 글만 가져오는 코드는 확실히 성능이 개선되어 보인다.</p><p><br /><br /></p><p><strong>그외 다른 log들</strong></p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>Result "LastLineBenchmark.testImproved":
+  1.860 ±(99.9%) 0.465 ms/op [Average]
+  (min, avg, max) = (1.566, 1.860, 2.398), stdev = 0.308
+  CI (99.9%): [1.395, 2.325] (assumes normal distribution)
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">(min, avg, max) = (1.566, 1.860, 2.398), stdev = 0.308</code></p><p>testImproved의 실행 시간에 대한 최소값, 평균값, 최대값, 표준 편차를 나타낸다.</p><p>최소값은 1.566 ms/op, 평균값은 1.860 ms/op, 최대값은 2.398 ms/op, 표준 편차는 0.308 ms/op다.</p><p><br /></p><p><code class="language-plaintext highlighter-rouge">CI (99.9%): [1.395, 2.325] (assumes normal distribution)</code></p><p>testImproved의 실행 시간에 대한 99.9% 신뢰 구간을 나타낸다.</p><p>여기서는 1.395 ms/op에서 2.325 ms/op 사이의 값들이 99.9%의 확률로 실제 평균값을 포함한다고 추정된다.</p><p>신뢰 구간은 실행 시간 추정의 정확성과 신뢰도를 나타낸다.</p><p><br /></p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>Result "LastLineBenchmark.testOriginal":
+  154.466 ±(99.9%) 51.680 ms/op [Average]
+  (min, avg, max) = (97.067, 154.466, 222.105), stdev = 34.183
+  CI (99.9%): [102.786, 206.146] (assumes normal distribution)
+</pre></table></code></div></div><p><br /><br /><br /></p><h4 id="2차-수정"><span class="mr-2">2차 수정</span><a href="#2차-수정" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>Map을 추가하여 file 조회 전 map의 값 유무에 따라 map에서 조회하거나 file에서 조회 하는 방식</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="nc">LastMessage</span> <span class="nf">lastLine</span><span class="o">(</span><span class="nc">String</span> <span class="n">roomId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">lastMessageMap</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">roomId</span><span class="o">)){</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" = = = MAP 활용 = = = "</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">lastMessageMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">roomId</span><span class="o">);</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" = = = MAP 활용 X = = = "</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">filePath</span> <span class="o">=</span> <span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">roomId</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">;</span>
+        <span class="c1">// 이하 변경 전 코드와 동일</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p><p>과연 파일 조회만 했을 때보다 map을 활용해서 file 조회를 덜 하는 방식이 얼마나 효과적일지 체크해봤다.</p><p>또, 처음에 작성한 코드와 얼마나 차이가 나는지 확인하기 위해</p><p>작성한 순서대로 결과를 띄우려고 메소드 명 앞에 A, B, C, … 를 넣었다.</p><p>Map 조회만 했을 때 ms로는 시간측정이 되지 않아서 ns로 측정했다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">jmh</span><span class="o">{</span>
+    <span class="n">fork</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">warmupIterations</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="o">}</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="nd">@State</span><span class="o">(</span><span class="nc">Scope</span><span class="o">.</span><span class="na">Benchmark</span><span class="o">)</span>
+<span class="nd">@BenchmarkMode</span><span class="o">(</span><span class="nc">Mode</span><span class="o">.</span><span class="na">AverageTime</span><span class="o">)</span>
+<span class="nd">@OutputTimeUnit</span><span class="o">(</span><span class="nc">TimeUnit</span><span class="o">.</span><span class="na">NANOSECONDS</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LastLineBenchmark</span> <span class="o">{</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p><p>map의 값 유무에 따라 map에서 조회하거나 file에서 조회 하는 방식을 jmh에서 사용하기 위해</p><p>file에서 먼저 조회하고 file 조회 로직에 map에 값을 넣는 로직을 추가했다.</p><p>내가 최종적으로 작성한 코드를 반영한 메서드는 getFileAftergetMap이다.</p><p><br /></p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/ba9d5dbe-f3d5-4dba-ae4e-6da7102de2d6" alt="image" width="80%" data-proofer-ignore></p><p><br /></p><p>jmh 결과를 통해 AtestOriginal 메서드는 파일을 열어서 7줄을 읽는 코드로,</p><p>BtestImproved는 1줄만 읽는 코드로 개선되었다.</p><p>그리고 DgetFileAftergetMap는 1줄을 읽지만 파일로만 읽지 않고 map의 값을 활용하는 코드다.</p><p>FonlyGetMap과 ConlyGetFile의 코드를 합친 것이 DgetFileAftergetMap인데,</p><p>하나만 실행했을 때 시간차이를 체크하기 위해 작성했다.</p><p><br /></p><p>참고로 BtestImproved와 ConlyGetFile의 시간차이가 나는 이유는</p><p>코드를 수정하면서 일부 변수들을 더 추가하고 저장하면서 코드의 수정이 일어났기 때문에</p><p>약간의 차이가 나는 것이다.</p><p><br /></p><p>평균적으로 파일로만 조회하는 경우 약 2.42초가 걸리는 반면,</p><p>파일을 조회한 후에 map을 조회할 때의 실행 시간이 더 빠르다는 것을 알 수 있다.</p><p>이를 통해 파일 조회를 최소화하고, map과 같은 메모리 캐싱을 활용하는 것이 효율적인 것으로 판단된다.</p><p><br /><br /><br /><br /></p><h3 id="파일-조회-코드-성능-비교"><span class="mr-2">파일 조회 코드 성능 비교</span><a href="#파일-조회-코드-성능-비교" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="nd">@BenchmarkMode</span><span class="o">(</span><span class="nc">Mode</span><span class="o">.</span><span class="na">AverageTime</span><span class="o">)</span>
+<span class="nd">@OutputTimeUnit</span><span class="o">(</span><span class="nc">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">)</span>
+<span class="nd">@State</span><span class="o">(</span><span class="nc">Scope</span><span class="o">.</span><span class="na">Benchmark</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReadFileBenchmark</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">chatUploadLocation</span><span class="o">;</span>
+
+    <span class="nd">@Setup</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">chatUploadLocation</span> <span class="o">=</span> <span class="s">"./src/main/resources/static/files/"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Benchmark</span> <span class="c1">// 벤치마크 대상 메소드</span>
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">readFileBefore</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ParseException</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">roomId</span> <span class="o">=</span> <span class="s">"111"</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">readString</span><span class="o">(</span><span class="nc">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">roomId</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">));</span>
+        <span class="nc">JSONParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JSONParser</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">"["</span> <span class="o">+</span> <span class="n">str</span> <span class="o">+</span> <span class="s">"]"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Benchmark</span> <span class="c1">// 벤치마크 대상 메소드</span>
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">readFileAfter</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ParseException</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">roomId</span> <span class="o">=</span> <span class="s">"111"</span><span class="o">;</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">lines</span><span class="o">(</span><span class="nc">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatUploadLocation</span><span class="o">,</span> <span class="n">roomId</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">)).</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+        <span class="nc">String</span> <span class="n">jsonString</span> <span class="o">=</span> <span class="s">"["</span> <span class="o">+</span> <span class="nc">String</span><span class="o">.</span><span class="na">join</span><span class="o">(</span><span class="s">","</span><span class="o">,</span> <span class="n">lines</span><span class="o">)</span> <span class="o">+</span> <span class="s">"]"</span><span class="o">;</span>
+        <span class="nc">JSONParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JSONParser</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">jsonString</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></table></code></div></div><p>JMH(Java Microbenchmark Harness)을 사용하여 두 개의 파일 읽기 메소드를 벤치마크하는 코드다.</p><p>JMH는 자바 마이크로 벤치마크 프레임워크로, 자바 성능 측정을 위해 만들어졌다.</p><p>이 코드는 두 개의 메소드를 실행하여 파일을 읽은 후, 결과를 비교한다.</p><p><br /><br /></p><p><code class="language-plaintext highlighter-rouge">readFileBefore()</code> 메소드는 <code class="language-plaintext highlighter-rouge">Files.readString()</code> 메소드를 사용하여 파일을 읽는다.</p><p><code class="language-plaintext highlighter-rouge">readFileAfter()</code> 메소드는 <code class="language-plaintext highlighter-rouge">Files.lines()</code> 메소드를 사용하여 파일을 한 줄씩 읽은 후, 리스트에 담아서 문자열로 변환한다.</p><p>두 개의 메소드를 실행하여 각각의 실행 시간을 측정한 후, 결과를 비교하여 성능을 개선하였는지 확인할 수 있다.</p><p><br /><br /><br /></p><h4 id="실행"><span class="mr-2">실행</span><a href="#실행" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>마지막 글만 가져오기 성능비교와는 다르게 큰 차이는 없어보인다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">jmh</span><span class="o">{</span>
+    <span class="n">fork</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">warmupIterations</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><img data-src="https://user-images.githubusercontent.com/74857364/236689942-de613a55-c852-4f29-872e-d7d629a5c572.png" alt="image" width="60%" data-proofer-ignore></p><p><br /><br /></p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">jmh</span><span class="o">{</span>
+    <span class="n">fork</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">warmupIterations</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/8dd7a16d-c40e-461d-84fd-da27492c5191" alt="image" width="65%" data-proofer-ignore></p><p><br /><br /></p><p><strong>log</strong></p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>Result "ReadFileBenchmark.readFileAfter":
+  1.155 ±(99.9%) 0.232 ms/op [Average]
+  (min, avg, max) = (0.929, 1.155, 1.411), stdev = 0.154
+  CI (99.9%): [0.923, 1.388] (assumes normal distribution)
+
+
+Result "ReadFileBenchmark.readFileBefore":
+  1.212 ±(99.9%) 0.652 ms/op [Average]
+  (min, avg, max) = (0.854, 1.212, 2.339), stdev = 0.431
+  CI (99.9%): [0.560, 1.864] (assumes normal distribution)
+</pre></table></code></div></div><p><br /><br /></p><p>*파일 저장하기는 변경된 부분이 거의 없으므로 성능의 큰 차이가 없을 것이다.</p><p>따라서 JMH 코드를 작성할 필요가 없다.</p><p>코드의 가독성을 높이거나 코드 스타일을 변경하는 경우에는 JMH 코드를 작성할 필요가 없다.</p><p>코드를 변경했을 때 성능이 향상되지 않았더라도 가독성이 높아진다면, 코드를 이해하기 쉬워지므로 변경한 것이 좋다.</p><p><br /><br /><br /></p><p>메소드를 벤치마크한다는 것은 해당 메소드를 실행하여 소요되는 시간, CPU 사용량 등의 성능 지표를 측정하고 분석하는 것을 말한다.</p><p>즉, 해당 메소드의 성능을 정량적으로 측정하여,</p><p>application의 병목 구간이나 성능 개선이 필요한 부분을 파악하고 개선할 수 있는 기반을 마련하는 것이다.</p><p>벤치마크를 통해 개선된 성능은 사용자 경험을 향상시키고, 서버의 처리량을 증가시키며, 더 나은 확장성과 안정성을 제공할 수 있다.</p><p><br /><br /><br /><br /></p><hr /><h2 id="변경-전-후-코드"><span class="mr-2">변경 전 후 코드</span><a href="#변경-전-후-코드" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="파일-저장하기"><span class="mr-2">파일 저장하기</span><a href="#파일-저장하기" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><h4 id="변경-전"><span class="mr-2">변경 전</span><a href="#변경-전" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">saveFile</span><span class="o">(</span><span class="nc">ChatMessage</span> <span class="n">chatMessage</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 파일 저장</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">connectUsers</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">())</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">((</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">toString</span><span class="o">()).</span><span class="na">equals</span><span class="o">(</span><span class="s">"JOIN"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">reset</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getSender</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">countChat</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getSender</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="nc">JsonObject</span> <span class="n">jsonObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JsonObject</span><span class="o">();</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"roomId"</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">toString</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">"JOIN"</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"type"</span><span class="o">,</span> <span class="s">"JOINED"</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"type"</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"sender"</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getSender</span><span class="o">());</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"message"</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"adminChat"</span><span class="o">,</span> <span class="n">adminChat</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">()));</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"userChat"</span><span class="o">,</span> <span class="n">userChat</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">()));</span>
+    <span class="nc">Gson</span> <span class="n">gson</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GsonBuilder</span><span class="o">().</span><span class="na">setPrettyPrinting</span><span class="o">().</span><span class="na">create</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">json1</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">toJson</span><span class="o">(</span><span class="n">jsonObject</span><span class="o">);</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="nc">FileWriter</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">()</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="nc">File</span> <span class="n">file1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">()</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">file1</span><span class="o">.</span><span class="na">exists</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">file1</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">file</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">json1</span><span class="o">);</span>
+            <span class="n">chatAlarm</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getSender</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">file</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">","</span> <span class="o">+</span> <span class="n">json1</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">file</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+        <span class="n">file</span><span class="o">.</span><span class="na">close</span><span class="o">();</span> <span class="c1">// 연결 끊기</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[error] "</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/6f62e2b2-171f-4be0-866f-b443441e2c72" alt="image" width="50%" data-proofer-ignore></p><p><br /></p><h4 id="변경-후"><span class="mr-2">변경 후</span><a href="#변경-후" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">saveFile</span><span class="o">(</span><span class="nc">ChatMessage</span> <span class="n">chatMessage</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">connectUsers</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">())</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getType</span><span class="o">()</span> <span class="o">==</span> <span class="nc">ChatMessage</span><span class="o">.</span><span class="na">MessageType</span><span class="o">.</span><span class="na">JOIN</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">reset</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getSender</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">countChat</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getSender</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="nc">JsonObject</span> <span class="n">jsonObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JsonObject</span><span class="o">();</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"roomId"</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getType</span><span class="o">()</span> <span class="o">==</span> <span class="nc">ChatMessage</span><span class="o">.</span><span class="na">MessageType</span><span class="o">.</span><span class="na">JOIN</span><span class="o">){</span>
+        <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"type"</span><span class="o">,</span> <span class="s">"JOINED"</span><span class="o">);</span>
+    <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+        <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"type"</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"sender"</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getSender</span><span class="o">());</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"message"</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"adminChat"</span><span class="o">,</span> <span class="n">adminChat</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">()));</span>
+    <span class="n">jsonObject</span><span class="o">.</span><span class="na">addProperty</span><span class="o">(</span><span class="s">"userChat"</span><span class="o">,</span> <span class="n">userChat</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">()));</span>
+
+    <span class="nc">Gson</span> <span class="n">gson</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Gson</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">json</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">toJson</span><span class="o">(</span><span class="n">jsonObject</span><span class="o">);</span>
+
+    <span class="k">try</span> <span class="o">(</span><span class="nc">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PrintWriter</span><span class="o">(</span><span class="k">new</span> <span class="nc">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">()</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">,</span> <span class="kc">true</span><span class="o">)))){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">()</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">).</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">json</span><span class="o">);</span>
+            <span class="n">chatAlarm</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getSender</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">","</span> <span class="o">+</span> <span class="n">json</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[error] "</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/c7906cc7-78f8-4c60-a57d-fc82eb56b8eb" alt="image" data-proofer-ignore></p><p>파일을 저장할 때 사용하는 FileWriter 클래스를 PrintWriter 클래스로 대체했다.</p><p>코드 중간에 조건문을 수정하여 ChatMessage 클래스의 type 속성을 확인할 때 <code class="language-plaintext highlighter-rouge">toString()</code> 메서드를 사용하지 않고,</p><p><code class="language-plaintext highlighter-rouge">ChatMessage.MessageType.JOIN</code>과 같이 enum 상수를 사용하여 비교하는 것으로 변경했다.</p><p>Gson 클래스를 생성할 때 setPrettyPrinting() 메서드를 사용하지 않아서 코드가 더 간결해졌다.</p><p><code class="language-plaintext highlighter-rouge">setPrettyPrinting()</code> 메서드는 JSON 데이터를 출력할 때 들여쓰기를 적용하는 기능인데, 이 기능이 필요하지 않아서 생략했다.</p><p><br /><br /></p><p><strong>PrintWriter와 FileWriter 차이</strong> → “data를 출력시키는 방법”</p><p>개행을 하게 될 때 PrintWriter에서는 <code class="language-plaintext highlighter-rouge">println()</code>을 사용하여 자동으로 해주지만</p><p>FileWriter는 직접 덧붙여야 한다.</p><p>참고 글 : <a href="https://wikidocs.net/227">PrintWriter과 FileWriter 차이</a></p><p><br /><br /><br /><br /></p><h3 id="파일-조회하기"><span class="mr-2">파일 조회하기</span><a href="#파일-조회하기" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><h4 id="변경-전-1"><span class="mr-2">변경 전</span><a href="#변경-전-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="nc">Object</span> <span class="nf">readFile</span><span class="o">(</span><span class="nc">String</span> <span class="n">roomId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">long</span> <span class="n">startTime</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">readString</span><span class="o">(</span><span class="nc">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">roomId</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">));</span>
+        <span class="nc">JSONParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JSONParser</span><span class="o">();</span>
+        <span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">"["</span> <span class="o">+</span> <span class="n">str</span> <span class="o">+</span> <span class="s">"]"</span><span class="o">);</span>
+        <span class="kt">long</span> <span class="n">stopTime</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"readFile : "</span> <span class="o">+</span> <span class="o">(</span><span class="n">stopTime</span> <span class="o">-</span> <span class="n">startTime</span><span class="o">)</span> <span class="o">+</span> <span class="s">" 초"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">NoSuchFileException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">FileNotFoundException</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="o">|</span> <span class="nc">ParseException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[error] "</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /></p><h4 id="변경-후-1"><span class="mr-2">변경 후</span><a href="#변경-후-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="nc">Object</span> <span class="nf">readFile</span><span class="o">(</span><span class="nc">String</span> <span class="n">roomId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">long</span> <span class="n">startTime</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">lines</span><span class="o">(</span><span class="nc">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">chatUploadLocation</span><span class="o">,</span> <span class="n">roomId</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">)).</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+        <span class="nc">String</span> <span class="n">jsonString</span> <span class="o">=</span> <span class="s">"["</span> <span class="o">+</span> <span class="nc">String</span><span class="o">.</span><span class="na">join</span><span class="o">(</span><span class="s">","</span><span class="o">,</span> <span class="n">lines</span><span class="o">)</span> <span class="o">+</span> <span class="s">"]"</span><span class="o">;</span>
+        <span class="nc">JSONParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JSONParser</span><span class="o">();</span>
+        <span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">jsonString</span><span class="o">);</span>
+        <span class="kt">long</span> <span class="n">stopTime</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"readFile : "</span> <span class="o">+</span> <span class="o">(</span><span class="n">stopTime</span> <span class="o">-</span> <span class="n">startTime</span><span class="o">)</span> <span class="o">+</span> <span class="s">" 초"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">NoSuchFileException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">FileNotFoundException</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="o">|</span> <span class="nc">ParseException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[error] "</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">Files.readString()</code>을 사용하여 파일의 내용을 가져왔지만,</p><p>변경 코드에서는 <code class="language-plaintext highlighter-rouge">Files.lines()</code>를 사용하여 각 라인을 읽어들인 후 <code class="language-plaintext highlighter-rouge">String.join()</code>을 사용하여 하나의 JSON 문자열로 결합했다.</p><p>또한 <code class="language-plaintext highlighter-rouge">Collectors.toList()</code>를 사용하여 리스트로 변환한 후 <code class="language-plaintext highlighter-rouge">String.join()</code>을 사용하여 결합했다.</p><p><br /><br /><br /><br /></p><h3 id="파일-마지막-json만-조회"><span class="mr-2">파일 마지막 json만 조회</span><a href="#파일-마지막-json만-조회" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><h4 id="변경-전-2"><span class="mr-2">변경 전</span><a href="#변경-전-2" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="nc">List</span> <span class="nf">lastLine</span><span class="o">(</span><span class="nc">String</span> <span class="n">roomId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span><span class="o">{</span>
+        <span class="c1">// 2. 뒤에서 7줄 읽기</span>
+        <span class="nc">RandomAccessFile</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RandomAccessFile</span><span class="o">(</span><span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">roomId</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">,</span> <span class="s">"r"</span><span class="o">);</span>
+        <span class="nc">StringBuilder</span> <span class="n">lastLine</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">lineCount</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span>
+      
+        <span class="c1">// 2. 전체 파일 길이</span>
+        <span class="kt">long</span> <span class="n">fileLength</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+
+        <span class="c1">// 3. 포인터를 이용하여 뒤에서부터 앞으로 데이터를 읽는다.</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">long</span> <span class="n">pointer</span> <span class="o">=</span> <span class="n">fileLength</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">pointer</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">pointer</span><span class="o">--)</span> <span class="o">{</span>
+
+            <span class="c1">// 3.1. pointer를 읽을 글자 앞으로 옮긴다.</span>
+            <span class="n">file</span><span class="o">.</span><span class="na">seek</span><span class="o">(</span><span class="n">pointer</span><span class="o">);</span>
+
+            <span class="c1">// 3.2. pointer 위치의 글자를 읽는다.</span>
+            <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="kt">char</span><span class="o">)</span> <span class="n">file</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+
+            <span class="c1">// 3.3. 줄바꿈이 7번(lineCount) 나타나면 더 이상 글자를 읽지 않는다.</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">'\n'</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">lineCount</span><span class="o">--;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">lineCount</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="c1">// 3.4. 결과 문자열의 앞에 읽어온 글자(c)를 붙여준다.</span>
+            <span class="n">lastLine</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">c</span><span class="o">);</span>
+
+        <span class="o">}</span>
+
+        <span class="nc">StringTokenizer</span> <span class="n">st</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringTokenizer</span><span class="o">(</span><span class="n">lastLine</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="s">","</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">roomNum</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">type</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">sender</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">admin</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="nc">StringUtils</span><span class="o">.</span><span class="na">removeEnd</span><span class="o">(</span><span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">trim</span><span class="o">(),</span> <span class="s">"}"</span><span class="o">);</span>
+
+        <span class="nc">String</span> <span class="n">adminChat</span> <span class="o">=</span> <span class="n">admin</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">admin</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"adminChat"</span><span class="o">)+</span><span class="mi">12</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">userChat</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"userChat"</span><span class="o">)+</span><span class="mi">11</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"message"</span><span class="o">)+</span><span class="mi">10</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"iso-8859-1"</span><span class="o">),</span> <span class="s">"utf-8"</span><span class="o">);</span>
+
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">chat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">chat</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">adminChat</span><span class="o">.</span><span class="na">trim</span><span class="o">());</span>
+        <span class="n">chat</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">userChat</span><span class="o">.</span><span class="na">trim</span><span class="o">());</span>
+        <span class="n">chat</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">trim</span><span class="o">());</span>
+
+        <span class="k">return</span> <span class="n">chat</span><span class="o">;</span>
+        <span class="c1">// 4. 결과 출력</span>
+    <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">FileNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /></p><h4 id="변경-후-2"><span class="mr-2">변경 후</span><a href="#변경-후-2" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">lastLine</span><span class="o">(</span><span class="nc">String</span> <span class="n">roomId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">(</span><span class="nc">RandomAccessFile</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RandomAccessFile</span><span class="o">(</span><span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">roomId</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">,</span> <span class="s">"r"</span><span class="o">))</span> <span class="o">{</span>
+        <span class="kt">long</span> <span class="n">fileLength</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+
+        <span class="c1">// 파일 포인터를 파일 끝으로 이동시킴</span>
+        <span class="n">file</span><span class="o">.</span><span class="na">seek</span><span class="o">(</span><span class="n">fileLength</span><span class="o">);</span>
+
+        <span class="c1">// 파일 포인터를 끝에서 두 번째 줄의 시작 지점으로 이동시킴</span>
+        <span class="kt">long</span> <span class="n">pointer</span> <span class="o">=</span> <span class="n">fileLength</span> <span class="o">-</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">pointer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">file</span><span class="o">.</span><span class="na">seek</span><span class="o">(</span><span class="n">pointer</span><span class="o">);</span>
+            <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="kt">char</span><span class="o">)</span> <span class="n">file</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">'\n'</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">pointer</span><span class="o">--;</span>
+        <span class="o">}</span>
+        <span class="n">file</span><span class="o">.</span><span class="na">seek</span><span class="o">(</span><span class="n">pointer</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+
+        <span class="c1">// 두 번째 줄의 내용을 읽어서 반환함</span>
+        <span class="nc">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">line</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">line</span><span class="o">.</span><span class="na">trim</span><span class="o">().</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">line</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">","</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">JSONObject</span> <span class="n">json</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JSONObject</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">adminChat</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"adminChat"</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">userChat</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"userChat"</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"message"</span><span class="o">).</span><span class="na">trim</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"iso-8859-1"</span><span class="o">),</span> <span class="s">"utf-8"</span><span class="o">);</span>
+
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">chat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">chat</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">adminChat</span><span class="o">));</span>
+        <span class="n">chat</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">userChat</span><span class="o">));</span>
+        <span class="n">chat</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">messages</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">chat</span><span class="o">;</span>
+
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="o">|</span> <span class="nc">JSONException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="k">return</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>파일이 저장될 때 마지막 줄은 공백으로 비워져 있다.</p><p>그래서 끝에서 2번째 줄을 가지고 오는 코드로 작성했다.</p><p><br /><br /></p><ul><li><p>try-with-resources 구문을 사용하여 파일 <code class="language-plaintext highlighter-rouge">close()</code>를 명시적으로 호출하지 않아도 자동으로 파일을 닫아준다.</p><li><p>파일 포인터를 끝에서 두 번째 줄의 시작 지점으로 이동시켜서 파일을 한 번만 읽어도 되도록 개선되었다.</p><p>이전 코드에서는 파일의 끝부터 7줄을 읽어야 했다.</p><li><p>불필요한 문자열 처리가 제거되어 코드가 간결해졌다.</p><p>이전 코드에서는 문자열을 분리하고 다시 합치는 등의 작업이 있었지만,</p><p>변경된 코드에서는 JSON 객체를 바로 파싱하여 필요한 값을 추출했다.</p></ul><p><br /></p><p>변경된 코드는 이전 코드보다 효율적이고 간결해졌다.</p><p><br /><br /><br /></p><h4 id="2차-수정-1"><span class="mr-2">2차 수정</span><a href="#2차-수정-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>채팅방을 키고 닫고를 자주 하면서 계속 파일을 열고 마지막 글을 가져오는 시간이 너무 많이 소요되는 것 같아 수정했다.</p><p>채팅을 할 때 HashMap으로 값을 변경하면서 가장 최근에 작성한 글만 담아두고 있다가</p><p>채팅방 리스트를 띄울 때 가장 최근의 글을 HashMap으로 값을 가져오게 했다.</p><p>위에서 작성했던 코드는 채팅을 입력하지 않은 처음 시작할 때만 실행되고 그 이후에는 HashMap을 활용하게 했다.</p><p>lastMessageMap은 채팅을 하면 해당 기록을 파일에 저장 하는 과정에서 update하게 된다.</p><p><br /><br /></p><p>그 과정에서 return값을 DTO로 변경하고 dto에서 활용할 때 <code class="language-plaintext highlighter-rouge">list.get(0)</code> 과 같이</p><p>순서에 의해 값을 설정했는데 dto에서 값을 꺼내오는 것으로 변경했다.</p><p><br /></p><h4 id="파일-저장-method-코드-추가"><span class="mr-2">파일 저장 method 코드 추가</span><a href="#파일-저장-method-코드-추가" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="c1">// 파일 저장 메소드 내 코드 추가</span>
+<span class="nc">LastMessage</span> <span class="n">lastMessage</span> <span class="o">=</span> <span class="nc">LastMessage</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">,</span> <span class="n">adminCnt</span><span class="o">,</span> <span class="n">userCnt</span><span class="o">,</span> <span class="n">days</span><span class="o">,</span> <span class="n">time</span><span class="o">);</span>
+<span class="n">lastMessageMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">(),</span> <span class="n">lastMessage</span><span class="o">);</span>
+</pre></table></code></div></div><p><br /><br /></p><h4 id="dto"><span class="mr-2">Dto</span><a href="#dto" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="c1">// 변경 전</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="nc">ChatRoomDto</span> <span class="nf">of</span><span class="o">(</span><span class="nc">String</span> <span class="n">roomId</span><span class="o">,</span> <span class="nc">String</span> <span class="n">nickname</span><span class="o">,</span> <span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nc">ChatRoomDto</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+         <span class="o">.</span><span class="na">roomId</span><span class="o">(</span><span class="n">roomId</span><span class="o">)</span>
+         <span class="o">.</span><span class="na">nickname</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getNickname</span><span class="o">())</span>
+         <span class="o">.</span><span class="na">adminChat</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)))</span>
+         <span class="o">.</span><span class="na">userChat</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)))</span>
+         <span class="o">.</span><span class="na">message</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span>
+         <span class="o">.</span><span class="na">day</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">3</span><span class="o">))</span>
+         <span class="o">.</span><span class="na">time</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">4</span><span class="o">))</span>
+         <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">// 변경 후</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="nc">ChatRoomDto</span> <span class="nf">of</span><span class="o">(</span><span class="nc">String</span> <span class="n">roomId</span><span class="o">,</span> <span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nc">LastMessage</span> <span class="n">lastMessage</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nc">ChatRoomDto</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+         <span class="o">.</span><span class="na">roomId</span><span class="o">(</span><span class="n">roomId</span><span class="o">)</span>
+         <span class="o">.</span><span class="na">nickname</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getNickname</span><span class="o">())</span>
+         <span class="o">.</span><span class="na">adminChat</span><span class="o">(</span><span class="n">lastMessage</span><span class="o">.</span><span class="na">getAdminChat</span><span class="o">())</span>
+         <span class="o">.</span><span class="na">userChat</span><span class="o">(</span><span class="n">lastMessage</span><span class="o">.</span><span class="na">getUserChat</span><span class="o">())</span>
+         <span class="o">.</span><span class="na">message</span><span class="o">(</span><span class="n">lastMessage</span><span class="o">.</span><span class="na">getMessage</span><span class="o">())</span>
+         <span class="o">.</span><span class="na">day</span><span class="o">(</span><span class="n">lastMessage</span><span class="o">.</span><span class="na">getDay</span><span class="o">())</span>
+         <span class="o">.</span><span class="na">time</span><span class="o">(</span><span class="n">lastMessage</span><span class="o">.</span><span class="na">getTime</span><span class="o">())</span>
+         <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p><h4 id="최근-채팅-기록-가져오기"><span class="mr-2">최근 채팅 기록 가져오기</span><a href="#최근-채팅-기록-가져오기" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">LastMessage</span><span class="o">&gt;</span> <span class="n">lastMessageMap</span><span class="o">;</span>
+<span class="nd">@PostConstruct</span> <span class="c1">// @PostConstruct는 의존성 주입이 이루어진 후 초기화를 수행하는 메서드</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">lastMessageMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ConcurrentHashMap</span><span class="o">&lt;&gt;();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="nc">LastMessage</span> <span class="nf">lastLine</span><span class="o">(</span><span class="nc">String</span> <span class="n">roomId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">lastMessageMap</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">roomId</span><span class="o">)){</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" = = = MAP 활용 = = = "</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">lastMessageMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">roomId</span><span class="o">);</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">" = = = MAP 활용 X = = = "</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">filePath</span> <span class="o">=</span> <span class="n">chatUploadLocation</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">roomId</span> <span class="o">+</span> <span class="s">".txt"</span><span class="o">;</span>
+
+        <span class="c1">// 이하 변경 전 코드와 동일</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /><br /></p><p><em>Reference</em></p><ul><li><a href="https://mong9data.tistory.com/131">[Java] gradle 환경에서 JMH를 사용하여 벤치마킹하기</a><li><a href="https://hyesun03.github.io/2019/08/27/how-to-benchmark-java/">JMH를 사용한 gradle 환경에서의 Java 코드 벤치마킹</a><li><a href="https://ysjee141.github.io/blog/quality/java-benchmark/">JMH(Java Microbenchmark Harness) 사용법</a><li><a href="https://velog.io/@kakdark/JMH">JMH</a></ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/project/'>Project</a>, <a href='/categories/chat/'>Chat</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/spring/" class="post-tag no-text-decoration" >spring</a> <a href="/tags/jmh/" class="post-tag no-text-decoration" >JMH</a> <a href="/tags/%EC%84%B1%EB%8A%A5-%EC%B8%A1%EC%A0%95/" class="post-tag no-text-decoration" >성능 측정</a> <a href="/tags/%EB%B2%A4%EC%B9%98%EB%A7%88%ED%81%AC-%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="post-tag no-text-decoration" >벤치마크 테스트</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Jmh+-+Dal+Blog&url=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FJMH%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Jmh+-+Dal+Blog&u=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FJMH%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FJMH%2F&text=Jmh+-+Dal+Blog" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div><script src="https://utteranc.es/client.js" repo="haedal-uni/comments" issue-term="title" label="comments" theme="github-light" crossorigin="anonymous" async> </script></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/Python%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-%ED%8C%8C%EC%9D%B4%EC%B0%A8%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%83%9D%EC%84%B1/">Python을 활용한 파이차트 이미지 생성</a><li><a href="/posts/SocketIO%EC%99%80-NLTK%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%B1%97%EB%B4%87-%EA%B5%AC%ED%98%84/">Socketio와 nltk를 사용한 챗봇 구현</a><li><a href="/posts/Redis-%EC%A0%81%EC%9A%A9/">Redis 적용</a><li><a href="/posts/%EA%B2%80%EC%83%89%EC%96%B4-%EC%9E%90%EB%8F%99%EC%99%84%EC%84%B1/">검색어 자동완성</a><li><a href="/posts/%EC%A7%81%EB%A0%AC%ED%99%94%EC%99%80-%EC%97%AD%EC%A7%81%EB%A0%AC%ED%99%94/">직렬화와 역직렬화</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/study/">study</a> <a class="post-tag" href="/tags/summary/">summary</a> <a class="post-tag" href="/tags/chat/">Chat</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/log/">log</a> <a class="post-tag" href="/tags/jpa/">JPA</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/websocket/">WebSocket</a> <a class="post-tag" href="/tags/data-structure/">Data-Structure</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4"><div id="related-posts" class="mb-2 mb-sm-4"><h3 class="pt-2 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/WebSocket/"><div class="card-body"> <em class="small" data-ts="1674918000" data-df="ll" > Jan 29, 2023 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Websocket</h3><div class="text-muted small"><p> WebSocket 관련 글 Websocket 👈🏻 Websocket + 부가기능 Websocket (채팅 기록 json 파일 저장하기) Sse Sse 문제점 Websocket + jwt Websocket test Jmh - 채팅 파일 refactoring 기존에 작성했던 webSocket 그동안 채팅 구현을 하...</p></div></div></a></div><div class="card"> <a href="/posts/WebSocket-+%EB%B6%80%EA%B0%80%EA%B8%B0%EB%8A%A5/"><div class="card-body"> <em class="small" data-ts="1675609200" data-df="ll" > Feb 6, 2023 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Websocket +부가기능</h3><div class="text-muted small"><p> WebSocket 관련 글 Websocket Websocket + 부가기능 👈🏻 Websocket (채팅 기록 json 파일 저장하기) Sse Sse 문제점 Websocket + jwt Websocket test Jmh - 채팅 파일 refactoring 1편에 이어서 채팅기능을 구현했으므로 고객센터를 구현하기 ...</p></div></div></a></div><div class="card"> <a href="/posts/WebSocket(%EC%B1%84%ED%8C%85-%EA%B8%B0%EB%A1%9D-Json-%ED%8C%8C%EC%9D%BC-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0)/"><div class="card-body"> <em class="small" data-ts="1676559600" data-df="ll" > Feb 17, 2023 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Websocket(채팅 기록 json 파일 저장하기)</h3><div class="text-muted small"><p> Json 파일 저장하기 관련 글 Websocket Websocket + 부가기능 Websocket (채팅 기록 json 파일 저장하기) 👈🏻 Sse Sse 문제점 Websocket + jwt Websocket test Jmh - 채팅 파일 refactoring 문제 채팅 대화내용을 보여주기 위해서 처음에는 클라이언...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/Redis-Cache/" class="btn btn-outline-primary" prompt="Older"><p>Redis cache</p></a> <a href="/posts/EC2+Docker+MySQL/" class="btn btn-outline-primary" prompt="Newer"><p>Ec2+docker+mysql</p></a></div></div></div><footer class="row pl-3 pr-3"><div class="col-12 d-flex justify-content-between align-items-center text-muted pl-0 pr-0"><div class="footer-left"><p class="mb-0"> © 2025 <a href="https://github.com/haedal-uni">haedal-uni</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/study/">study</a> <a class="post-tag" href="/tags/summary/">summary</a> <a class="post-tag" href="/tags/chat/">Chat</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/log/">log</a> <a class="post-tag" href="/tags/jpa/">JPA</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/websocket/">WebSocket</a> <a class="post-tag" href="/tags/data-structure/">Data-Structure</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a><div id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-animation="true" data-autohide="false"><div class="toast-header"> <button type="button" class="ml-2 ml-auto close" data-dismiss="toast" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div><div class="toast-body text-center pt-0"><p class="pl-2 pr-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></div><script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/ko.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-K7KC8XYH0P"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-K7KC8XYH0P'); }); </script>
