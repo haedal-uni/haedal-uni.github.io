@@ -9,13 +9,14 @@ df = pd.read_csv('ecommerce_customer_data_large.csv')
 df.head()
 # df.tail()
 ```
+
 |index|Customer ID|Purchase Date|Product Category|Product Price|Quantity|Total Purchase Amount|Payment Method|Customer Age|Returns|Customer Name|Age|Gender|Churn|           
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|         
-|0|44605|2023-05-03 21:30:02|Home|177|1|2427|PayPal|31|1\.0|John Rivera|31|Female|0|       
-|1|44605|2021-05-16 13:57:44|Electronics|174|3|2448|PayPal|31|1\.0|John Rivera|31|Female|0|  
-|2|44605|2020-07-13 06:16:57|Books|413|1|2345|Credit Card|31|1\.0|John Rivera|31|Female|0|   
-|3|44605|2023-01-17 13:14:36|Electronics|396|3|937|Cash|31|0\.0|John Rivera|31|Female|0|     
-|4|44605|2021-05-01 11:29:27|Books|259|4|2598|PayPal|31|1\.0|John Rivera|31|Female|0|        
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|0|44605|2023-05-03 21:30:02|Home|177|1|2427|PayPal|31|1\.0|John Rivera|31|Female|0|
+|1|44605|2021-05-16 13:57:44|Electronics|174|3|2448|PayPal|31|1\.0|John Rivera|31|Female|0|
+|2|44605|2020-07-13 06:16:57|Books|413|1|2345|Credit Card|31|1\.0|John Rivera|31|Female|0|
+|3|44605|2023-01-17 13:14:36|Electronics|396|3|937|Cash|31|0\.0|John Rivera|31|Female|0|
+|4|44605|2021-05-01 11:29:27|Books|259|4|2598|PayPal|31|1\.0|John Rivera|31|Female|0|
 
 평균이 중앙값보다 크거나 작은 차이가 크지 않은걸 보아 데이터가 한쪽으로 치우치는 경향이 없어보인다.
 
@@ -63,7 +64,7 @@ df.isna().sum()
 
 Returns 열에만 Nan값이 있어 개수를 확인했다. 총 47382로 전체 데이터의 약 19%를 차지한다.
 
-![image](https://github.com/user-attachments/assets/78dd2be5-9b32-4156-81a5-86e7806f36ef){: width="50%"}  
+![image](https://github.com/user-attachments/assets/78dd2be5-9b32-4156-81a5-86e7806f36ef){: width="20%"}  
 
 <br><br>
 
@@ -72,9 +73,10 @@ df.dropna(inplace=True) # 결측치 제거
 df.describe()
 df.info()
 ```
+
 |index|Customer ID|Product Price|Quantity|Total Purchase Amount|Customer Age|Returns|Churn|     
-|---|---|---|---|---|---|---|---|       
-|count|202618\.0|202618\.0|202618\.0|202618\.0|202618\.0|202618\.0|202618\.0|       
+|---|---|---|---|---|---|---|---|
+|count|202618\.0|202618\.0|202618\.0|202618\.0|202618\.0|202618\.0|202618\.0|
 |mean|25020\.140234332586|254\.8990662231391|3\.0084197850141647|2725\.817661806947|43\.817923382917606|0\.500824211077002|0\.20108776120581587|
 |std|14412\.38867355113|141\.72042520520375|1\.4143385567083016|1442\.2684914912043|15\.35606675487065|0\.5000005545271854|0\.4008145037060417|
 |min|1\.0|10\.0|1\.0|100\.0|18\.0|0\.0|0\.0|
