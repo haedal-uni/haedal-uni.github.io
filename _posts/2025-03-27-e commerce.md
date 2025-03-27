@@ -114,9 +114,6 @@ Data columns (total 12 columns):
 
 성별, 연령대, 반품, 이탈, 제품, 날짜를 시각화 했으며 연령을 연령대로 변환해 진행했다.
 
-- `plt.xticks()` : x축에 간격을 구분하기 위해 표시하는 눈금    
-- `plt.xlim()` : x축이 표시되는 범위를 지정하거나 반환
-
 ```py
 # 제품 카테고리 확인  
 df['Product Category'].unique() # 'Home', 'Electronics', 'Books', 'Clothing'
@@ -224,8 +221,6 @@ ax[3][1].set_title('Hour')
 <br><br><br><br>
 
 ### seaborn
-*subplot을 명시적으로 만든 경우 Axes 객체를 전달해야한다. 
-
 #### 연령대별 평균 구매 금액 
 ```py
 import seaborn as sns
@@ -240,6 +235,7 @@ for idx, val in total_purchase.items() : # (index, value) 형태
 plt.title("연령대별 평균 구매 금액")
 plt.show()
 ```
+
 ![image](https://github.com/user-attachments/assets/5ed88327-519f-45a5-a4e7-039e773aea80)
 
 연령대가 높을수록 평균 구매 금액이 증가하는 형태를 보인다.  
