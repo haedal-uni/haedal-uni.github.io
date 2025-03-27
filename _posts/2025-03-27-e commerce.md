@@ -113,7 +113,8 @@ Data columns (total 12 columns):
 성별, 연령대, 반품, 이탈, 제품, 날짜를 시각화 했으며 연령을 연령대로 변환해 진행했다.
 
 - `plt.xticks()` : x축에 간격을 구분하기 위해 표시하는 눈금    
-- `plt.xlim()` : x축이 표시되는 범위를 지정하거나 반환     
+- `plt.xlim()` : x축이 표시되는 범위를 지정하거나 반환
+
 ```py
 # 제품 카테고리 확인  
 df['Product Category'].unique() # 'Home', 'Electronics', 'Books', 'Clothing'
@@ -143,6 +144,7 @@ df['Month'] = pd.to_datetime(df['Purchase Date']).dt.month
 df['Hour'] = pd.to_datetime(df['Purchase Date']).dt.hour
 df["Weekday"] = df["Purchase Date"].dt.day_name()
 ```
+
 <br><br>
 
 ### subplot 시각화 
