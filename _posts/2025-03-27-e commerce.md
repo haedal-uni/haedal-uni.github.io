@@ -299,3 +299,52 @@ plt.show()
 
 9 ~ 12월에는 판매량이 제품과 상관없이 저조해지는 것을 볼 수 있다.    
 
+<br><br><br>
+
+#### 반환 데이터 
+
+```py
+'''
+만약 Nan이 존재하는 컬럼이라면 notna()를 사용하여 필터링
+df_returns = df[df["Returns"].notna()] 와 같이 작성해서 data에 넣어준다.
+'''
+g = sns.FacetGrid(df, col="Returns", height=5, aspect=1, hue="Churn")
+g.map_dataframe(sns.histplot, x="Age_Group", alpha=0.5)
+g.add_legend()
+plt.show()
+```
+
+![image](https://github.com/user-attachments/assets/eaf0b2a1-623a-47ef-b19b-6e747be689ad)
+
+반품(Returns) 여부에 따른 연령대 분포를 보여주며 이탈(Churn) 여부를 색상으로 구분했다.
+
+연령대별 고객 분포가 유사하게 나타났으며
+
+반품을 한 경우에도 비슷한 연령대 분포가 유지됨을 확인할 수 있다.
+
+연령대별 반품 고객의 이탈 여부를 비교하여 특정 연령대에서 이탈이 더 높은지 확인하기 위해 추가 분석했다.   
+
+<br><br>
+
+#### 연령대별 반품 고객의 이탈 비율 
+```py
+df_returns = df[df["Returns"] == 1]  # 반품한 고객만 선택
+churn_rates = df_returns.groupby("Age_Group")["Churn"].mean()  # 연령대별 이탈 비율 계산
+
+plt.figure(figsize=(10, 5))
+sns.barplot(x=churn_rates.index, y=churn_rates.values)
+plt.title("연령대별 반품 고객의 이탈 비율")
+plt.xlabel("Age Group")
+plt.ylabel("Churn Rate")
+plt.ylim(0, 1)  # Churn의 데이터가 0과 1로만 이루어져있으므로 
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/214874c9-2520-4219-8355-06679b313980)
+
+이를 표로 보면 아래와 같다.
+
+![image](https://github.com/user-attachments/assets/ebae854b-7d15-417e-8839-ccbe9f010140)
+
+반품 경험이 있는 고객의 경우 연령대와 관계없이 일정 수준의 이탈 비율을 보이는 경향이 있다.
+
+
