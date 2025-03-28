@@ -220,7 +220,7 @@ ax[3][1].set_title('Hour')
 
 <br><br><br><br>
 
-### seaborn
+### 연령대별
 #### 연령대별 평균 구매 금액 
 ```py
 import seaborn as sns
@@ -254,6 +254,7 @@ px.imshow(co_matrix, text_auto=True)
 
 <br><br><br>
 
+### 날짜별 
 #### 요일 별 구매 빈도 
 ```py
 plt.figure(figsize=(8, 5))
@@ -300,8 +301,9 @@ plt.show()
 9 ~ 12월에는 판매량이 제품과 상관없이 저조해지는 것을 볼 수 있다.    
 
 <br><br><br>
-
-#### 반환 데이터 
+    
+### 반품 
+#### 반품 데이터 
 
 ```py
 '''
@@ -346,5 +348,39 @@ plt.show()
 ![image](https://github.com/user-attachments/assets/ebae854b-7d15-417e-8839-ccbe9f010140)
 
 반품 경험이 있는 고객의 경우 연령대와 관계없이 일정 수준의 이탈 비율을 보이는 경향이 있다.
+
+<br><br><br><br>
+
+### 제품 카테고리 별
+#### 제품 카테고리 별 반품 비율 
+```py
+# 반품 비율이 높은 제품 카테고리 분석
+return_rates = df.groupby("Product Category")["Returns"].mean().sort_values(ascending=False)
+
+plt.figure(figsize=(10, 5))
+sns.barplot(x=return_rates.index, y=return_rates.values)
+plt.title("제품 카테고리별 반품 비율")
+plt.xticks(rotation=45)
+plt.ylim(0, 1)
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/1f26d9d1-46e9-4f26-b678-29aad9d89f5c)
+
+모든 제품의 반품 비율이 비슷하게 나와서 차이를 파악하기 힘들다.
+
+<br><br><br><br>
+
+### 고객 별
+#### 고객 별 구매 개수 
+```py
+customer_purchase = df.groupby("Customer ID")["Purchase Date"].count().sort_values(ascending=True)
+plt.hist(customer_purchase, edgecolor='black')   
+```
+![image](https://github.com/user-attachments/assets/29802a46-77c9-4c6f-bcc9-77b8788df043)
+
+고객의 구매 횟수를 분석한 결과 
+
+대부분의 고객이 1~6회 구매에 몰려 있으며 7회 이상 구매하는 고객은 상대적으로 적다
+
 
 
