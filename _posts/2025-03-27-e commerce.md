@@ -382,5 +382,33 @@ plt.hist(customer_purchase, edgecolor='black')
 
 대부분의 고객이 1~6회 구매에 몰려 있으며 7회 이상 구매하는 고객은 상대적으로 적다
 
+<br><br><br><br>
 
+### 이탈
+#### 이탈 고객 분석
+```py
+fig = make_subplots(rows=1, cols=3, subplot_titles=["연령대", "성별", "구매 횟수"])
+
+# 이탈 고객 (Churn=1)
+fig.add_trace(go.Bar(x=df[df["Churn"] == 1]["Age_Group"].value_counts().index,
+                     y=df[df["Churn"] == 1]["Age_Group"].value_counts().values,
+                     name="이탈 고객 연령대"), row=1, col=1)
+
+fig.add_trace(go.Bar(x=df[df["Churn"] == 1]["Gender"].value_counts().index,
+                     y=df[df["Churn"] == 1]["Gender"].value_counts().values,
+                     name="이탈 고객 성별"), row=1, col=2)
+
+fig.add_trace(go.Bar(x=df[df["Churn"] == 1]["Quantity"].value_counts().index,
+                     y=df[df["Churn"] == 1]["Quantity"].value_counts().values,
+                     name="이탈 고객 구매 횟수"), row=1, col=3)
+
+fig.update_layout(title_text="이탈 고객 분석")
+fig.show()
+```
+![newplot](https://github.com/user-attachments/assets/83db95a3-6ba5-49f3-ba5c-c9e1bda07f9c)
+
+
+이탈 고객 분석을 연령대, 성별, 구매 횟수에 따라 구분을 하였다.
+
+기존 연령대 분포, 성별, 구매횟수의 분포와 비슷한 형태를 띈다. 
 
