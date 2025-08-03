@@ -43,16 +43,18 @@ ex) 한 명의 사람이 총 5번 방문했다면
 웹사이트에 사용자들의 가장 많은 유입처를 확인하기 위해 사용자 측정항목의 데이터를 확인
 
 <br>                   
-                 
-세션 기본 채널 그룹 |     
-:---:|    
-Organic Search  
-Direct      
-Referral        
-Paid Search        
-Organic Social      
-Paid Social      
-Display         
+
+ 
+세션 기본 채널 그룹 |
+:---: |
+Organic Search |
+Direct |
+Referral |
+Paid Search |
+Organic Social |
+Paid Social |
+Display |
+
 
 <br><br>  
 
