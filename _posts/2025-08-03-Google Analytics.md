@@ -34,7 +34,7 @@ ex) 한 명의 사람이 총 5번 방문했다면
 ### 1. 웹사이트 사용자 유입 분석 
 전체 사용자의 전반적인 유입 분석이 가능한 [트래픽 획득] 탭 클릭 
 
-<img width="308" height="230" alt="image" src="https://github.com/user-attachments/assets/8a110c51-13ad-4ce4-8fad-77baae532cad" />
+<img src="https://github.com/user-attachments/assets/8a110c51-13ad-4ce4-8fad-77baae532cad" width="40%">   
 
 <br><br><br><br>          
 
@@ -42,17 +42,17 @@ ex) 한 명의 사람이 총 5번 방문했다면
 
 웹사이트에 사용자들의 가장 많은 유입처를 확인하기 위해 사용자 측정항목의 데이터를 확인
 
-<br>      
-
-세션 기본 채널 그룹 |
-:---: |
-Organic Search
-Direct
-Referral
-Paid Search
-Organic Social
-Paid Social
-Display
+<br>                   
+                 
+세션 기본 채널 그룹 |           
+:---:|
+Organic Search  
+Direct      
+Referral        
+Paid Search        
+Organic Social      
+Paid Social      
+Display         
 
 <br><br>  
 
