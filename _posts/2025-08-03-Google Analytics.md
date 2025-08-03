@@ -155,6 +155,8 @@ plt.show()
 
 <br><br><br><br>
 
+---
+
 REFERENCE
 
 [구글 애널리틱스 4 유입 분석의 첫 단계: 획득 보고서 보기](https://osoma.kr/blog/ga4-acquisition-report/)
