@@ -162,6 +162,12 @@ plt.show()
 
 방문자 수가 적은(10 이하) 글을 제외하고 가장 높은 수치는 76%의 참여율을 보였다.
 
+<br>
+
+<img src="https://github.com/user-attachments/assets/286919fa-8c89-45e1-8085-06535fd5d5ea" />
+   
+<br><br>   
+
 참여율이 높지 않은 것으로 보아 대부분의 참여율이 50~60%에 미치는 것으로 보여진다.
 
 <br><br><br><br>
