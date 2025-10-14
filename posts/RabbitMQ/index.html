@@ -1,0 +1,463 @@
+<!DOCTYPE html><html lang="ko" data-mode="light" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Rabbitmq" /><meta property="og:locale" content="ko" /><meta name="description" content="RabbitMQ Message Broker는 실시간 채팅 서비스를 구현하는 데 핵심적인 부분이다." /><meta property="og:description" content="RabbitMQ Message Broker는 실시간 채팅 서비스를 구현하는 데 핵심적인 부분이다." /><link rel="canonical" href="https://haedal-uni.github.io//posts/RabbitMQ/" /><meta property="og:url" content="https://haedal-uni.github.io//posts/RabbitMQ/" /><meta property="og:site_name" content="Dal Blog" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2024-04-01T00:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Rabbitmq" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-04-05T04:38:09+09:00","datePublished":"2024-04-01T00:00:00+09:00","description":"RabbitMQ Message Broker는 실시간 채팅 서비스를 구현하는 데 핵심적인 부분이다.","headline":"Rabbitmq","mainEntityOfPage":{"@type":"WebPage","@id":"https://haedal-uni.github.io//posts/RabbitMQ/"},"url":"https://haedal-uni.github.io//posts/RabbitMQ/"}</script><title>Rabbitmq | Dal Blog</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Dal Blog"><meta name="application-name" content="Dal Blog"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="https://raw.githubusercontent.com/cotes2020/chirpy-images/main/commons/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Dal Blog</a></div><div class="site-subtitle font-italic">한 걸음씩</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <a href="https://github.com/haedal-uni" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['example','doamin.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>Rabbitmq</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper" class="d-flex justify-content-center"><div id="main" class="container pl-xl-4 pr-xl-4"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4 pb-5"><div class="post pl-1 pr-1 pl-md-2 pr-md-2"><h1 data-toc-skip>Rabbitmq</h1><div class="post-meta text-muted"> <span> Posted <em class="" data-ts="1711897200" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Apr 1, 2024 </em> </span> <span> Updated <em class="" data-ts="1712259489" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Apr 5, 2024 </em> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/haedal-uni">haedal-uni</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="4092 words"> <em>22 min</em> read</span></div></div></div><div class="post-content"><h1 id="rabbitmq">RabbitMQ</h1><p>Message Broker는 실시간 채팅 서비스를 구현하는 데 핵심적인 부분이다.</p><p>Message Broker를 적용하는 과정에 대해서 정리했다.</p><p><br /><br /></p><p>WebSocket과 Stomp의 차이점에 대해서 살펴보면</p><p>WebSocket은 클라이언트와 서버 간 양방향 실시간 통신을 가능하게 하는 프로토콜이다.</p><p>별도의 메시지 브로커 없이도 클라이언트와 서버 간의 통신을 구현할 수 있다.</p><p><br /></p><p>Stomp는 메시지 브로커와 클라이언트 간 상호작용을 위한 프로토콜이다.</p><p>메시지 큐나 브로커와의 통신을 추상화하여 클라이언트가 메시지를 보내고 받을 때의 프로토콜을 통일한다. (일관된 방식)</p><p>따라서 보안 토큰과 같은 정보를 헤더와 바디를 가진 메시지로 전달할 수 있다.</p><p><br /></p><p>나는 Stomp 프로토콜을 선택하여 보안을 강화하고 메시지의 타입에 따라 컨트롤러를 분리하기로 했다.</p><p>따라서 나는 header의 token을 담아 보안을 높이고 메세지 타입에 따른 controller를 분리 시키기 위해 Stomp을 사용했었다.</p><p><br /><br /><br /><br /></p><h3 id="in-memory-broker의-문제점"><span class="mr-2">In Memory Broker의 문제점</span><a href="#in-memory-broker의-문제점" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Stomp 프로토콜을 사용할 때는 기본적으로 In-Memory Message Broker를 사용하게된다.</p><p>In Memory Broker를 사용하는 경우 몇 가지 문제점이 있다.</p><ul><li><p>용량 제한:</p><p>세션을 수용할 수 있는 크기가 제한되어 있어서,</p><p>사용자 수가 증가할수록 서버 부하와 처리량이 감소한다.</p><li><p>장애 발생 시 메시지 유실 가능성:</p><p>장애가 발생하면 메시지가 메모리에만 저장되어 있기 때문에 메시지 유실 가능성이 높아진다.</p><li><p>모니터링 어려움:</p><p>메모리 기반 브로커의 경우 모니터링 도구나 기능이 제한되어 있어 시스템 상태를 파악하기 어렵다.</p></ul><p><br /></p><p>이러한 문제점을 해결하기 위해 외부 브로커인 RabbitMQ, Kafka, Active MQ 등을 사용할 수 있다.</p><p><br /><br /><br /><br /></p><h3 id="redis의-적용과-문제점"><span class="mr-2">Redis의 적용과 문제점</span><a href="#redis의-적용과-문제점" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>문제를 해결하기 위해 Redis를 사용하여 메시지를 빠르게 처리할 수 있도록 적용했었다.</p><p>그러나 Redis는 STOMP 프로토콜을 지원하지 않았다.</p><p>따라서 front에서 사용 중인 STOMP 프로토콜과의 호환성 문제가 발생했다.</p><p><br /></p><p>현재 채팅은 front에서 STOMP 프로토콜을 사용하고 있기 때문에</p><p>Redis broker를 사용해서 채팅을 진행하려면 websocket을 사용해야하고</p><p>front를 수정하지 않고 동작시키기 위해서는</p><p>STOMP 프로토콜의 Message Broker 기능을 제공하는 RabbitMQ, ActiveMQ 등을 사용해야했다.</p><p><br /><br /><br /><br /></p><h3 id="rabbitmq와-activemq-비교"><span class="mr-2">RabbitMQ와 ActiveMQ 비교</span><a href="#rabbitmq와-activemq-비교" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>RabbitMQ와 ActiveMQ는 메시지를 수신한 구독자가 해당 메시지를 명시적으로 확인하기 전까지는 메시지를 보관하고 유지한다.</p><p>이러한 방식을 메시지 액키스(Acknowledgement) 또는 컨슈머의 확인(Consumer Acknowledgement)이라고 한다.</p><p><br /></p><p>따라서 메시지를 받기 전까지 삭제하지 않으며, 이는 메시지 손실을 방지하는 데 도움이 된다.</p><p>비교적으로 RabbitMQ는 더 높은 성능과 안정성을 제공하며, 더 많은 정보를 얻을 수 있다.</p><p>또한, 단순하고 쉽게 설정하고 관리할 수 있는 특성을 가지고 있다.</p><p><br /></p><p>위와 같은 이유로, RabbitMQ와 ActiveMQ 중에서는 RabbitMQ를 선택했다.</p><p><br /><br /></p><p>남은 RabbitMQ와 Kafka를 후보로 두고 내가 정한 기준에 따라 결정했다.</p><p><strong>1.</strong> 문제가 발생했을 시 재시도 가능</p><p><strong>2.</strong> Stomp 프로토콜을 지원</p><p><br /><br /><br /><br /></p><h3 id="rabbitmq와-kafka의-특징"><span class="mr-2">RabbitMQ와 Kafka의 특징</span><a href="#rabbitmq와-kafka의-특징" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>RabbitMQ는 AMQP 프로토콜을 지원하여 다양한 클라이언트 언어와 플랫폼에서 사용할 수 있다.</p><p>또한 메시지 지속성을 통해 메시지 손실을 방지하고 유연한 메시지 라우팅 기능을 제공한다.</p><p>이는 비동기 및 분산 시스템에 적합하다.</p><p><br /></p><p>반면 Kafka는 로그 기반 아키텍처를 통해 대량의 데이터를 신속하게 처리할 수 있으며,</p><p>분산 및 확장성을 갖춘 클러스터 구성으로 대규모 데이터 처리가 가능하다.</p><p>또한 파티션 단위로 데이터를 저장하여 순서를 보장한다.</p><p><br /><br /><br /><br /></p><h4 id="rabbitmq와-kafka의-재시도-메커니즘"><span class="mr-2">RabbitMQ와 Kafka의 재시도 메커니즘</span><a href="#rabbitmq와-kafka의-재시도-메커니즘" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>RabbitMQ는 메시지 처리 실패 시 재시도가 가능한 내장된 메커니즘을 제공한다.</p><p>이를 통해 다른 소비자가 해당 메시지를 처리할 수 있으며, 재시도 동안 다른 메시지의 처리가 중단되지 않는다.</p><p><br /></p><p>반면 Kafka는 내장된 재시도 메커니즘이 없기 때문에 소비자 애플리케이션에서 메시지 재시도 로직을 직접 구현해야 한다.</p><p>또한 파티션 내에서 순서가 보장되므로 메시지 처리 중에 다른 메시지 처리가 대기해야 한다.</p><p><br /></p><p>이러한 특징을 고려하여 RabbitMQ가 메시지의 안정적인 전달을 보장하고 실시간 채팅 서비스에 적합하다고 판단했다.</p><p><br /><br /><br /><br /><br /></p><h2 id="rabbitmq-flow"><span class="mr-2">RabbitMQ flow</span><a href="#rabbitmq-flow" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p><a href="https://docs.spring.io/spring-framework/reference/web/websocket/stomp/message-flow.html">공식 문서</a></p><p><br /></p><p>단순 내장 메시지 브로커가 활성화될 때 사용되는 구성 요소</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/3ec90774-d0aa-4447-a29c-577578511f68" alt="image" data-proofer-ignore></p><p><br /><br /></p><p>외부 브로커(RabbitMQ)를 구성할 때 사용되는 구성 요소</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/42f4fb92-90bf-45bc-af3d-988fce819ec6" alt="image" data-proofer-ignore></p><p><br /></p><p>두 다이어그램 사이의 차이점은 메시지를 TCP를 통해 외부 STOMP broker까지 전달하고</p><p>broker에서 가입된 client로 메시지를 전달하기 위해 “broker relay”를 사용한다는 것이다.</p><p><br /><br /></p><p>message는 Producer에서 시작하여 Exchange를 거쳐 Binding된 Queue로 이동하고, 최종적으로 Consumer에게 전달된다.</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>       +----------+     +------------+     +----------+     +------+
+       | Producer | --&gt; | Exchange   | --&gt; | Binding  | --&gt; | Queue| --&gt; Consumer
+       +----------+     +------------+     +----------+     +------+
+                      |   Routing    |
+                      |   Rules      |
+                      +--------------+
+</pre></table></code></div></div><ul><li><p>Producer(프로듀서):</p><p>Producer는 메시지를 생성하고 Message Broker(RabbitMQ)에 전송한다.</p></ul><p><br /></p><ul><li><p>Exchange(익스체인지):</p><p>Exchange는 Producer로부터 받은 메시지를 수신하고 라우팅한다.</p><p>Exchange는 설정된 라우팅 규칙(route key)에 따라 메시지를 하나 이상의 Queue로 라우팅한다.</p></ul><p><br /></p><ul><li><p>Binding(바인딩):</p><p>Binding은 Exchange와 Queue 간의 연결을 말한다.</p><p>Binding을 통해 Exchange는 어떤 Queue로 메시지를 전달할지 결정한다.</p></ul><p><br /></p><ul><li><p>Queue(큐):</p><p>Queue는 Exchange로부터 메시지를 수신하여 저장한다.</p><p>Binding된 Queue 중 하나에 메시지가 전달된다.</p></ul><p><br /></p><ul><li><p>Consumer(컨슈머):</p><p>Consumer는 Queue에 쌓인 메시지를 소비하고 처리한다.</p><p>Consumer는 Queue에 새로운 메시지가 도착할 때마다 해당 메시지를 받아 처리한다.</p></ul><p><br /><br /><br /><br /><br /></p><h2 id="code-작성"><span class="mr-2">Code 작성</span><a href="#code-작성" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/messaging.html#messaging.amqp">공식 문서</a></p><p><a href="https://spring.io/guides/gs/messaging-rabbitmq">공식 문서 guide</a></p><p><br /><br /></p><h3 id="의존성-주입"><span class="mr-2">의존성 주입</span><a href="#의존성-주입" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">reactor</span><span class="o">-</span><span class="n">netty</span><span class="err">'</span>
+<span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">amqp</span><span class="err">'</span>
+</pre></table></code></div></div><p>stompBrokerRelayMessageHandler는 Spring Framework의 WebSocket 모듈에서</p><p>STOMP 메시징 프로토콜을 사용하여 메시지 브로커와 통신하기 위한 핸들러다.</p><p>이 핸들러를 사용하려면 STOMP 메시지 브로커와의 통신을 지원하는 라이브러리가 필요하다.</p><p>Reactor Netty를 백엔드로 사용하기 때문에 관련 설정을 추가해준다.</p><p><br /></p><div class="language-yml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="c1"># application.properties</span>
+<span class="s">spring.rabbitmq.host=localhost</span>
+<span class="s">spring.rabbitmq.port=5672</span>
+<span class="s">spring.rabbitmq.username=guest</span>
+<span class="s">spring.rabbitmq.password=guest</span>
+
+<span class="c1"># RabbitMQ queue, exchange, routing-key info</span>
+<span class="s">rabbitmq.queue.name = adme.queue</span>
+<span class="s">rabbitmq.exchange.name = adme.exchange</span>
+<span class="s">rabbitmq.routing.key = room.*</span>
+</pre></table></code></div></div><p>routing key는 사용자 별로 채팅방 id가 다르기 때문에 와일드 카드를 사용했다..</p><p><br /></p><ul><li><code class="language-plaintext highlighter-rouge">*</code> : 한 단어만을 대신<li><code class="language-plaintext highlighter-rouge">#</code> : 한 단어 이상을 대신</ul><p>ex) <code class="language-plaintext highlighter-rouge">room.*</code>일 때, “room.hello”와 “room.hi”는 인식하지만 “room.hello.hi”는 인식하지 못한다.</p><p>이럴 때 <code class="language-plaintext highlighter-rouge">room.#</code>을 사용해야한다.</p><p>room.* 패턴은 “room.” 다음에 딱 하나의 단어가, room.# 패턴은 “room.” 다음에 하나 이상의 단어가 나온다고 보면 된다.</p><p><a href="https://www.rabbitmq.com/tutorials/tutorial-five-java">RabbitMQ tutorial - Topics</a></p><p><br /><br /><br /></p><h3 id="stomp"><span class="mr-2">stomp</span><a href="#stomp" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="nd">@Configuration</span>
+<span class="nd">@EnableWebSocketMessageBroker</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StompWebSocketConfig</span> <span class="kd">implements</span> <span class="nc">WebSocketMessageBrokerConfigurer</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">StompHandler</span> <span class="n">stompHandler</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureMessageBroker</span><span class="o">(</span><span class="nc">MessageBrokerRegistry</span> <span class="n">config</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">config</span><span class="o">.</span><span class="na">setApplicationDestinationPrefixes</span><span class="o">(</span><span class="s">"/app"</span><span class="o">);</span> <span class="c1">// pub</span>
+        <span class="n">config</span><span class="o">.</span><span class="na">setPathMatcher</span><span class="o">(</span><span class="k">new</span> <span class="nc">AntPathMatcher</span><span class="o">(</span><span class="s">"."</span><span class="o">));</span> <span class="c1">// URL을 / → .으로</span>
+        <span class="n">config</span><span class="o">.</span><span class="na">enableStompBrokerRelay</span><span class="o">(</span> <span class="s">"/queue"</span><span class="o">,</span> <span class="s">"/topic"</span><span class="o">,</span> <span class="s">"/exchange"</span><span class="o">,</span> <span class="s">"/amq/queue"</span><span class="o">);</span>
+<span class="c1">// stompBrokerRelayMessageHandler는 외부 메시지 브로커와 통신하기 위한 설정이다. </span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">registerStompEndpoints</span><span class="o">(</span><span class="nc">StompEndpointRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//소켓에 연결하기 위한 엔드 포인트를 지정</span>
+        <span class="n">registry</span><span class="o">.</span><span class="na">addEndpoint</span><span class="o">(</span><span class="s">"/coco"</span><span class="o">).</span><span class="na">setAllowedOriginPatterns</span><span class="o">(</span><span class="s">"*"</span><span class="o">).</span><span class="na">withSockJS</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureClientInboundChannel</span><span class="o">(</span><span class="nc">ChannelRegistration</span> <span class="n">registration</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// jwt 토큰 검증을 위해 생성한 stompHandler를 인터셉터로 지정해준다.</span>
+        <span class="n">registration</span><span class="o">.</span><span class="na">interceptors</span><span class="o">(</span><span class="n">stompHandler</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>RabbitMQ에서는 점(.)을 사용하여 경로를 구분한다.</p><p>예를 들어, “/room”과 같은 주제를 구독할 때, RabbitMQ에서는 “/room” 대신에 “.room”으로 사용된다.</p><p>따라서 Spring의 <code class="language-plaintext highlighter-rouge">configureMessageBroker()</code>에서 <code class="language-plaintext highlighter-rouge">config.setPathMatcher(new AntPathMatcher("."))</code>를 사용한다.</p><p><br /><br /><br /></p><h3 id="config"><span class="mr-2">Config</span><a href="#config" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Exchage 유형은 4가지가 있다. (Direct Exchange, Fanout Exchange, Topic Exchange, Headers Exchange)</p><p>고객센터의 채팅을 구현했기 때문에 1:1 통신에 적합한 방식인 direct를 사용하려고 했으나</p><p>routing Key와 큐의 binding key가 정확히 일치하는 경우에만 메시지를 전달하기 때문에</p><p>와일드 카드(<code class="language-plaintext highlighter-rouge">*</code>, <code class="language-plaintext highlighter-rouge">#</code>)를 사용할 수가 없다.</p><p><br /></p><p>사용자 별로 채팅방 id를 구분하기 때문에 와일드 카드를 사용해야해서 TopicExchange을 사용했다.</p><p>TopicExchange는 pub/sub에 적합하다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+</pre><td class="rouge-code"><pre><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RabbitMQConfig</span> <span class="o">{</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.rabbitmq.host}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">host</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.rabbitmq.port}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">port</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.rabbitmq.username}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">username</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${spring.rabbitmq.password}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${rabbitmq.queue.name}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">queueName</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${rabbitmq.exchange.name}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">exchange</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${rabbitmq.routing.key}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">routingKey</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * 지정된 큐 이름으로 Queue 빈을 생성
+     * @return Queue 빈 객체
+     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">Queue</span> <span class="nf">queue</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Queue</span><span class="o">(</span><span class="n">queueName</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * routing Key와 일치하는 Queue로 메시지를 전송하기 위한 TopicExchange 빈 생성
+     * @return TopicExchange 빈 객체
+     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">TopicExchange</span> <span class="nf">exchange</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">TopicExchange</span><span class="o">(</span><span class="n">exchange</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * Exchange와 Queue를 바인딩하기 위한 Binding 빈 생성
+     * @param queue Queue 빈 객체
+     * @param exchange TopicExchange 빈 객체
+     * @return Binding 빈 객체
+     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">Binding</span> <span class="nf">binding</span><span class="o">(</span><span class="nc">Queue</span> <span class="n">queue</span><span class="o">,</span> <span class="nc">TopicExchange</span> <span class="n">exchange</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 라우팅 키를 사용하여 Exchange와 Queue를 바인딩</span>
+        <span class="k">return</span> <span class="nc">BindingBuilder</span>
+                <span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">queue</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">to</span><span class="o">(</span><span class="n">exchange</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">routingKey</span><span class="o">);</span>
+    <span class="o">}</span>
+
+
+    <span class="cm">/**
+     * RabbitMQ와의 연결을 관리하는 클래스
+     * @return ConnectionFactory 빈 객체
+     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">ConnectionFactory</span> <span class="nf">connectionFactory</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// RabbitMQ와의 연결을 설정</span>
+        <span class="nc">CachingConnectionFactory</span> <span class="n">connectionFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CachingConnectionFactory</span><span class="o">(</span><span class="n">host</span><span class="o">);</span>
+        <span class="n">connectionFactory</span><span class="o">.</span><span class="na">setPort</span><span class="o">(</span><span class="n">port</span><span class="o">);</span>
+        <span class="n">connectionFactory</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="n">username</span><span class="o">);</span>
+        <span class="n">connectionFactory</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">connectionFactory</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * RabbitMQ와의 메시지 통신을 담당하는 클래스
+     * @param connectionFactory ConnectionFactory 빈 객체
+     * @return RabbitTemplate 빈 객체
+     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">RabbitTemplate</span> <span class="nf">rabbitTemplate</span><span class="o">(</span><span class="nc">ConnectionFactory</span> <span class="n">connectionFactory</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// RabbitMQ와의 메시지 통신을 설정</span>
+        <span class="nc">RabbitTemplate</span> <span class="n">rabbitTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RabbitTemplate</span><span class="o">(</span><span class="n">connectionFactory</span><span class="o">);</span>
+        <span class="n">rabbitTemplate</span><span class="o">.</span><span class="na">setMessageConverter</span><span class="o">(</span><span class="n">jackson2JsonMessageConverter</span><span class="o">());</span>
+        <span class="n">rabbitTemplate</span><span class="o">.</span><span class="na">setExchange</span><span class="o">(</span><span class="n">exchange</span><span class="o">);</span>
+        <span class="n">rabbitTemplate</span><span class="o">.</span><span class="na">setRoutingKey</span><span class="o">(</span><span class="n">routingKey</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">rabbitTemplate</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">SimpleMessageListenerContainer</span> <span class="nf">container</span><span class="o">(</span><span class="nc">ConnectionFactory</span> <span class="n">connectionFactory</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// RabbitMQ 메시지 리스너 컨테이너 설정</span>
+        <span class="nc">SimpleMessageListenerContainer</span> <span class="n">container</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleMessageListenerContainer</span><span class="o">();</span>
+        <span class="n">container</span><span class="o">.</span><span class="na">setConnectionFactory</span><span class="o">(</span><span class="n">connectionFactory</span><span class="o">);</span>
+        <span class="n">container</span><span class="o">.</span><span class="na">setQueueNames</span><span class="o">(</span><span class="n">queueName</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">container</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * Jackson library를 사용해서 메시지를 JSON 형식으로 변환하는 BEAN 생성
+     * @return MessageConverter 빈 객체
+     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">MessageConverter</span> <span class="nf">jackson2JsonMessageConverter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Jackson2JsonMessageConverter</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">new Queue(queueName, true);</code></p><p>boolean durable 매개변수는 큐의 지속성(durability)을 나타낸다.</p><p><br /></p><p>true로 설정하면, 큐가 지속되어 RabbitMQ 서버가 다시 시작되어도 유지된다.</p><p>이는 큐에 저장된 메시지가 손실되지 않고 유지되는 것을 의미한다.</p><p><br /></p><p>false로 설정하면, 큐가 비지속적(non-durable)이며, RabbitMQ 서버가 다시 시작될 때 해당 큐가 삭제된다.</p><p>이 경우 큐에 저장된 메시지는 유실될 수 있다.</p><p><br /><br /><br /></p><h3 id="producer"><span class="mr-2">Producer</span><a href="#producer" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Redis의 Publisher-Subscriber 모델은 RabbitMQ의 Producer-Consumer 모델과 유사한 메시지 전달 패턴을 가지고 있다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre><td class="rouge-code"><pre><span class="nd">@Service</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatMessageProducer</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">RabbitTemplate</span> <span class="n">rabbitTemplate</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${rabbitmq.queue.name}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">queue</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${rabbitmq.exchange.name}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">exchange</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${rabbitmq.routing.key}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">routingKey</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendMessage</span><span class="o">(</span><span class="nc">ChatMessage</span> <span class="n">message</span><span class="o">,</span> <span class="nc">String</span> <span class="n">roomId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"message send : {}"</span><span class="o">,</span> <span class="n">message</span><span class="o">);</span>
+        <span class="n">rabbitTemplate</span><span class="o">.</span><span class="na">convertAndSend</span><span class="o">(</span><span class="n">exchange</span><span class="o">,</span> <span class="n">roomId</span><span class="o">,</span> <span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><h3 id="consumer"><span class="mr-2">Consumer</span><a href="#consumer" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Redis의 경우 MessageListener를 구현하는 방식으로 메시지를 구독했었다.</p><p>RabbitMQ에서는 메시지를 소비하고 처리하기 위해 <code class="language-plaintext highlighter-rouge">@RabbitListener</code>을 사용하면 된다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="nd">@Component</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatMessageConsumer</span><span class="o">{</span>
+
+    <span class="nd">@RabbitListener</span><span class="o">(</span><span class="n">queues</span> <span class="o">=</span> <span class="s">"${rabbitmq.queue.name}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onMessage</span><span class="o">(</span><span class="nc">Message</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// Queue에서 message를 구독</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Received message: "</span> <span class="o">+</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getBody</span><span class="o">()));</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Error processing message: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><h3 id="controller"><span class="mr-2">Controller</span><a href="#controller" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Redis에서는 메시지를 수신하기 위해 Channel을 구독하고, 이를 수신하는 MessageListener를 등록했었다.</p><p>하지만 RabbitMQ에서는 메시지를 수신하기 위해 명시적인 구독이 필요하지 않았다.</p><p>Producer가 메시지를 보내면 해당 Exchange에 메시지가 전달되고,</p><p>이를 구독하는 Consumer는 큐로부터 메시지를 받아 처리한다.</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="nd">@Controller</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatController</span> <span class="o">{</span>
+   <span class="kd">private</span> <span class="kd">final</span> <span class="nc">ChatServiceImpl</span> <span class="n">chatService</span><span class="o">;</span>
+   <span class="kd">private</span> <span class="kd">final</span> <span class="nc">JwtTokenProvider</span> <span class="n">jwtTokenProvider</span><span class="o">;</span>
+   <span class="kd">private</span> <span class="kd">final</span> <span class="nc">RedisService</span> <span class="n">redisService</span><span class="o">;</span>
+   <span class="kd">private</span> <span class="kd">final</span> <span class="nc">ChatMessageProducer</span> <span class="n">producer</span><span class="o">;</span>
+
+   <span class="nd">@MessageMapping</span><span class="o">(</span><span class="s">"chat.sendMessage"</span><span class="o">)</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendMessage</span><span class="o">(</span><span class="nd">@Payload</span> <span class="nc">ChatMessage</span> <span class="n">chatMessage</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">producer</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">,</span> <span class="s">"room."</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+   <span class="o">}</span>
+
+   <span class="nd">@MessageMapping</span><span class="o">(</span><span class="s">"chat.addUser"</span><span class="o">)</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">(</span><span class="nd">@Payload</span> <span class="nc">ChatMessage</span> <span class="n">chatMessage</span><span class="o">,</span> <span class="nc">SimpMessageHeaderAccessor</span> <span class="n">headerAccessor</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">chatMessage</span><span class="o">.</span><span class="na">setType</span><span class="o">(</span><span class="nc">MessageType</span><span class="o">.</span><span class="na">JOIN</span><span class="o">);</span>
+      <span class="n">redisService</span><span class="o">.</span><span class="na">addRedis</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">);</span>
+      <span class="n">chatService</span><span class="o">.</span><span class="na">countUser</span><span class="o">(</span><span class="s">"Connect"</span><span class="o">,</span> <span class="n">roomId</span><span class="o">,</span> <span class="n">chatMessage</span><span class="o">);</span>
+      <span class="n">producer</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">chatMessage</span><span class="o">,</span> <span class="s">"room."</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">());</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><h3 id="docker"><span class="mr-2">Docker</span><a href="#docker" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 -p 61613:61613 rabbitmq:management
+</pre></table></code></div></div><p>RabbitMQ의 AMQP port : 5672</p><p>관리자 웹 인터페이스 port : 15672</p><p>RabbitMQ의 STOMP port : 61613</p><p><br /><br /></p><p>RabbitMQ STOMP plug-in 활성화</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>$ rabbitmq-plugins enable rabbitmq_web_stomp
+$ rabbitmq-plugins enable rabbitmq_web_stomp_examples
+</pre></table></code></div></div><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/4f6cc6f9-22c0-4a95-a4f6-895708e9e7cf" alt="image" width="30%" data-proofer-ignore></p><p><br /><br /><br /><br /><br /></p><h2 id="rabbitmq-관리자-페이지"><span class="mr-2">RabbitMQ 관리자 페이지</span><a href="#rabbitmq-관리자-페이지" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>application을 실행하면 아래 로그가 뜬다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f47ca938-8bea-4386-8958-ec6c1031d92a" alt="image" data-proofer-ignore></p><p>RabbitMQ 서버와 Connection이 정상적으로 동작하는 것을 확인할 수 있다.</p><p><br /><br /><br /></p><p><code class="language-plaintext highlighter-rouge">http://localhost:15672</code>로 들어가서 로그인을 한다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/77c14092-46b5-4a2e-b369-03e99e5f557b" alt="image" width="60%" data-proofer-ignore></p><p><br /><br /><br /></p><h3 id="connections"><span class="mr-2">Connections</span><a href="#connections" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Connections 탭에서 연결이 되었는지 확인한다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/7b802aa9-59f8-4eca-8176-336a29d2a84f" alt="image" width="60%" data-proofer-ignore></p><p><br /><br /><br /></p><h3 id="exchange-확인"><span class="mr-2">Exchange 확인</span><a href="#exchange-확인" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d262d5cc-6580-45a0-bbd7-615f78d89f20" alt="image" width="60%" data-proofer-ignore></p><p><br /><br /></p><p>adme.exchange를 클릭해서 binding 탭을 보면</p><p><code class="language-plaintext highlighter-rouge">application.properties</code>에 설정한 값 그대로 들어가 있는 것을 볼 수 있다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/38480e8b-50b2-416b-97fe-c8f4151323be" alt="image" width="50%" data-proofer-ignore></p><p><br /><br /><br /></p><h3 id="listener-test"><span class="mr-2">Listener test</span><a href="#listener-test" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Consumer 쪽으로 메세지가 잘 들어가는지 테스트 해본다.</p><p>RabbitMQ management 에서 자체적으로 테스트를 할 수 있다.</p><p><br /></p><p>Queues &gt; adme.queue(각자 설정한 queueName)의 상세 화면을 보면 Publish message 토글이 있다.</p><p>Payload에 아무 글이나 작성하고 Pulbish message를 클릭한다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/207ad1a5-f1fb-4b50-8366-dc0e632ee2b1" alt="image" width="60%" data-proofer-ignore></p><p><br /><br /><br /></p><p>메세지가 발행이 되었다고 alert창이 뜬다. 서버 log를 확인해본다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/3c4d8d08-02e9-4b3d-8b97-710cfc74113a" alt="image" width="60%" data-proofer-ignore></p><p><br /><br /><br /><br /></p><h3 id="code-test"><span class="mr-2">code test</span><a href="#code-test" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>destination을 <code class="language-plaintext highlighter-rouge">/queue/&lt;name&gt;</code>으로 설정하면 메세지는 default exchange로 발행된다.</p><p>destination을 <code class="language-plaintext highlighter-rouge">/topic/&lt;routing_key&gt;</code>로 설정하면 메세지는 amq.topic 이라는 exchange로 발행된다.</p><p>나머지 destination에 대해 <code class="language-plaintext highlighter-rouge">/exchange/&lt;exchange_name&gt;/[routing_key]</code> 의 exchange로 메세지가 발행된다.</p><p><br /><br /></p><p>exchanges 탭을 보면 아래와 같이 보여지는데 adme.exchange는 직접 만든 것이고</p><p>나머지는 RabbitMQ에서 기본으로 만들어 준 것이다.</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/38d7401f-bde3-4f96-90cb-014b2e9ff730" alt="image" data-proofer-ignore></p><p><br /><br /><br /></p><h4 id="custom-exchange"><span class="mr-2">custom exchange</span><a href="#custom-exchange" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-js highlighter-rouge"><div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="nx">stompClient</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">/exchange/adme.exchange/room.</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">roomId</span><span class="p">,</span> <span class="nx">onMessageReceived</span><span class="p">);</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">CHAT_EXCHANGE_NAME</span> <span class="o">=</span> <span class="s">"adme.exchange"</span><span class="o">;</span>
+
+<span class="nd">@MessageMapping</span><span class="o">(</span><span class="s">"chat.addUser"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">(</span><span class="nd">@Payload</span> <span class="nc">ChatMessage</span> <span class="n">chatMessage</span><span class="o">,</span> <span class="nc">SimpMessageHeaderAccessor</span> <span class="n">headerAccessor</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">rabbitTemplate</span><span class="o">.</span><span class="na">convertAndSend</span><span class="o">(</span><span class="no">CHAT_EXCHANGE_NAME</span><span class="o">,</span> <span class="s">"room."</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><h4 id="queuedefault-exchange"><span class="mr-2">queue(default exchange)</span><a href="#queuedefault-exchange" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-js highlighter-rouge"><div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="nx">stompClient</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">/queue/room.</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">roomId</span><span class="p">,</span> <span class="nx">onMessageReceived</span><span class="p">);</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">CHAT_EXCHANGE_NAME</span> <span class="o">=</span> <span class="s">"adme.exchange"</span><span class="o">;</span>
+
+<span class="nd">@MessageMapping</span><span class="o">(</span><span class="s">"chat.addUser"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">(</span><span class="nd">@Payload</span> <span class="nc">ChatMessage</span> <span class="n">chatMessage</span><span class="o">,</span> <span class="nc">SimpMessageHeaderAccessor</span> <span class="n">headerAccessor</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">rabbitTemplate</span><span class="o">.</span><span class="na">convertAndSend</span><span class="o">(</span><span class="no">C</span><span class="s">"room."</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /><br /></p><h4 id="topicamqtopic"><span class="mr-2">topic(amq.topic)</span><a href="#topicamqtopic" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-js highlighter-rouge"><div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="kd">let</span> <span class="nx">exchan</span>
+<span class="nx">stompClient</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">/topic/room.</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">roomId</span><span class="p">,</span> <span class="nx">onMessageReceived</span><span class="p">);</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">CHAT_EXCHANGE_NAME</span> <span class="o">=</span> <span class="s">"adme.exchange"</span><span class="o">;</span>
+
+<span class="nd">@MessageMapping</span><span class="o">(</span><span class="s">"chat.addUser"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">(</span><span class="nd">@Payload</span> <span class="nc">ChatMessage</span> <span class="n">chatMessage</span><span class="o">,</span> <span class="nc">SimpMessageHeaderAccessor</span> <span class="n">headerAccessor</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">rabbitTemplate</span><span class="o">.</span><span class="na">convertAndSend</span><span class="o">(</span><span class="s">"amq.topic"</span><span class="o">,</span> <span class="s">"room."</span> <span class="o">+</span> <span class="n">chatMessage</span><span class="o">.</span><span class="na">getRoomId</span><span class="o">(),</span> <span class="n">chatMessage</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><br /><br /></p><p>*RabbitMQ 관리 페이지와 관련된 글은 <a href="https://haedal-uni.github.io/posts/RabbitMQ-%EC%A0%81%EC%9A%A9/">Rabbitmq 적용</a>에서 더 볼 수 있다.</p><p><br /><br /><br /><br /><br /></p><h2 id="error-모음집"><span class="mr-2">ERROR 모음집</span><a href="#error-모음집" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="connection-refused"><span class="mr-2">Connection refused</span><a href="#connection-refused" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information:</p><p><img data-src="https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/9e308a33-eeee-401a-aa4e-18dab2de76b5" alt="image" data-proofer-ignore></p><p><br /><br /><br /></p><h3 id="해결방법"><span class="mr-2">해결방법</span><a href="#해결방법" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>RabbitMQ의 STOMP 포트인 61613 포트를 매핑시킨다.</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 -p 61613:61613 rabbitmq:management
+</pre></table></code></div></div><p><br /><br /><br /><br /><br /></p><p>REFERENCE</p><ul><li><a href="https://velog.io/@ch4570/Stomp-Kafka%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%B1%84%ED%8C%85-%EA%B8%B0%EB%8A%A5-%EA%B0%9C%EB%B0%9C%ED%95%98%EA%B8%B0-with-Spring-Boot-1-Kafka%EC%99%80-Stomp%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C">Stomp + Kafka를 이용한 채팅 기능 개발하기 - (with Spring Boot) #1 (Kafka와 Stomp는 무엇일까?)</a><li><a href="https://leejincha.tistory.com/263">[36] WebSocket - In Memory 대신 외부 브로커 사용하는 이유</a><br /> = = = = = = = = = = = = = = = = = = = = = = = = = = =<li><a href="https://velog.io/@yyong3519/WebSocket-RabbitMQ">WebSocket - RabbitMQ</a><li><a href="https://oingdaddy.tistory.com/166">Springboot + RabbitMQ 연동 및 초간단 샘플 프로젝트 만들기</a><li><a href="https://velog.io/@junsu1222/STOMP%EC%97%90-RabbitMQ%EB%A5%BC-%EC%B6%94%EA%B0%80%ED%95%B4%EB%B3%B4%EC%95%98%EB%8B%A4">STOMP에 RabbitMQ를 추가해보았다.</a></ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/project/'>Project</a>, <a href='/categories/rabbitmq/'>RabbitMQ</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/chat/" class="post-tag no-text-decoration" >Chat</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Rabbitmq+-+Dal+Blog&url=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FRabbitMQ%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Rabbitmq+-+Dal+Blog&u=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FRabbitMQ%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Fhaedal-uni.github.io%2F%2Fposts%2FRabbitMQ%2F&text=Rabbitmq+-+Dal+Blog" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div><script src="https://utteranc.es/client.js" repo="haedal-uni/comments" issue-term="title" label="comments" theme="github-light" crossorigin="anonymous" async> </script></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/Excel_%EC%9E%90%EB%8F%99%ED%99%94/">Excel_자동화</a><li><a href="/posts/%EB%8B%A8%EC%B6%95%ED%82%A4/">단축키</a><li><a href="/posts/%EA%B4%91%EA%B3%A0-%EB%8D%B0%EC%9D%B4%ED%84%B0/">광고 데이터</a><li><a href="/posts/Google-Analytics/">Google analytics</a><li><a href="/posts/SQL-ORDER-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%84%EC%84%9D/">Sql order 데이터 분석</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/study/">study</a> <a class="post-tag" href="/tags/summary/">summary</a> <a class="post-tag" href="/tags/chat/">Chat</a> <a class="post-tag" href="/tags/log/">log</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/jpa/">JPA</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/websocket/">WebSocket</a> <a class="post-tag" href="/tags/data-structure/">Data-Structure</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4"><div id="related-posts" class="mb-2 mb-sm-4"><h3 class="pt-2 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/RabbitMQ-%EC%A0%81%EC%9A%A9/"><div class="card-body"> <em class="small" data-ts="1712242800" data-df="ll" > Apr 5, 2024 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Rabbitmq 적용</h3><div class="text-muted small"><p> RabbitMQ 적용 이 전에 어떻게 적용을 해야하는지 파악했으니 이제 본 코드에 적용해보기로 했다. 적용할 부분 1:1 채팅 현재 나는 1:n 채팅은 존재하지 않는다. 따라서 “topic”은 지운다. topic과 queue에 대한 stackoverflow 글 MessageType에 따른 Queue 설정 ...</p></div></div></a></div><div class="card"> <a href="/posts/WebSocket/"><div class="card-body"> <em class="small" data-ts="1674918000" data-df="ll" > Jan 29, 2023 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Websocket</h3><div class="text-muted small"><p> WebSocket 관련 글 Websocket 👈🏻 Websocket + 부가기능 Websocket (채팅 기록 json 파일 저장하기) Sse Sse 문제점 Websocket + jwt Websocket test Jmh - 채팅 파일 refactoring 기존에 작성했던 webSocket 그동안 채팅 구현을 하...</p></div></div></a></div><div class="card"> <a href="/posts/WebSocket-+%EB%B6%80%EA%B0%80%EA%B8%B0%EB%8A%A5/"><div class="card-body"> <em class="small" data-ts="1675609200" data-df="ll" > Feb 6, 2023 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Websocket +부가기능</h3><div class="text-muted small"><p> WebSocket 관련 글 Websocket Websocket + 부가기능 👈🏻 Websocket (채팅 기록 json 파일 저장하기) Sse Sse 문제점 Websocket + jwt Websocket test Jmh - 채팅 파일 refactoring 1편에 이어서 채팅기능을 구현했으므로 고객센터를 구현하기 ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/Apache-Jmeter/" class="btn btn-outline-primary" prompt="Older"><p>Apache jmeter</p></a> <a href="/posts/RabbitMQ-%EC%A0%81%EC%9A%A9/" class="btn btn-outline-primary" prompt="Newer"><p>Rabbitmq 적용</p></a></div></div></div><footer class="row pl-3 pr-3"><div class="col-12 d-flex justify-content-between align-items-center text-muted pl-0 pr-0"><div class="footer-left"><p class="mb-0"> © 2025 <a href="https://github.com/haedal-uni">haedal-uni</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/spring/">spring</a> <a class="post-tag" href="/tags/study/">study</a> <a class="post-tag" href="/tags/summary/">summary</a> <a class="post-tag" href="/tags/chat/">Chat</a> <a class="post-tag" href="/tags/log/">log</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/jpa/">JPA</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/websocket/">WebSocket</a> <a class="post-tag" href="/tags/data-structure/">Data-Structure</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a><div id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-animation="true" data-autohide="false"><div class="toast-header"> <button type="button" class="ml-2 ml-auto close" data-dismiss="toast" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div><div class="toast-body text-center pt-0"><p class="pl-2 pr-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></div><script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/ko.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-K7KC8XYH0P"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-K7KC8XYH0P'); }); </script>
