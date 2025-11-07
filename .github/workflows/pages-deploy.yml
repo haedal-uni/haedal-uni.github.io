@@ -23,7 +23,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.7
-          bundler-cache: false
+          bundler-cache: true
 
       - name: Deploy
         run: bash tools/deploy.sh
+
+      - name: Build site with Jekyll
+        run: bundle exec jekyll build
