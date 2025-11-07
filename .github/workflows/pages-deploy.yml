@@ -33,9 +33,6 @@ jobs:
 
       - name: Install bundler (최신 허용)
         run: gem install bundler
-  
-      - name: Build site with Jekyll(build)
-        run: bundle exec jekyll build
         
       - name: Deploy
         run: bash tools/deploy.sh
