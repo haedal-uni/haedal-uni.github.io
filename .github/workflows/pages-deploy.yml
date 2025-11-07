@@ -22,10 +22,19 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.7
+          ruby-version: 3.2.2
           bundler-cache: false
 
-      - name: Build site with Jekyll
+      - name: Check ruby & gem versions (디버깅용)
+        run: |
+          ruby -v
+          gem -v
+          bundle -v || true
+
+      - name: Install bundler (최신 허용)
+        run: gem install bundler
+  
+      - name: Build site with Jekyll(build)
         run: bundle exec jekyll build
         
       - name: Deploy
