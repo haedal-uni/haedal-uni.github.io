@@ -31,8 +31,12 @@ jobs:
           gem -v
           bundle -v || true
 
-      - name: Install bundler (최신 허용)
-        run: gem install bundler
+      - name: Update RubyGems & Install Bundler (update)
+        run: |
+          gem update --system
+          gem install bundler -v '2.4.13' || gem install bundler
+          bundle -v
+          gem -v
         
       - name: Deploy
         run: bash tools/deploy.sh
