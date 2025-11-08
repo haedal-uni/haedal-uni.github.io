@@ -37,7 +37,10 @@ jobs:
           gem install bundler -v '2.4.13' || gem install bundler
           bundle -v
           gem -v
-        
+      - name: Install gems (bundle install) 
+        run: |
+          bundle config set --local path vendor/bundle
+          bundle install --jobs 4 --retry 3
       - name: Deploy
         run: bash tools/deploy.sh
 
