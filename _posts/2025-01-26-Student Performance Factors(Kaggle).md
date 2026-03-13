@@ -1,0 +1,253 @@
+---
+categories: Eng-Project Analysis
+tags: [log, Python, Analysis]
+---
+        
+# 데이터 분석  
+## 1. 데이터 가져오기
+```py
+import pandas as pd
+
+# CSV 파일 불러오기
+data = pd.read_csv('../kaggle/StudentPerformanceFactors.csv')
+print(data.head())
+```
+`pandas` : 데이터 처리 및 분석을 위한 라이브러리
+
+`read_csv` : CSV 파일을 데이터프레임 형태로 읽어온다.  
+
+`head()` :  데이터의 첫 5행 출력 
+
+<br>
+
+데이터에 어떤 변수가 있는지는 [kaggle](https://www.kaggle.com/datasets/lainguyn123/student-performance-factors) 에서 확인하면 된다. 
+
+<br><br><br><br>
+
+## 2. 변수 범주화 처리
+### 공부 시간 (Hours_Studied)  
+평균, 표준편차, 최솟값, 최댓값을 계산하고 이를 기준으로 "적음", "보통", "많음"이라는 범주로 나눈다.  
+
+```py
+import numpy as np
+from scipy import stats
+
+hours = np.array(data["Hours_Studied"])
+
+# 평균, 표준편차, 최솟값, 최댓값 계산
+mean = np.mean(hours)
+std_dev = np.std(hours)
+min_value = np.min(hours)
+max_value = np.max(hours)
+
+print(f'평균: {mean}, 표준편차: {std_dev}, 최솟값: {min_value}, 최댓값: {max_value}')
+'''
+평균: 19.98, 표준편차: 5.99, 최솟값: 1, 최댓값: 44  
+'''
+```
+이를 토대로 적음 : 0 ~ 15, 보통 : 15 ~ 30, 많음 : 30 ~ 45를 적용했다.   
+
+<br><br><br>
+
+### 시험 점수 (Exam_Score)  
+```py
+score = np.array(data["Exam_Score"])
+
+mean = np.mean(score)
+std_dev = np.std(score)
+min_value = np.min(score)
+max_value = np.max(score)
+
+print(f'평균: {mean}, 표준편차: {std_dev}, 최솟값: {min_value}, 최댓값: {max_value}')
+
+'''
+평균: 67.23, 표준편차: 3.89, 최솟값: 55, 최댓값: 101
+'''
+```
+
+낮음 : 50 ~ 65, 보통 : 65 ~ 75, 높음 : 75 ~ 100
+
+시험 점수의 최댓값이 101이므로 100점을 초과한 값은 이상치로 간주했다. 
+
+<br><br><br><br>
+
+## 3. 상관분석 (Pearson 상관계수) 
+공부 시간과 시험 점수 간의 관계를 수치적으로 파악하기 위해 Pearson 상관계수를 계산했다.   
+
+<br>
+
+Pearson 상관 계수는 모두 연속형 자료여야한다.
+
+`corr()` : 각 column 간의 상관 계수 계산 
+
+method 옵션이 있는데 pearson은 default값이라 생략가능하다.
+
+```py
+# 이상치 제거
+data = data[data["Exam_Score"] <= 100]
+
+correlation = data['Hours_Studied'].corr(data['Exam_Score'])
+print(f"공부 시간과 시험 점수 간의 Pearson 상관계수: {correlation.round(2)}") # 0.45
+'''
+공부 시간과 시험 점수 간의 Pearson 상관계수: 0.45
+'''
+```
+상관계수 0.45는 약한 양의 상관관계를 의미한다.  
+
+공부 시간이 많을 수록 시험 점수가 높아지는 경향이 있지만 
+
+공부 시간 외 제 3의 요인에 영향을 받을 가능성이 크다.     
+
+<br><br><br>  
+
+### lmplot 시각화  
+Seaborn 라이브러리의 `lmplot`을 사용하여 두 변수 간의 선형 관계를 시각화한다.  
+
+```py
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.lmplot(x='Hours_Studied', y='Exam_Score', data=data)
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/bb880aec-1459-4e03-badb-0fa338466227){: width="50%"}   
+
+그래프의 회귀선 주변에 점들이 흩어져 있다. → 완벽한 선형 관계가 아님을 알 수 있다.  
+
+<br><br><br><br>
+
+## 4. 교차 분석 (카이제곱 검정)  
+### 가설 설정  
+귀무가설 (H₀) : 학습 시간과 시험 점수는 연관성이 없다. (독립이다.)            
+
+대립가설 (H₁) : 학습 시간과 시험 점수는 연관성이 있다. (독립이 아니다.)
+  
+<br>
+
+`chisquare`는 적합성 검정(데이터가 특정 분포에 적합한지)을 수행하는 데 사용되고 
+ 
+`chi2_contingency`는 독립성 검정(두 범주형 변수 간의 관계)을 확인하는 데 사용된다.   
+ 
+카이제곱 검정은 범주형 데이터를 분석하기 때문에 데이터를 범주형으로 변환했다. 
+
+<br><br><br>  
+
+### 카이제곱
+```py
+import pandas as pd
+from scipy.stats import chi2_contingency
+
+# 이상치 제거 
+data = data[data["Exam_Score"] <= 100]
+
+data['study_time'] = pd.cut(data['Hours_Studied'], bins=[0, 10, 25, 45], labels=['적음', '보통', '많음'])
+data['exam'] = pd.cut(data['Exam_Score'], bins=[50, 65, 75, 100], labels=['낮음', '중간', '높음'])
+
+# 교차표 생성 (분할표 만들기는 crosstab을 사용하여 분석)
+observed = pd.crosstab(data['study_time'], data['exam'])
+
+# scipy를 이용한 카이제곱 검정(카이제곱, p, 자유도, 기대치) 
+chi2, p, dof, expected = chi2_contingency(observed)  
+```
+- `observed` : 교차표(관측된 빈도수)
+
+- `chi2` : 카이제곱 통계량
+
+- `p` : 귀무가설이 참이라는 가정하에 관측된 데이터를 얻을 확률
+
+- `dof` : 자유도(Degrees of Freedom)
+
+- `expected` : 기대 빈도수  
+
+  
+<br><br><br>  
+
+### 적합도 검정 (Goodness of Fit Test) 
+모집단을 대표하는지 검정할 수 있는지 확인하는 방법이다.  
+ 
+```py
+# 기대 빈도 중 5 미만 셀 개수 확인
+cells = (expected < 5).sum()
+percentage = (cells / expected.size) * 100
+
+print(f"5 미만 셀 개수: {cells}")
+print(f"전체 셀 대비 비율: {percentage:.1f}%")
+```
+```
+[[4.8550e+02 1.0024e+03 1.7100e+01]
+[1.5639e+03 3.2291e+03 5.5000e+01]
+[8.1600e+01 1.6850e+02 2.9000e+00]]
+```
+각 셀의 기대빈도는 5 이상이어야 한다.
+
+*각 셀의 기대빈도가 5보다 작은 셀이 25% 미만이어야 카이제곱 검정 통계량 값을 사용할 수 있다.
+
+계산 결과 `11%`로 나와서 카이제곱 검정 통계량 값을 사용할 수 있다.  
+
+<br><br>
+
+df(자유도) = (행 개수-1) * (열 개수-1) = 4
+
+카이 제곱표를 보면 df가 4이고 유의수준이 0.05이면 임계값은 9.49가 된다.
+
+아래 코드로도 확인할 수 있다. 
+
+```py
+import scipy.stats as stats
+print(stats.chi2.ppf(0.95,4).round(2)) # 유의수준, 자유도
+```
+
+카이제곱 검정 통계량(X²=710.5)이 임계값(9.49)보다 크므로 귀무가설을 기각하고 대립가설을 채택한다.  
+
+<br><br><br>  
+
+### 독립성 검정 (Chi-Square Test of Independence)  
+```py
+# scipy를 이용한 카이제곱 검정(카이제곱, p, 자유도, 기대치) 
+chi2, p, dof, expected = chi2_contingency(observed)
+print(f"카이제곱 통계량: {chi2}, p-value: {p}")
+'''
+카이제곱 통계량: 710.507724463204, p-value: 1.8491304034075416e-152
+'''
+```
+p-value가 유의 수준인 0.05보다 작으므로 대립가설을 채택한다.
+
+따라서 학습 시간과 시험 점수는 연관성이 있다라고 볼 수 있다. 
+
+<br><br><br>
+
+### 기여도 분석 
+어떤 범주가 카이제곱 통계량에 가장 큰 영향을 미쳤는지 확인하기 위해 표준화 잔차를 계산했다.   
+
+표준화 잔차 : 잔차(또는 관측 카운트와 기대 카운트 간의 차이)를 기대 카운트의 제곱근으로 나눈 값  
+
+```py
+residuals = (observed - expected) / np.sqrt(expected)
+print(residuals)
+```
+```
+점수 범주            낮음         중간        높음
+공부 시간 범주                                
+적음        17.754313 -12.133973 -1.665438
+보통        -8.046655   5.708677 -0.858997
+많음        -8.035393   4.575550  7.818131
+```
+"공부 시간이 적고 점수가 낮음", "공부 시간이 많고 점수가 높음" → 대립가설 채택에 기여 
+
+<br><br><br>
+
+상관분석 결과, 공부 시간과 시험 점수 간에는 약한 양의 상관관계가 있는 것으로 나타났다.
+
+카이제곱 검정을 통해 학습 시간과 시험 점수는 연관성이 있음을 확인하였으며 
+
+특히 공부 시간이 적고 점수가 낮은 범주 및 공부 시간이 많고 점수가 높은 범주가 분석 결과에 가장 크게 기여했다.
+
+<br><br><br><br>
+
+---
+
+**REFERENCE**            
+카이제곱             
+- [[python] 가설 검정 중 교차분석(카이제곱, 카이스퀘어, chi2)](https://velog.io/@grooty/python-%EA%B0%80%EC%84%A4-%EA%B2%80%EC%A0%95-%EC%A4%91-%EA%B5%90%EC%B0%A8%EB%B6%84%EC%84%9D%EC%B9%B4%EC%9D%B4%EC%A0%9C%EA%B3%B1-%EC%B9%B4%EC%9D%B4%EC%8A%A4%ED%80%98%EC%96%B4-chi2)    
+
+적합도 검정       
+- [카이제곱 검정 - 독립성검정 in python](https://star-project.tistory.com/66)           
