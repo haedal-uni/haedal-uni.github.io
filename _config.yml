@@ -37,7 +37,7 @@ social:
   name: haedal-uni # your_full_name
   email: # example@domain.com # change to your email address
   fediverse_handle: # fill in your fediverse handle. E.g. "@username@domain.com"
-  links:
+  # links:
     # The first element serves as the copyright owner's link
     # - https://twitter.com/username # change to your Twitter homepage
     # - https://github.com/haedal-uni # change to your GitHub homepage
