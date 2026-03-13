@@ -309,7 +309,7 @@ public interface ChatRepository extends JpaRepository<Socket, Long> {
 ## 채팅방 gif
 왼쪽 : 일반 user || 오른쪽 : admin
 
-![AC_ 20230129-040520](https://user-images.githubusercontent.com/74857364/215287583-9a8c0b4a-f7a5-4ece-9479-73cdc804cdb8.gif)
+![AC_ 20230129-040520](/assets/img/posts/215287583-9a8c0b4a-f7a5-4ece-9479-73cdc804cdb8.gif)
 
 <br><br><br>
 

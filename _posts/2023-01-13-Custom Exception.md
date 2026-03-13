@@ -210,7 +210,7 @@ public ResRegistryDto getIdxRegistry(Long idx) {
 
 <br>
 
-![image](https://user-images.githubusercontent.com/74857364/212059902-96820ae8-ba63-482f-972a-9061209634c8.png)
+![image](/assets/img/posts/212059902-96820ae8-ba63-482f-972a-9061209634c8.png)
 
 <br><br><br><br>  
 

@@ -260,7 +260,7 @@ form_data.append("comment", $("#comment").val())
 form_data.append("nickname", nickname)
 form_data.append("registry", $("#RegistryId").html())
 ```
-![image](https://user-images.githubusercontent.com/74857364/203247789-71a9ae84-8a61-445c-9a0f-710dfe37809a.png)
+![image](/assets/img/posts/203247789-71a9ae84-8a61-445c-9a0f-710dfe37809a.png)
 
 registry에 id를 넣었는데 어떻게 Registry 객체로 인식되는지는 [연관관계 적용3(궁금증 해결하기)]() 에서 다룬다.  
 

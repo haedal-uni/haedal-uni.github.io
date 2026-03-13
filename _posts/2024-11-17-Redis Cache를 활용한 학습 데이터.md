@@ -57,7 +57,7 @@ if (만약 오늘 날짜가 아니라면) {
 <br><br><br><br>  
 
 ## 구현 과정
-![image](https://github.com/user-attachments/assets/d2158a7a-2cf5-488d-a1b2-604eec198515){: width="85%"}      
+![image](/assets/img/posts/d2158a7a-2cf5-488d-a1b2-604eec198515.png){: width="85%"}      
 
 <br>
 
@@ -174,7 +174,7 @@ Duration ttl = Duration.between(LocalDateTime.now(), LocalDateTime.now().toLocal
 log.info("ttl : " + ttl); // ttl : PT27M40.0414405S (출력 예시)  
 ```
 
-![image](https://github.com/user-attachments/assets/a97bdb5e-54e9-4dc2-a8e4-4987719db7c8)
+![image](/assets/img/posts/a97bdb5e-54e9-4dc2-a8e4-4987719db7c8.png)
 
 - P : "Period"를 나타내는 시작 문자 (기간을 나타냄)    
 - T : 시간 정보를 시작하는 표시

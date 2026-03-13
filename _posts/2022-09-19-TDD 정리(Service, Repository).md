@@ -65,7 +65,7 @@ Board boardSave = boardService.saveBoard(new BoardDto("3", "title", "main", "wri
 
 `@Transactional`이 기본 적용되어 테스트 끝나면 자동 롤백된다. 
 
-![image](https://user-images.githubusercontent.com/74857364/193873417-6ac08742-1904-41a6-b766-682940a5568c.png)
+![image](/assets/img/posts/193873417-6ac08742-1904-41a6-b766-682940a5568c.png)
 
 <br><br>
 

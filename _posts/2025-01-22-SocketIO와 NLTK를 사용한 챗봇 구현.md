@@ -12,7 +12,7 @@ Spring WebSocket 경험이 있다면 SocketIO을 이해하는 데 도움이 될 
 
 <br>
 
-![AC_ 20250126-172901](https://github.com/user-attachments/assets/c931e6c0-c66e-4694-b8c6-7f6c5b7e38d7){: width="50%"}  
+![AC_ 20250126-172901](/assets/img/posts/c931e6c0-c66e-4694-b8c6-7f6c5b7e38d7.gif){: width="50%"}  
 
 <br><br>  
 

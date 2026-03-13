@@ -64,7 +64,7 @@ df.isna().sum()
 
 Returns 열에만 Nan값이 있어 개수를 확인했다. 총 47382로 전체 데이터의 약 19%를 차지한다.
 
-![image](https://github.com/user-attachments/assets/78dd2be5-9b32-4156-81a5-86e7806f36ef){: width="20%"}  
+![image](/assets/img/posts/78dd2be5-9b32-4156-81a5-86e7806f36ef.png){: width="20%"}  
 
 <br><br>
 
@@ -207,7 +207,7 @@ ax[3][1].bar(hour_category.index, hour_category.values, color='skyblue', edgecol
 ax[3][1].set_title('Hour')
 ```
 
-![image](https://github.com/user-attachments/assets/06c7e0dc-31ed-4720-a1ad-7484ef2e967a)
+![image](/assets/img/posts/06c7e0dc-31ed-4720-a1ad-7484ef2e967a.png)
 
 - **성별** : 남녀의 비율은 거의 비슷하게 분포 
 - **연령대** : 20대~60대는 고르게 분포되었으며 10대와 70대는 상대적으로 적은 비율을 차지  
@@ -236,7 +236,7 @@ plt.title("연령대별 평균 구매 금액")
 plt.show()
 ```
 
-![image](https://github.com/user-attachments/assets/5ed88327-519f-45a5-a4e7-039e773aea80)
+![image](/assets/img/posts/5ed88327-519f-45a5-a4e7-039e773aea80.png)
 
 연령대가 높을수록 평균 구매 금액이 증가하는 형태를 보인다.  
 
@@ -248,7 +248,7 @@ import plotly.express as px
 co_matrix =  df[['Total Purchase Amount', 'Customer Age']].corr().round(2)
 px.imshow(co_matrix, text_auto=True)
 ```
-![image](https://github.com/user-attachments/assets/8a028d8b-bf4a-4442-88b1-1d16a0d03cf7)
+![image](/assets/img/posts/8a028d8b-bf4a-4442-88b1-1d16a0d03cf7.png)
 
 연령대와 총 구매 가격의 상관계수는 0.06으로 서로 관련이 없다는 것을 보여준다. 
 
@@ -262,7 +262,7 @@ sns.countplot(x="Weekday", data=df, order=["Monday", "Tuesday", "Wednesday", "Th
 plt.title("요일별 구매 건수")
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/31ea695e-213c-48c9-8ec2-f3d1c8ec5c3d)
+![image](/assets/img/posts/31ea695e-213c-48c9-8ec2-f3d1c8ec5c3d.png)
 
 요일별 차이가 거의 없다. 
 
@@ -276,7 +276,7 @@ plt.title("요일별 구매 건수")
 plt.yscale('log')
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/2fab447c-0f4a-4b1b-bbe2-96a65b54917d)
+![image](/assets/img/posts/2fab447c-0f4a-4b1b-bbe2-96a65b54917d.png)
 
 수, 목, 토요일 순으로 구매 건수가 높고 일요일이 가장 낮다.  
 
@@ -294,7 +294,7 @@ plt.xlabel("제품 카테고리")
 plt.ylabel("월")
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/1b2ef50d-06b0-4dac-94fb-d226883c66b0)
+![image](/assets/img/posts/1b2ef50d-06b0-4dac-94fb-d226883c66b0.png)
 
 이전에 살펴본 월별 구매 그래프와 같이 1 ~ 8월에는 전체적으로 판매량이 높지만 
 
@@ -316,7 +316,7 @@ g.add_legend()
 plt.show()
 ```
 
-![image](https://github.com/user-attachments/assets/eaf0b2a1-623a-47ef-b19b-6e747be689ad)
+![image](/assets/img/posts/eaf0b2a1-623a-47ef-b19b-6e747be689ad.png)
 
 반품(Returns) 여부에 따른 연령대 분포를 보여주며 이탈(Churn) 여부를 색상으로 구분했다.
 
@@ -341,11 +341,11 @@ plt.ylabel("Churn Rate")
 plt.ylim(0, 1)  # Churn의 데이터가 0과 1로만 이루어져있으므로 
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/214874c9-2520-4219-8355-06679b313980)
+![image](/assets/img/posts/214874c9-2520-4219-8355-06679b313980.png)
 
 이를 표로 보면 아래와 같다.
 
-![image](https://github.com/user-attachments/assets/ebae854b-7d15-417e-8839-ccbe9f010140)
+![image](/assets/img/posts/ebae854b-7d15-417e-8839-ccbe9f010140.png)
 
 반품 경험이 있는 고객의 경우 연령대와 관계없이 일정 수준의 이탈 비율을 보이는 경향이 있다.
 
@@ -364,7 +364,7 @@ plt.xticks(rotation=45)
 plt.ylim(0, 1)
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/1f26d9d1-46e9-4f26-b678-29aad9d89f5c)
+![image](/assets/img/posts/1f26d9d1-46e9-4f26-b678-29aad9d89f5c.png)
 
 모든 제품의 반품 비율이 비슷하게 나와서 차이를 파악하기 힘들다.
 
@@ -376,7 +376,7 @@ plt.show()
 customer_purchase = df.groupby("Customer ID")["Purchase Date"].count().sort_values(ascending=True)
 plt.hist(customer_purchase, edgecolor='black')   
 ```
-![image](https://github.com/user-attachments/assets/29802a46-77c9-4c6f-bcc9-77b8788df043)
+![image](/assets/img/posts/29802a46-77c9-4c6f-bcc9-77b8788df043.png)
 
 고객의 구매 횟수를 분석한 결과 
 
@@ -405,7 +405,7 @@ fig.add_trace(go.Bar(x=df[df["Churn"] == 1]["Quantity"].value_counts().index,
 fig.update_layout(title_text="이탈 고객 분석")
 fig.show()
 ```
-![newplot](https://github.com/user-attachments/assets/83db95a3-6ba5-49f3-ba5c-c9e1bda07f9c)
+![newplot](/assets/img/posts/83db95a3-6ba5-49f3-ba5c-c9e1bda07f9c.png)
 
 
 이탈 고객 분석을 연령대, 성별, 구매 횟수에 따라 구분을 하였다.

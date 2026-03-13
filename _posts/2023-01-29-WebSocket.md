@@ -96,7 +96,7 @@ public class WebSocketHandler {
 
 <br><br>  
 
-![image](https://user-images.githubusercontent.com/74857364/213742193-f8e7bc55-a971-452b-9999-abf619965594.png){: width="85%"}
+![image](/assets/img/posts/213742193-f8e7bc55-a971-452b-9999-abf619965594.png){: width="85%"}
 
 WebSocketSession과 Session 모두 Closeable을 상속받고 있다.
 
@@ -148,7 +148,7 @@ WebSocket 서버는 WebSocketHandler 인터페이스를 구현하여 각 경로�
 
 메시지 타입에 따라 TextWebSocketHandler 또는 BinaryWebSocketHandler를 상속해서 구현할 수 있다.
 
-![image](https://user-images.githubusercontent.com/74857364/216780090-693af2df-3c03-41d6-bca4-9741cb8bb07e.png)
+![image](/assets/img/posts/216780090-693af2df-3c03-41d6-bca4-9741cb8bb07e.png)
 
 ```java
 public abstract class AbstractWebSocketHandler implements WebSocketHandler {
@@ -327,7 +327,7 @@ Message Broker는 발신자로부터 받은 메시지를 적절한 수신자에�
 
 **내장 메세지 브로커를 사용한 경우 컴포넌트 구성**
 
-![image](https://user-images.githubusercontent.com/74857364/215541274-d405c685-004f-47d7-b6ae-549f7403dc61.png)
+![image](/assets/img/posts/215541274-d405c685-004f-47d7-b6ae-549f7403dc61.png)
 
 [공식문서](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#websocket)
 

@@ -77,7 +77,7 @@ utterance.rate = parseFloat(rateInput.value); // rate 설정
 synth.speak(utterance); // 음성 재생
 ```
  
-![image](https://github.com/user-attachments/assets/4a28c32b-d149-40ba-a1af-5fecc02a8398){: width="40%"}  
+![image](/assets/img/posts/4a28c32b-d149-40ba-a1af-5fecc02a8398.png){: width="40%"}  
 
 <br><br><br>      
  

@@ -77,7 +77,7 @@ private Jws<Claims> getClaims(String jwt){
 
 `getClaims(token)` : header={alg=HS256},body={sub=haedal, roles=USER, iat=1516239022, exp=1234567890},signature=ajslkdfjaldkfjaDSLFieo
 
-![image](https://user-images.githubusercontent.com/74857364/224392770-dd5f8550-e18c-45f0-ba73-d7b4ffa46d24.png)
+![image](/assets/img/posts/224392770-dd5f8550-e18c-45f0-ba73-d7b4ffa46d24.png)
 
 정리글 👉🏻 [Session과 jwt](https://haedal-uni.github.io/posts/Session%EA%B3%BC-JWT/)
 

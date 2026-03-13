@@ -23,7 +23,7 @@ JWT는 Base64로 인코딩된 JSON 구조로 이루어져 있으며 사용자에
 <br><br><br>
 
 ### JWT의 구조와 시그니처
-![image](https://user-images.githubusercontent.com/74857364/234974933-691e69f0-fdfa-4085-8be7-a801a09164ec.png)
+![image](/assets/img/posts/234974933-691e69f0-fdfa-4085-8be7-a801a09164ec.png)
 
 JWT는 헤더(Header), 페이로드(Payload), 시그니처(Signature) 총 세 부분으로 구성된다.  
 
