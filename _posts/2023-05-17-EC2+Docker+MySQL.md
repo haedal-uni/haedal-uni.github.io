@@ -24,11 +24,11 @@ tags: [study, summary, Docker, AWS, EC2]
 - 스팟 인스턴스 클릭
 
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/35fe007f-f9f1-49ed-8447-a3bfd5625138)
+<img width="808" height="270" alt="Image" src="https://github.com/user-attachments/assets/ae0337a3-c372-471a-95a6-3c51e98ea069" />
 
 <br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/831ca840-c925-4825-8523-541b85c9a56a)
+<img width="465" height="171" alt="Image" src="https://github.com/user-attachments/assets/9fcab3cb-e90e-46cf-8246-3de709a97fb3" />
 
 <br><br>
 
@@ -291,14 +291,14 @@ docker run -p 1111:2222 --name hello -e MYSQL_ROOT_PASSWORD=1234 -d mysql:latest
 
 MySQL이 EC2에서 실행 중이므로 프로젝트에서 해당 DB에 연결한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f4d6c67b-d278-4a6d-ad0a-94a86e6dc73b) 
+<img width="987" height="835" alt="Image" src="https://github.com/user-attachments/assets/660d280f-2b03-4ae4-8dd8-6e570286bc72" /> 
 
 user와 password는 MySQL 실행 시 설정한 값
 
 <br><br><br> 
 
 ### Edit Configuration
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/384931ce-42c0-49a9-9419-e955dc99644b)
+<img width="901" height="326" alt="Image" src="https://github.com/user-attachments/assets/b8e2232f-88cf-4fcd-9fe7-f462b4f9d155" /> 
 
 Edit Configuration에서 Spring Boot 설정을 수정한다.
 
@@ -311,7 +311,7 @@ Active Profiles에 쓰는 것이 아니라 Environment Variables에 작성해야
 <br><br><br> 
 
 ### 인바운드 규칙 설정
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/cc5d6e6f-3df2-4c8d-ade4-44d30bfa7bb3)
+<img width="1823" height="567" alt="Image" src="https://github.com/user-attachments/assets/170035bc-abff-4e6c-9263-de73b93b72e4" />
 
 MySQL 포트를 열어줘야 한다.
 
@@ -319,7 +319,7 @@ MySQL 포트를 열어줘야 한다.
 
 DB는 반드시 내 IP만 접근 가능하도록 설정한다. (보안상 모든 IP 허용X)
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/3a0221a1-c332-432a-94de-1d4cc3942ca5)
+<img width="171" height="210" alt="Image" src="https://github.com/user-attachments/assets/5056a4c0-6f3d-478f-837a-f7822a6a7395" />
 
 <br><br><br>
 
@@ -327,7 +327,7 @@ DB는 반드시 내 IP만 접근 가능하도록 설정한다. (보안상 모든
 
 chat 스키마 생성 후 run 하면 정상 동작한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f53176ab-382f-4118-8ac9-0706ce6f5027)
+<img width="1080" height="304" alt="Image" src="https://github.com/user-attachments/assets/7cce6083-5940-447e-a8cf-4691991c6166" /> 
 
 application.properties에 `spring.jpa.hibernate.ddl-auto=create`를 추가하면 실행과 동시에 테이블이 생성된다.
 
