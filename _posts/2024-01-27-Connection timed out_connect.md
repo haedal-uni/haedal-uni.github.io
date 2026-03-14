@@ -11,7 +11,7 @@ DB를 연결하려고 보니 Connection timed out: connect. 에러가 떴다.
 
 <br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/e72013c6-33af-4613-b940-1052e2a7150f)
+<img width="162" height="293" alt="Image" src="https://github.com/user-attachments/assets/f71923f8-42e6-4383-8efd-708d6cee5649" /> 
 
 <br>
 
