@@ -44,8 +44,6 @@ Publisher가 채널에 메시지를 보내면, 그 채널을 구독하고 있는
 
 메시지를 보낼 때 Publisher는 채널에 어떤 Subscriber가 있는지 알 필요가 없이, 그냥 메시지를 전송만 하면 된다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/a3bc658f-ce54-430d-89f1-f4ad9e760928)
-
 Publish/Subscribe 구조에서 사용되는 Queue를 일반적으로 Topic이라고 한다.
 
 <br><br>
