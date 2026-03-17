@@ -361,7 +361,7 @@ Docker hub 대신 GitHub Container Registry를 사용하여 Docker 이미지를 
             ghcr.io/user/app:latest
             ghcr.io/user/app:1.0.0
 ```
-![image](https://github.com/user-attachments/assets/dfa52ff0-d23b-4468-8383-e9fbce55738f){: width="70%"}   
+![image](/assets/img/posts/dfa52ff0-d23b-4468-8383-e9fbce55738f.png){: width="70%"}   
 
 <br><br><br>
 
@@ -433,7 +433,7 @@ jobs:
             push: true
             tags: ghcr.io/`${{ github.repository }}`:latest
 ```
-![image](https://github.com/user-attachments/assets/1857970f-ecae-4908-9787-42d903ea0bd2){: width="70%"}   
+![image](/assets/img/posts/1857970f-ecae-4908-9787-42d903ea0bd2.png){: width="70%"}   
 
 기본으로 제공되는 변수 알아보기 → [GitHub Docs](https://docs.github.com/ko/actions/learn-github-actions/variables)
 
