@@ -195,7 +195,7 @@ JSON 객체 필드를 Java 객체 필드와 다른 방식으로 일치시켜야 
 
 <br>
 
-<img width="941" height="267" alt="Image" src="https://github.com/user-attachments/assets/0da74268-66c1-4c11-9815-8b21921e68c3" /> 
+<img width="941" height="267" alt="Image" src="/assets/img/posts/0da74268-66c1-4c11-9815-8b21921e68c3.png" /> 
 
 [Jackson ObjectMapper](https://jenkov.com/tutorials/java-json/jackson-objectmapper.html)        
 
