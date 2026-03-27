@@ -11,7 +11,7 @@ DB를 연결하려고 보니 Connection timed out: connect. 에러가 떴다.
 
 <br>
 
-<img width="162" height="293" alt="Image" src="https://github.com/user-attachments/assets/a9063302-f3f7-45b4-88d1-994133cc4268" /> 
+<img width="162" height="293" alt="Image" src="https://github.com/user-attachments/assets/d61d065c-45c6-46b8-976f-399242493db7" />  
 
 <br>
 
