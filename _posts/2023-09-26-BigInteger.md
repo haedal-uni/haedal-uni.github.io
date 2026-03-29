@@ -17,7 +17,7 @@ a와 b를 long으로 변환을 시키면 NumberFormatException 오류가 떴다.
 ### BigInteger
 [docs.oracle](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigInteger.html) 를 참고하여 코드를 작성했다.
 
-<img width="1693" height="551" alt="Image" src="https://github.com/user-attachments/assets/98f00612-e487-4175-908f-9b8ad7526441" /> 
+<img width="1693" height="551" alt="Image" src="/assets/img/posts/98f00612-e487-4175-908f-9b8ad7526441.png" /> 
 
 ```java
 import java.math.*;
