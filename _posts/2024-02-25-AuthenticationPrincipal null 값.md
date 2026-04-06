@@ -109,7 +109,7 @@ public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer m
 
 AuthenticationPrincipalArgumentResolver 클래스를 보면
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/0b514631-7a7c-4d2c-9a49-76a976befdb9)
+<img width="1615" height="305" alt="Image" src="https://github.com/user-attachments/assets/a1a23b6b-e7c8-450a-a5eb-84bec56b4920" />  
 
 **1.** `supportsParameter()`를 통해 `@AuthenticationPrincipal` 이 있는지 체크
 
@@ -121,9 +121,10 @@ Authentication 인터페이스는 Spring Security에서 인증 객체를 나타�
 
 <br><br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/b804fb2d-4cde-40b9-bc18-8cd4ef5dfec5){: width="50%"}
+<img width="820" height="615" alt="Image" src="https://github.com/user-attachments/assets/7ed62ba8-e2da-4c59-9d77-ceb9959d2f90" />
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/a053f95f-1eee-4df6-a462-32ffe905d90c){: width="30%"}
+
+<img width="390" height="403" alt="Image" src="https://github.com/user-attachments/assets/946c4f3a-8797-465d-b684-434600ceb13f" />  
 
 Spring Security에서 AuthenticationFilter를 거쳐 사용자의 인증을 완료하면 
 
@@ -141,7 +142,7 @@ UsernamePasswordAuthenticationToken을 사용하여 Authentication 객체를 설
 
 UsernamePasswordAuthenticationToken은 Authentication 인터페이스를 구현한 클래스다. 
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/6ce3222d-3b07-4b7c-ad8a-ee53fb60e1e2){: width="50%"}      
+<img width="513" height="618" alt="Image" src="https://github.com/user-attachments/assets/7a5abf4d-e6e7-45d2-98d1-852b6ee57466" />    
 
 <br>
 
