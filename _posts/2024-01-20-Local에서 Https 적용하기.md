@@ -63,13 +63,13 @@ $ keytool -genkey -alias bns-ssl -storetype PKCS12 -keyalg RSA -keysize 2048 -ke
 
 아래와 같이 원하는 값을 입력하면 된다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/5167c05f-ac54-4810-8bd9-329a5701621a)
+<img width="1530" height="735" alt="Image" src="https://github.com/user-attachments/assets/4304bdf1-5c50-4884-a13a-87aa3e46b712" />
 
 <br><br>
 
 생성이 끝났다면 다음과 같이 파일이 프로젝트 디렉토리 안에서 생성되어야만 한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/4f757271-ffca-4c4d-825e-6d52dad57826){: width="50%"}
+<img width="1530" height="365" alt="Image" src="https://github.com/user-attachments/assets/571d1b48-fb46-4464-9d25-d52b02b7aa08" /> 
 
 <br><br>
 
@@ -120,10 +120,10 @@ https://localhost:8443
 
 <br><br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d6e3a398-411a-4891-a51f-8da515793bc0){: width="50%"}
+<img width="1530" height="881" alt="Image" src="https://github.com/user-attachments/assets/9b1e603f-7989-4edc-b71c-e56135c7b487" /> 
 
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/d84d3bd5-d230-48c6-b0d7-b1a465b6c552){: width="50%"}
+<img width="1530" height="1168" alt="Image" src="https://github.com/user-attachments/assets/4ca06f8a-ad00-4ca1-b983-b10f610f63a1" />  
 
 localhost(안전하지 않음)으로 이동을 클릭하면 HTTPS가 적용된 사이트를 볼 수 있다.  
 
@@ -175,7 +175,7 @@ powershell을 관리자 권한으로 실행한다.
 
 choco 설치 [공식문서](https://chocolatey.org/install)
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/df86e977-427b-400e-8c80-7e6169f4f937)
+<img width="1530" height="238" alt="Image" src="https://github.com/user-attachments/assets/6665958d-cf24-4da1-a7e0-214e3a884f69" /> 
 
 ```java
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
@@ -185,8 +185,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 설치가 완료되면 설치가 제대로 되었는지 체크해본다.   
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/e9befeb5-7926-403f-a443-6cd40dae1fc5)
-
+<img width="1530" height="161" alt="Image" src="https://github.com/user-attachments/assets/b47752a5-68f3-4788-9467-32cbbee29bd0" />
 
 <br><br>
 
@@ -205,7 +204,7 @@ CA 생성 및 설치 이후 PKCS12 형식 인증서를 생성한다.
 
 $ mkcert -pkcs12 localhost
 ```
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/49134eb4-e382-41aa-8372-9ee9ccf25679)
+<img width="1530" height="606" alt="Image" src="https://github.com/user-attachments/assets/a6dc3e0c-25af-42c5-a6e1-44165544a946" /> 
 
 <br><br>
 
@@ -230,13 +229,13 @@ server.ssl.key-store-password=changeit
 
 실행시키면 아래와 같이 log가 찍힌다.   
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/92857f0a-63d6-46ca-9853-4bd44d71684f){: width="60%"}
+<img width="1530" height="124" alt="Image" src="https://github.com/user-attachments/assets/a3c5392a-6622-4950-813f-d6c4094f9745" />
 
 <br><br>   
 
 실행 페이지
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f46577fb-775b-43ce-9be0-0980f00a38f0){: width="60%"}
+<img width="1530" height="800" alt="Image" src="https://github.com/user-attachments/assets/911a192a-b476-4981-a2e7-5da9ed798f14" />  
 
 <br><br><br><br>
 
