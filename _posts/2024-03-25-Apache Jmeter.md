@@ -5,7 +5,7 @@ tags: [Monitoring]
 
 # Apache Jmeter
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/c87672db-11d2-4ee5-b41a-f1fb8f937848)
+<img width="1800" height="895" alt="Image" src="https://github.com/user-attachments/assets/c360c206-cf8d-439f-8e44-841027854d79" /> 
 
 Download Release 클릭 후 나는 apache-jmeter-5.6.3.zip 다운받았다.
 
@@ -20,13 +20,13 @@ window인 나는 jmeter.bat을 실행했다.
 ## JMeter plugin
 [link](https://jmeter-plugins.org/)
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/3e1dffe1-8c13-4bff-bc3f-197c8630110e){: width="50%"} 
+<img width="828" height="346" alt="Image" src="https://github.com/user-attachments/assets/f6292816-1fb2-4063-a45a-6f96bacdcbb5" />  
 
 이렇게 검색해도 된다.   
 
 <br><br><br> 
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/7cb95821-273a-4f54-9f47-d3c2d7a0c40f){: width="50%"} 
+<img width="771" height="422" alt="Image" src="https://github.com/user-attachments/assets/d9c3b673-93f2-4363-997c-371bc90ca4c8" />  
 
 해당 이미지처럼 클릭해서 플러그인 매니저를 다운받는다.   
 
@@ -36,7 +36,7 @@ jmeter 압축해제 한 뒤 해당 파일을 jmeter 폴더의 lib/ext 안에 넣
 
 JMeter를 재시작 하면 아래와 같이 플러그인을 설치할 수 있게 메뉴가 생겼다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f40cc445-d139-4557-a769-85233d0cd5db)
+<img width="432" height="333" alt="Image" src="https://github.com/user-attachments/assets/39af224e-a0bb-4840-b6f7-076ea798cb75" />   
 
 <br><br><br><br><br> 
 
@@ -44,7 +44,7 @@ JMeter를 재시작 하면 아래와 같이 플러그인을 설치할 수 있게
 ### Thread 설정  
 JMeter에서 Test Plan 우클릭 → add → Thread(Users) → Thread Group을 하여 Thread Group을 생성한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/282b4e92-a4df-4071-b957-58055ca2bb2f){: width="60%"}   
+<img width="563" height="479" alt="Image" src="https://github.com/user-attachments/assets/22678a2a-688f-4eb5-9259-97d7ac54983f" />   
 
 1) Number of Threads (users) : 쓰레드 개수 → 사용자 수
 
@@ -76,11 +76,11 @@ options 탭 → Plugins Manager → Available Plugins 탭 클릭 → WebSocket S
 
 우측 하단의 Apply Changes and Restart JMeter버튼 클릭
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/1cf7a36e-6db5-48c2-a7a3-71dff8991621)
+<img width="1246" height="936" alt="Image" src="https://github.com/user-attachments/assets/b04bf7bd-1143-4943-a2ba-2e534cadeb80" />  
 
 <br><br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/2cb82476-d959-4d51-b2ef-48c99de9883c){: width="60%"}  
+<img width="792" height="673" alt="Image" src="https://github.com/user-attachments/assets/ee8b3b19-6303-4c6b-acea-111d881c0942" />  
 
 **WebSocket Close**: WebSocket 연결을 닫는 작업을 테스트한다.     
     → WebSocket 연결의 안정성과 정상적인 종료 상황을 확인   
@@ -108,7 +108,7 @@ EventListener를 통해 연결 및 종료 이벤트를 감지하는 경우에는
 
 각각 WebSocket Open Connection 및 WebSocket Close Sampler를 사용하면 될 것 같다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/1f08156f-244a-4dc5-b5ea-ef7d2af3073e){: width="60%"}  
+<img width="909" height="679" alt="Image" src="https://github.com/user-attachments/assets/2c1582ab-37f6-4f99-a352-ec2df0570e2b" />  
 
 <br><br><br><br><br> 
 
@@ -128,7 +128,7 @@ EventListener를 통해 연결 및 종료 이벤트를 감지하는 경우에는
 > Thread Group > Add > Listener > View Results Tree           
 > Thread Group > Sampler > Debug Sampler             
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/c3d75777-a309-4756-8287-9d6bf476cebe)
+<img width="231" height="116" alt="Image" src="https://github.com/user-attachments/assets/c11a1482-2f7b-4671-b214-1544a9683dfe" />   
 
 <br><br><br><br> 
 
@@ -141,7 +141,8 @@ Body Data에 json형식으로 nickname과 password를 작성한다.
     "password" : "nick.123"
 }
 ```
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/18ae7be6-2437-4038-914c-3c92ae037d5d)
+
+<img width="1047" height="447" alt="Image" src="https://github.com/user-attachments/assets/8d8a004c-c891-4021-b278-56c9a2718eee" /> 
 
 <br><br><br><br>   
 
@@ -150,7 +151,7 @@ Body Data에 json형식으로 nickname과 password를 작성한다.
 
 HTTP Header Manager에 Name = `Content-type`, Value = `application/json`를 추가한다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/45a6fdd8-008d-41c3-aeb8-a7a78de59b0b)
+<img width="1337" height="208" alt="Image" src="https://github.com/user-attachments/assets/306f7adc-c5e1-43b4-b6c8-cdadd930bb71" />   
 
 <br><br><br><br>   
 
@@ -171,13 +172,13 @@ Response data > Response Body로 보면 아래와 같은 형식으로 응답이 
 - Template : `$1$`
 - Match No. : `1`
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/08560422-58cf-4673-a5a1-b24550404897){: width="50%"} 
+<img width="651" height="417" alt="Image" src="https://github.com/user-attachments/assets/cc56c905-c0ab-4f77-a2ba-305a04b8f7e7" />  
 
 <br><br><br> 
 
 token이 추출 된 것을 볼 수 있다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/4f75a8ab-abe5-4e17-959b-f500c4a17c21){: width="50%"}  
+<img width="781" height="612" alt="Image" src="https://github.com/user-attachments/assets/75f7ae88-53f7-4528-adb9-219a628ef8b0" />  
 
 <br><br><br><br>  
 
@@ -191,7 +192,8 @@ import org.apache.jmeter.protocol.http.control.Header;
 
 sampler.getHeaderManager().add(new Header("Authorization",vars.get("token")));
 ```
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/c0e7aa32-96ef-4b71-b742-5eef8be3e922){: width="60%"}  
+
+<img width="804" height="427" alt="Image" src="https://github.com/user-attachments/assets/70409462-4d30-42c3-a1cb-2de0e90900d7" />
 
 <br><br><br><br> 
 
@@ -200,9 +202,9 @@ sampler.getHeaderManager().add(new Header("Authorization",vars.get("token")));
 
 > HTTP Request를 만들고 HTTP Header Manager에 token을 넣어준다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/0c3f3f5a-28fc-4e4b-b894-ce92194ad5c0)
+<img width="273" height="76" alt="Image" src="https://github.com/user-attachments/assets/90dd2bef-6b02-45b6-be41-2e9a7a92e44b" /> 
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/bdf291d9-5e01-4fa6-9e07-77a6f9e37637){: width="50%"}  
+<img width="685" height="239" alt="Image" src="https://github.com/user-attachments/assets/dfd1e52a-4b13-4aed-a151-a9b392b8a9df" />  
 
 <br><br><br><br><br> 
     
@@ -210,13 +212,13 @@ sampler.getHeaderManager().add(new Header("Authorization",vars.get("token")));
 
 전체 보기
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/592eca09-ad07-4776-80c0-44cf1dd9c650){: width="40%"} 
+<img width="437" height="425" alt="Image" src="https://github.com/user-attachments/assets/231c503b-2405-46b9-94d7-12d70a7753fe" />  
 
 <br><br> 
 
 참고로 모든 요청에 HTTP Header Manager를 생성하여 아래와 같이 작성했다.
     
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/11b8d7f3-b0f8-410a-b9fd-ef5a78737249){: width="60%"} 
+<img width="788" height="264" alt="Image" src="https://github.com/user-attachments/assets/f8703834-6cf8-4bd8-b4f0-d05641eaaf4c" />
 
 *simpSessionId는 아래에서 설명 예정
     
@@ -236,7 +238,7 @@ Stomp 프로토콜을 사용하여 통신하는 엔드포인트는 `/ws` 다.
 
 이를 Server URL에 작성하면 ws, localhost, 8080으로 작성할 수 있다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/cc3f25c5-c24e-4318-aa2e-167e54b00ffd){: width="60%"} 
+<img width="696" height="334" alt="Image" src="https://github.com/user-attachments/assets/4ecc2235-63e4-4862-b477-f71ff227346f" /> 
 
 <br><br> 
 
@@ -248,7 +250,7 @@ Stomp 프로토콜을 사용하여 통신하는 엔드포인트는 `/ws` 다.
 
 ### 변수 추가
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/eec29b51-a824-466e-968b-783ab56b2bb8)
+<img width="271" height="176" alt="Image" src="https://github.com/user-attachments/assets/bcc536be-697d-4a11-910e-f3a40f05f883" />
 
 <br><br> 
 
@@ -257,7 +259,7 @@ Stomp 프로토콜을 사용하여 통신하는 엔드포인트는 `/ws` 다.
 
 100~999 랜덤 숫자
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/9e5a66fd-9e7c-4684-b334-12f6907a65b6){: width="40%"} 
+<img width="350" height="348" alt="Image" src="https://github.com/user-attachments/assets/2573bd75-d882-4f5f-9a7c-cd5e53992fe0" /> 
 
 <br><br><br> 
 
@@ -268,19 +270,19 @@ a~z 중 랜덤 8자리
 
 Name = `sessionId`, Value = `${__RandomString(8,abcdefghijklmnopqrstuvwxyz)}`
    
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/71a83346-ad5a-42fe-b89e-a2b8b89feded){: width="60%"} 
+<img width="855" height="227" alt="Image" src="https://github.com/user-attachments/assets/82b75b41-71ff-4c6d-81e4-3019d0f3bd1d" /> 
            
 <br><br>  
 
 따라서 path는 `/ws/${num}/${sessionId}/websocket`로 설정할 수 있다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/f887d8a6-0f3a-4dfd-a4fa-d305bd720577)
+<img width="1066" height="210" alt="Image" src="https://github.com/user-attachments/assets/5e20fb36-4ac3-4a73-9214-545ee152d576" /> 
 
 <br><br>
 
 작성 후에 실행하면 성공적으로 띄워지는 것을 볼 수 있다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/660846f5-866b-4ab2-9206-cc0541cb11cf)
+<img width="286" height="119" alt="Image" src="https://github.com/user-attachments/assets/285c9c39-dd39-464f-9a69-59d2de8ec7d4" /> 
 
 <br>
 
@@ -292,7 +294,7 @@ Name = `sessionId`, Value = `${__RandomString(8,abcdefghijklmnopqrstuvwxyz)}`
 ### Send Connect : WebSocket Single Write Sampler
 > Thread Group > Add > Sampler > WebSocket Single Write Sampler
   
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/5694743c-57cc-450b-9157-a50be79444e0){: width="50%"} 
+<img width="458" height="461" alt="Image" src="https://github.com/user-attachments/assets/a7a56a18-7b58-4f69-8554-976161872e38" /> 
 
 WebSocket Open Connection"으로 연결을 열어둔 상태에서 
 
@@ -310,7 +312,7 @@ Request data :`["CONNECTED\nversion:1.2\n\n\u0000"]`
 ### SEND SUBSCRIBE : WebSocket Single Write Sampler 
 > Thread Group > Add > Sampler > WebSocket Single Write Sampler          
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/a19dcfb0-cac6-46c8-b57c-f5270c8b8ff7){: width="60%"}  
+<img width="661" height="463" alt="Image" src="https://github.com/user-attachments/assets/2153b8b7-28cf-41e3-8ccc-b10616150516" />  
          
 구독하는 url : `/topic/public/${roomId}`
 
@@ -326,7 +328,7 @@ Request data :  `["SUBSCRIBE\ndestination:/topic/public/room/'${roomId}'\nid:sub
 
 *No subscriptionId in GenericMessage* 라는 에러가 뜬다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/06357d18-8a21-4725-a961-e09979bdad8f)
+<img width="1138" height="39" alt="Image" src="https://github.com/user-attachments/assets/5ac0450e-240c-4859-8cd5-a3fdd1b1c5a6" />
 
 <br><br> 
     
@@ -435,7 +437,7 @@ public void addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor 
 ```
 사용자가 채팅방에 접속했을 때 띄워지는 log가 출력되었다.
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/b65cde2e-4d67-485d-9aec-6feea05ee144)
+<img width="885" height="175" alt="Image" src="https://github.com/user-attachments/assets/af136c34-3dea-4a45-91f1-2385725c2842" />
 
 
 <br><br><br><br>
