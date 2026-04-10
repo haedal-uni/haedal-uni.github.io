@@ -20,13 +20,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 ```
 <br>
 
-back과 front를 분리할 경우, 각각의 서버는 독립적으로 동작하며 API 요청만을 처리하기 때문에 보안 필터를 적용할 필요가 없다. 
+back과 front를 분리할 경우
+
+각각의 서버는 독립적으로 동작하며 API 요청만을 처리하기 때문에 보안 필터를 적용할 필요가 없다. 
 
 이로 인해 log에는 해당 메시지가 표시되지 않는다.
 
 <br>
 
-그러나 back과 front를 결합하여 하나의 서버로 실행할 경우, 보안 필터가 모든 요청에 대해 작동하게 된다. 
+그러나 back과 front를 결합하여 하나의 서버로 실행할 경우 보안 필터가 모든 요청에 대해 작동하게 된다. 
 
 이로 인해 CSS 및 JavaScript 파일과 같이 인증이 필요 없는 자원에 대해서도 보안 필터가 적용되어 해당 메시지가 log에 표시된다.
 
@@ -73,9 +75,8 @@ http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePass
 ```
 <br><br><br>
 
-![image](https://github.com/haedal-uni/haedal-uni.github.io/assets/74857364/24eeb110-a769-448c-be50-5c6d37c8bd73)
 
-JwtAuthenticationFilter는 인증 과정에서 JWT token을 검증하며,  
+JwtAuthenticationFilter는 인증 과정에서 JWT token을 검증하며   
 
 인증에 실패할 경우 JwtAuthenticationEntryPoint가 호출되어 일관된 인증 예외 응답을 반환한다. 
 
