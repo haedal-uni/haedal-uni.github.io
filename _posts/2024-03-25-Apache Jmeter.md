@@ -5,7 +5,7 @@ tags: [Monitoring]
 
 # Apache Jmeter
 
-<img width="1800" height="895" alt="Image" src="https://github.com/user-attachments/assets/c360c206-cf8d-439f-8e44-841027854d79" /> 
+<img width="1800" height="895" alt="Image" src="/assets/img/posts/c360c206-cf8d-439f-8e44-841027854d79.png" /> 
 
 Download Release 클릭 후 나는 apache-jmeter-5.6.3.zip 다운받았다.
 
@@ -20,13 +20,13 @@ window인 나는 jmeter.bat을 실행했다.
 ## JMeter plugin
 [link](https://jmeter-plugins.org/)
 
-<img width="828" height="346" alt="Image" src="https://github.com/user-attachments/assets/f6292816-1fb2-4063-a45a-6f96bacdcbb5" />  
+<img width="828" height="346" alt="Image" src="/assets/img/posts/f6292816-1fb2-4063-a45a-6f96bacdcbb5.png" />  
 
 이렇게 검색해도 된다.   
 
 <br><br><br> 
 
-<img width="771" height="422" alt="Image" src="https://github.com/user-attachments/assets/d9c3b673-93f2-4363-997c-371bc90ca4c8" />  
+<img width="771" height="422" alt="Image" src="/assets/img/posts/d9c3b673-93f2-4363-997c-371bc90ca4c8.png" />  
 
 해당 이미지처럼 클릭해서 플러그인 매니저를 다운받는다.   
 
@@ -36,7 +36,7 @@ jmeter 압축해제 한 뒤 해당 파일을 jmeter 폴더의 lib/ext 안에 넣
 
 JMeter를 재시작 하면 아래와 같이 플러그인을 설치할 수 있게 메뉴가 생겼다.
 
-<img width="432" height="333" alt="Image" src="https://github.com/user-attachments/assets/39af224e-a0bb-4840-b6f7-076ea798cb75" />   
+<img width="432" height="333" alt="Image" src="/assets/img/posts/39af224e-a0bb-4840-b6f7-076ea798cb75.png" />   
 
 <br><br><br><br><br> 
 
@@ -44,7 +44,7 @@ JMeter를 재시작 하면 아래와 같이 플러그인을 설치할 수 있게
 ### Thread 설정  
 JMeter에서 Test Plan 우클릭 → add → Thread(Users) → Thread Group을 하여 Thread Group을 생성한다.
 
-<img width="563" height="479" alt="Image" src="https://github.com/user-attachments/assets/22678a2a-688f-4eb5-9259-97d7ac54983f" />   
+<img width="563" height="479" alt="Image" src="/assets/img/posts/22678a2a-688f-4eb5-9259-97d7ac54983f.png" />   
 
 1) Number of Threads (users) : 쓰레드 개수 → 사용자 수
 
@@ -76,11 +76,11 @@ options 탭 → Plugins Manager → Available Plugins 탭 클릭 → WebSocket S
 
 우측 하단의 Apply Changes and Restart JMeter버튼 클릭
 
-<img width="1246" height="936" alt="Image" src="https://github.com/user-attachments/assets/b04bf7bd-1143-4943-a2ba-2e534cadeb80" />  
+<img width="1246" height="936" alt="Image" src="/assets/img/posts/b04bf7bd-1143-4943-a2ba-2e534cadeb80.png" />  
 
 <br><br>
 
-<img width="792" height="673" alt="Image" src="https://github.com/user-attachments/assets/ee8b3b19-6303-4c6b-acea-111d881c0942" />  
+<img width="792" height="673" alt="Image" src="/assets/img/posts/ee8b3b19-6303-4c6b-acea-111d881c0942.png" />  
 
 **WebSocket Close**: WebSocket 연결을 닫는 작업을 테스트한다.     
     → WebSocket 연결의 안정성과 정상적인 종료 상황을 확인   
@@ -108,7 +108,7 @@ EventListener를 통해 연결 및 종료 이벤트를 감지하는 경우에는
 
 각각 WebSocket Open Connection 및 WebSocket Close Sampler를 사용하면 될 것 같다.
 
-<img width="909" height="679" alt="Image" src="https://github.com/user-attachments/assets/2c1582ab-37f6-4f99-a352-ec2df0570e2b" />  
+<img width="909" height="679" alt="Image" src="/assets/img/posts/2c1582ab-37f6-4f99-a352-ec2df0570e2b.png" />  
 
 <br><br><br><br><br> 
 
@@ -128,7 +128,7 @@ EventListener를 통해 연결 및 종료 이벤트를 감지하는 경우에는
 > Thread Group > Add > Listener > View Results Tree           
 > Thread Group > Sampler > Debug Sampler             
 
-<img width="231" height="116" alt="Image" src="https://github.com/user-attachments/assets/c11a1482-2f7b-4671-b214-1544a9683dfe" />   
+<img width="231" height="116" alt="Image" src="/assets/img/posts/c11a1482-2f7b-4671-b214-1544a9683dfe.png" />   
 
 <br><br><br><br> 
 
@@ -142,7 +142,7 @@ Body Data에 json형식으로 nickname과 password를 작성한다.
 }
 ```
 
-<img width="1047" height="447" alt="Image" src="https://github.com/user-attachments/assets/8d8a004c-c891-4021-b278-56c9a2718eee" /> 
+<img width="1047" height="447" alt="Image" src="/assets/img/posts/8d8a004c-c891-4021-b278-56c9a2718eee.png" /> 
 
 <br><br><br><br>   
 
@@ -151,7 +151,7 @@ Body Data에 json형식으로 nickname과 password를 작성한다.
 
 HTTP Header Manager에 Name = `Content-type`, Value = `application/json`를 추가한다.
 
-<img width="1337" height="208" alt="Image" src="https://github.com/user-attachments/assets/306f7adc-c5e1-43b4-b6c8-cdadd930bb71" />   
+<img width="1337" height="208" alt="Image" src="/assets/img/posts/306f7adc-c5e1-43b4-b6c8-cdadd930bb71.png" />   
 
 <br><br><br><br>   
 
@@ -172,13 +172,13 @@ Response data > Response Body로 보면 아래와 같은 형식으로 응답이 
 - Template : `$1$`
 - Match No. : `1`
 
-<img width="651" height="417" alt="Image" src="https://github.com/user-attachments/assets/cc56c905-c0ab-4f77-a2ba-305a04b8f7e7" />  
+<img width="651" height="417" alt="Image" src="/assets/img/posts/cc56c905-c0ab-4f77-a2ba-305a04b8f7e7.png" />  
 
 <br><br><br> 
 
 token이 추출 된 것을 볼 수 있다.
 
-<img width="781" height="612" alt="Image" src="https://github.com/user-attachments/assets/75f7ae88-53f7-4528-adb9-219a628ef8b0" />  
+<img width="781" height="612" alt="Image" src="/assets/img/posts/75f7ae88-53f7-4528-adb9-219a628ef8b0.png" />  
 
 <br><br><br><br>  
 
@@ -193,7 +193,7 @@ import org.apache.jmeter.protocol.http.control.Header;
 sampler.getHeaderManager().add(new Header("Authorization",vars.get("token")));
 ```
 
-<img width="804" height="427" alt="Image" src="https://github.com/user-attachments/assets/70409462-4d30-42c3-a1cb-2de0e90900d7" />
+<img width="804" height="427" alt="Image" src="/assets/img/posts/70409462-4d30-42c3-a1cb-2de0e90900d7.png" />
 
 <br><br><br><br> 
 
@@ -202,9 +202,9 @@ sampler.getHeaderManager().add(new Header("Authorization",vars.get("token")));
 
 > HTTP Request를 만들고 HTTP Header Manager에 token을 넣어준다.
 
-<img width="273" height="76" alt="Image" src="https://github.com/user-attachments/assets/90dd2bef-6b02-45b6-be41-2e9a7a92e44b" /> 
+<img width="273" height="76" alt="Image" src="/assets/img/posts/90dd2bef-6b02-45b6-be41-2e9a7a92e44b.png" /> 
 
-<img width="685" height="239" alt="Image" src="https://github.com/user-attachments/assets/dfd1e52a-4b13-4aed-a151-a9b392b8a9df" />  
+<img width="685" height="239" alt="Image" src="/assets/img/posts/dfd1e52a-4b13-4aed-a151-a9b392b8a9df.png" />  
 
 <br><br><br><br><br> 
     
@@ -212,13 +212,13 @@ sampler.getHeaderManager().add(new Header("Authorization",vars.get("token")));
 
 전체 보기
 
-<img width="437" height="425" alt="Image" src="https://github.com/user-attachments/assets/231c503b-2405-46b9-94d7-12d70a7753fe" />  
+<img width="437" height="425" alt="Image" src="/assets/img/posts/231c503b-2405-46b9-94d7-12d70a7753fe.png" />  
 
 <br><br> 
 
 참고로 모든 요청에 HTTP Header Manager를 생성하여 아래와 같이 작성했다.
     
-<img width="788" height="264" alt="Image" src="https://github.com/user-attachments/assets/f8703834-6cf8-4bd8-b4f0-d05641eaaf4c" />
+<img width="788" height="264" alt="Image" src="/assets/img/posts/f8703834-6cf8-4bd8-b4f0-d05641eaaf4c.png" />
 
 *simpSessionId는 아래에서 설명 예정
     
@@ -238,7 +238,7 @@ Stomp 프로토콜을 사용하여 통신하는 엔드포인트는 `/ws` 다.
 
 이를 Server URL에 작성하면 ws, localhost, 8080으로 작성할 수 있다.
 
-<img width="696" height="334" alt="Image" src="https://github.com/user-attachments/assets/4ecc2235-63e4-4862-b477-f71ff227346f" /> 
+<img width="696" height="334" alt="Image" src="/assets/img/posts/4ecc2235-63e4-4862-b477-f71ff227346f.png" /> 
 
 <br><br> 
 
@@ -250,7 +250,7 @@ Stomp 프로토콜을 사용하여 통신하는 엔드포인트는 `/ws` 다.
 
 ### 변수 추가
 
-<img width="271" height="176" alt="Image" src="https://github.com/user-attachments/assets/bcc536be-697d-4a11-910e-f3a40f05f883" />
+<img width="271" height="176" alt="Image" src="/assets/img/posts/bcc536be-697d-4a11-910e-f3a40f05f883.png" />
 
 <br><br> 
 
@@ -259,7 +259,7 @@ Stomp 프로토콜을 사용하여 통신하는 엔드포인트는 `/ws` 다.
 
 100~999 랜덤 숫자
 
-<img width="350" height="348" alt="Image" src="https://github.com/user-attachments/assets/2573bd75-d882-4f5f-9a7c-cd5e53992fe0" /> 
+<img width="350" height="348" alt="Image" src="/assets/img/posts/2573bd75-d882-4f5f-9a7c-cd5e53992fe0.png" /> 
 
 <br><br><br> 
 
@@ -270,19 +270,19 @@ a~z 중 랜덤 8자리
 
 Name = `sessionId`, Value = `${__RandomString(8,abcdefghijklmnopqrstuvwxyz)}`
    
-<img width="855" height="227" alt="Image" src="https://github.com/user-attachments/assets/82b75b41-71ff-4c6d-81e4-3019d0f3bd1d" /> 
+<img width="855" height="227" alt="Image" src="/assets/img/posts/82b75b41-71ff-4c6d-81e4-3019d0f3bd1d.png" /> 
            
 <br><br>  
 
 따라서 path는 `/ws/${num}/${sessionId}/websocket`로 설정할 수 있다.
 
-<img width="1066" height="210" alt="Image" src="https://github.com/user-attachments/assets/5e20fb36-4ac3-4a73-9214-545ee152d576" /> 
+<img width="1066" height="210" alt="Image" src="/assets/img/posts/5e20fb36-4ac3-4a73-9214-545ee152d576.png" /> 
 
 <br><br>
 
 작성 후에 실행하면 성공적으로 띄워지는 것을 볼 수 있다.
 
-<img width="286" height="119" alt="Image" src="https://github.com/user-attachments/assets/285c9c39-dd39-464f-9a69-59d2de8ec7d4" /> 
+<img width="286" height="119" alt="Image" src="/assets/img/posts/285c9c39-dd39-464f-9a69-59d2de8ec7d4.png" /> 
 
 <br>
 
@@ -294,7 +294,7 @@ Name = `sessionId`, Value = `${__RandomString(8,abcdefghijklmnopqrstuvwxyz)}`
 ### Send Connect : WebSocket Single Write Sampler
 > Thread Group > Add > Sampler > WebSocket Single Write Sampler
   
-<img width="458" height="461" alt="Image" src="https://github.com/user-attachments/assets/a7a56a18-7b58-4f69-8554-976161872e38" /> 
+<img width="458" height="461" alt="Image" src="/assets/img/posts/a7a56a18-7b58-4f69-8554-976161872e38.png" /> 
 
 WebSocket Open Connection"으로 연결을 열어둔 상태에서 
 
@@ -312,7 +312,7 @@ Request data :`["CONNECTED\nversion:1.2\n\n\u0000"]`
 ### SEND SUBSCRIBE : WebSocket Single Write Sampler 
 > Thread Group > Add > Sampler > WebSocket Single Write Sampler          
 
-<img width="661" height="463" alt="Image" src="https://github.com/user-attachments/assets/2153b8b7-28cf-41e3-8ccc-b10616150516" />  
+<img width="661" height="463" alt="Image" src="/assets/img/posts/2153b8b7-28cf-41e3-8ccc-b10616150516.png" />  
          
 구독하는 url : `/topic/public/${roomId}`
 
@@ -328,7 +328,7 @@ Request data :  `["SUBSCRIBE\ndestination:/topic/public/room/'${roomId}'\nid:sub
 
 *No subscriptionId in GenericMessage* 라는 에러가 뜬다.
 
-<img width="1138" height="39" alt="Image" src="https://github.com/user-attachments/assets/5ac0450e-240c-4859-8cd5-a3fdd1b1c5a6" />
+<img width="1138" height="39" alt="Image" src="/assets/img/posts/5ac0450e-240c-4859-8cd5-a3fdd1b1c5a6.png" />
 
 <br><br> 
     
@@ -437,7 +437,7 @@ public void addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor 
 ```
 사용자가 채팅방에 접속했을 때 띄워지는 log가 출력되었다.
 
-<img width="885" height="175" alt="Image" src="https://github.com/user-attachments/assets/af136c34-3dea-4a45-91f1-2385725c2842" />
+<img width="885" height="175" alt="Image" src="/assets/img/posts/af136c34-3dea-4a45-91f1-2385725c2842.png" />
 
 
 <br><br><br><br>
