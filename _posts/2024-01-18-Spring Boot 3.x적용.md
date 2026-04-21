@@ -27,13 +27,13 @@ Preferences/Settings → Build, Execution, Deployment → Build Tools → Gradle
 
 Gradle의 JVM이 Java 17이상인지 확인한다.
 
-<img width="1192" height="606" alt="Image" src="https://github.com/user-attachments/assets/bba9dbbe-b75d-45ef-8b49-22daefeb583d" />  
+<img width="1192" height="606" alt="Image" src="/assets/img/posts/bba9dbbe-b75d-45ef-8b49-22daefeb583d.png" />  
 
 <br><br>
 
 Preferences/Settings → Build, Execution, Deployment → Compiler → Java Compiler
 
-<img width="907" height="377" alt="Image" src="https://github.com/user-attachments/assets/1c0f5794-e15a-4f4b-8a38-38ac4d482df6" /> 
+<img width="907" height="377" alt="Image" src="/assets/img/posts/1c0f5794-e15a-4f4b-8a38-38ac4d482df6.png" /> 
 
 
 <br><br><br>    
@@ -42,12 +42,12 @@ Preferences/Settings → Build, Execution, Deployment → Compiler → Java Comp
 File → Project Structure로 이동. 프로젝트 SDK의 버전을 확인후 Java 17이상으로 설정한다.  
 
 #### Project
-<img width="1102" height="271" alt="Image" src="https://github.com/user-attachments/assets/cf736d1c-389f-45cc-bf20-70bc367d9a4d" />  
+<img width="1102" height="271" alt="Image" src="/assets/img/posts/cf736d1c-389f-45cc-bf20-70bc367d9a4d.png" />  
 
 <br>
 
 ### Modules
-<img width="950" height="163" alt="Image" src="https://github.com/user-attachments/assets/a8e391e4-3cfe-4513-ae97-bea5436f4f22" /> 
+<img width="950" height="163" alt="Image" src="/assets/img/posts/a8e391e4-3cfe-4513-ae97-bea5436f4f22.png" /> 
 
 <br><br><br><br>
 
@@ -105,7 +105,7 @@ spring.jpa.hibernate.use-new-id-generator-mappings= false 이 부분은 설정�
 
 <br><br>
 
-<img width="726" height="72" alt="Image" src="https://github.com/user-attachments/assets/825821ca-c55f-4f46-8864-b5b36bd32848" /> 
+<img width="726" height="72" alt="Image" src="/assets/img/posts/825821ca-c55f-4f46-8864-b5b36bd32848.png" /> 
 
 spring.redis.host는 제거되었다고 해서 아래와 같이 변경했다.   
 ```
