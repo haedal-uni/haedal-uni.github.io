@@ -1,3 +1,8 @@
+---
+categories: Study  
+tags: [Python, study]
+---
+
 append는 리스트 자체가 요소로 들어가고 extend는 리스트를 풀어서 넣는다.
 
 ```py
