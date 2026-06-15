@@ -122,6 +122,7 @@ public class RedisConfig {
 **1.** 가장 최근 날짜를 조회하기 위해 `max()` 사용
 
 ```java
+// MyPageRepository
 @Query("SELECT max(s.date) FROM Study s WHERE s.user.id = :userId")
 LocalDate findLastDay(Long userId);
 ```
@@ -130,16 +131,24 @@ LocalDate findLastDay(Long userId);
 
 **2.** 오늘 날짜의 학습 데이터 조회 
 ```java
+// StudyRepository
 @Query("select s from Study s where s.date = :today and s.user.id = :userId")
 List<Study> findLastDayForStudy(LocalDate today, Long userId);
+
+// 변경 후
+List<Study> findByDateAndUser_Id(LocalDate date, Long userId);
 ```
 
 <br><br>
 
 **3.** meaningId에 해당하는 Sentence 데이터 조회 
 ```java
+// SentenceRepository
 @Query("select st from Sentence st where st.meaning.id = :meaningId")
 Sentence findBySentence(Long meaningId);
+
+// 변경 후
+List<Sentence> findByMeaning_Id(Long meaningId);
 ```
 
 <br><br><br><br>   
@@ -154,7 +163,7 @@ public List<StudyResponseDto> getStudyWord(String username) {
         // 기존 로직 생략
         studyRepository.saveAll(studyList); // study 테이블에 데이터 저장  
     } else { // 오늘 날짜라면 Study 테이블에서 조회
-        List<Study> study = studyRepository.findLastDayForStudy(today, user.getId());
+        List<Study> study = studyRepository.findByDateAndUser_Id(today, user.getId());
     }
 }
 ```
@@ -181,6 +190,8 @@ log.info("ttl : " + ttl); // ttl : PT27M40.0414405S (출력 예시)
 - H: 시간(hours)
 - M: 분(minutes)
 - S: 초(seconds)
+
+<br>
 
 27M → 27분
 
