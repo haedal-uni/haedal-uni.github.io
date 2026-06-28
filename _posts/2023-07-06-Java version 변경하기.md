@@ -58,10 +58,3 @@ PATH는 실행 파일이 위치한 디렉토리들의 경로를 저장한 시스
 OS는 프로그램 실행 시 PATH에 등록된 디렉토리를 순서대로 검색한다.
 
 Java를 실행하기 위해서는 Java 실행 파일이 있는 경로가 PATH 환경변수에 포함되어 있어야 한다.  
-
-<br><br><br>
-
----
-
-*reference*                       
-[[Java] 자바 버전 변경하는 방법 ( JDK 8 -> JDK 17)](https://coding-factory.tistory.com/823)                      
