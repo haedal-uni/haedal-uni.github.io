@@ -330,11 +330,3 @@ chat 스키마 생성 후 run 하면 정상 동작한다.
 <img width="1080" height="304" alt="Image" src="/assets/img/posts/1144f266-2078-4971-866d-da90436b4770.png" />  
 
 application.properties에 `spring.jpa.hibernate.ddl-auto=create`를 추가하면 실행과 동시에 테이블이 생성된다.
-
-<br><br><br><br>
-
----
-
-*reference*         
-[[AWS, Docker] aws ec2 instance에 docker, mysql 설치하기](https://velog.io/@coastby/AWS-Docker-aws-ec2-instance%EC%97%90-docker-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)                
-
