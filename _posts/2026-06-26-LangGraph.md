@@ -5,7 +5,7 @@ tags: [RAG, LangChain, LangGraph]
 
 # LangGraph로 RAG 챗봇 고도화하기
 
-이전 글에서 기본적인 RAG 챗봇을 만들었다.  
+이전 글에서 기본적인 RAG 챗봇을 만들었다.
 
 사용자가 질문하면 문서를 검색하고, LLM이 답변을 생성하는 단순한 흐름이었다.
 
@@ -27,7 +27,7 @@ tags: [RAG, LangChain, LangGraph]
 
 ---
 
-# LangGraph란?
+## LangGraph란?
 
 **LangGraph**는 LLM 애플리케이션의 처리 흐름을 **노드(Node)와 엣지(Edge)로 구성된 그래프**로 표현하는 프레임워크다.
 
@@ -46,17 +46,17 @@ LangGraph:
 
 핵심 개념은 세 가지다.
 
-| 개념 | 설명 |
-|------|------|
-| **State** | 노드 간에 공유되는 데이터 묶음. 각 노드는 State를 읽고 수정한 결과를 반환한다 |
-| **Node** | 실제 작업을 수행하는 함수. State를 받아 State의 일부를 반환한다 |
-| **Edge** | 노드 간의 연결. 조건에 따라 다음 노드를 다르게 선택하는 **conditional edge**를 지원한다 |
+| 개념      | 설명                                                                                    |
+| --------- | --------------------------------------------------------------------------------------- |
+| **State** | 노드 간에 공유되는 데이터 묶음. 각 노드는 State를 읽고 수정한 결과를 반환한다           |
+| **Node**  | 실제 작업을 수행하는 함수. State를 받아 State의 일부를 반환한다                         |
+| **Edge**  | 노드 간의 연결. 조건에 따라 다음 노드를 다르게 선택하는 **conditional edge**를 지원한다 |
 
 <br><br><br>
 
 ---
 
-# 전체 구조
+## 전체 구조
 
 기존 단일 파일 구조에서 역할별로 파일을 분리했다.
 
@@ -88,13 +88,13 @@ views.py — 결과를 세션에 저장 후 JSON 응답
 
 ---
 
-# rag_class.py — 문서 로딩 & 컴포넌트 초기화
+## rag_class.py — 문서 로딩 & 컴포넌트 초기화
 
 기존 `ChatBot` 클래스에서 문서 분할 방식 하나가 바뀌었다.
 
 <br>
 
-## 2단계 분할 전략
+### 2단계 분할 전략
 
 이전에는 `RecursiveCharacterTextSplitter`만 사용했는데, 이번에는 **두 단계로 나눠서** 처리한다.
 
@@ -135,13 +135,71 @@ docs = char_splitter.split_documents(header_docs)
 
 덕분에 Retriever가 어떤 chunk를 참고했는지 계층적으로 추적할 수 있다.
 
+<br><br>
+
+#### 두 단계로 나누는 게 실제로 나은가
+
+검색 파라미터(chunk 800 / overlap 0 / k=10)를 셋 다 고정하고 분할 방식만 바꿔서 비교했다.
+
+<br>
+
+| 분할 방식                    | chunk 수 | 평균 길이 |       MRR |    Hit@10 | Recall@10 | 평균 토큰 |
+| ---------------------------- | -------: | --------: | --------: | --------: | --------: | --------: |
+| **A. 헤더 → 글자 수 (현재)** |      649 |     595자 |     0.523 | **0.800** |     0.623 | **2,949** |
+| B. 헤더로만                  |      273 |   1,416자 | **0.543** | **0.800** | **0.643** |    14,683 |
+| C. 글자 수로만               |      699 |     556자 |     0.447 |     0.680 |     0.550 |     3,222 |
+
+<br>
+
+C는 헤더 메타데이터가 없어서 그대로 채점하면 전부 오답이 된다.
+
+그래서 chunk가 원문에서 차지하는 구간을 추적해 가장 많이 겹치는 헤더 섹션을 채점용으로만 붙였다.
+
+이 값은 임베딩·검색에 넣지 않았다.
+
+<br>
+
+**헤더를 쓰느냐 마느냐가 정확도를 가른다.**
+
+헤더를 무시하고 글자 수로만 자르면 Hit@10이 0.800에서 0.680으로 떨어진다.
+
+정답 문서를 아예 못 찾은 질문이 5개에서 8개로 늘었고, 토큰은 오히려 더 쓴다.
+
+차이가 가장 큰 건 영웅 이름 없이 상황만 말하는 질문으로, MRR이 0.125에서 0.000이 됐다.
+
+헤더 경계를 무시하고 자르면 서로 다른 영웅의 상성표 조각이 한 chunk에 섞이기 때문이다.
+
+<br>
+
+**2단계로 자르는 근거는 정확도가 아닌 토큰**
+
+헤더로만 나눠도 MRR 0.543, Hit@10 0.800, Recall@10 0.643이다.
+
+MRR과 Recall@10이 0.020씩 높고 Hit@10은 같다.
+
+<br>
+
+갈리는 건 비용이다. 평균 컨텍스트가 14,683토큰으로 2단계로 자를 때의 5배다.
+
+섹션 하나가 그대로 chunk가 되니 13,911자짜리 큰 chunk가 생긴다.
+
+이런 chunk가 상위 10개에 한 번 들어오면 프롬프트 대부분을 그 chunk 하나가 차지한다.
+
+<br>
+
+정확도 차이가 0.020인데 토큰을 5배 쓸 이유는 없어서 2단계로 자르는 쪽을 택했다.
+
+<br>
+
+정리하면 헤더로 나누는 것이 정확도를 만들고, 2단계 분할이 비용을 줄인다.
+
 <br><br><br>
 
 ---
 
-# chatbot_service.py — 싱글톤 컴포넌트 관리
+## chatbot_service.py — 싱글톤 컴포넌트 관리
 
-LangGraph의 노드들은 각각 독립적인 함수다. 
+LangGraph의 노드들은 각각 독립적인 함수다.
 
 매번 호출될 때마다 LLM이나 Retriever를 새로 만들면 초기화 비용이 크다.
 
@@ -175,7 +233,7 @@ def get_chatbot_components() -> Tuple[ChatBot, Any, Any]:
 
 <br>
 
-모든 노드는 `get_chatbot_components()`를 호출해서 이미 만들어진 컴포넌트를 가져다 쓴다. 
+모든 노드는 `get_chatbot_components()`를 호출해서 이미 만들어진 컴포넌트를 가져다 쓴다.
 
 무거운 초기화 작업은 서버 시작 후 단 한 번만 일어난다.
 
@@ -183,13 +241,13 @@ def get_chatbot_components() -> Tuple[ChatBot, Any, Any]:
 
 ---
 
-# chatbot_graph.py — LangGraph 핵심 로직
+## chatbot_graph.py — LangGraph 핵심 로직
 
 가장 핵심이 되는 파일로 11개의 노드와 그 연결 관계를 정의한다.
 
 <br>
 
-## State 정의
+### State 정의
 
 노드 간에 공유되는 데이터 구조를 먼저 정의한다. TypedDict를 사용해 타입을 명시했다.
 
@@ -208,13 +266,13 @@ class ChatbotGraphState(TypedDict, total=False):
     # ... 그 외 다수
 ```
 
-`total=False`로 선언했기 때문에 모든 키는 선택적이다. 
+`total=False`로 선언했기 때문에 모든 키는 선택적이다.
 
 각 노드는 자신이 처리한 키만 반환하면 된다. LangGraph가 기존 State에 병합해준다.
 
 <br><br>
 
-## 그래프 흐름
+### 그래프 흐름
 
 ```
 START
@@ -244,9 +302,9 @@ format_response          retrieve_docs — 검색 쿼리 생성 후 문서 검�
 
 <br><br>
 
-## 주요 노드 설명
+### 주요 노드 설명
 
-### 1. validate_input_node — 입력값 검사
+#### 1. validate_input_node — 입력값 검사
 
 가장 먼저 실행된다. 메시지가 비어있으면 즉시 에러를 State에 기록하고 이후 노드들은 에러 여부를 확인해 스킵한다.
 
@@ -263,7 +321,7 @@ def validate_input_node(state: ChatbotGraphState) -> ChatbotGraphState:
 
 <br><br>
 
-### 2. parse_stats_from_text_node — 스탯 파싱
+#### 2. parse_stats_from_text_node — 스탯 파싱
 
 사용자가 "리퍼 킬 5 딜 8000 데스 3" 같은 자유 형식으로 스탯을 입력하면, LLM을 활용해 구조화된 데이터로 변환한다.
 
@@ -275,25 +333,25 @@ def detect_stat_input(message: str) -> bool:
     return has_keyword and has_number
 ```
 
-스탯 키워드와 숫자가 함께 등장할 때만 파싱을 시도한다. 
+스탯 키워드와 숫자가 함께 등장할 때만 파싱을 시도한다.
 
 LLM에게 JSON 형식으로만 답하도록 프롬프트를 설계해 구조화된 데이터를 얻는다.
 
 ```json
 {
-  "enemy_stats": {"라마트라": {"kills": 8, "damage": 12000}},
-  "my_stats":    {"에코": {"kills": 5, "deaths": 3, "damage": 9500}},
+  "enemy_stats": { "라마트라": { "kills": 8, "damage": 12000 } },
+  "my_stats": { "에코": { "kills": 5, "deaths": 3, "damage": 9500 } },
   "my_team_stats": {}
 }
 ```
 
-파싱된 데이터는 이후 `judge_strategy_node`와 `generate_answer_node`에서 
+파싱된 데이터는 이후 `judge_strategy_node`와 `generate_answer_node`에서
 
 "어떤 적이 가장 위협적인지", "내 딜량이 낮은 이유가 무엇인지" 분석하는 데 쓰인다.
 
 <br><br>
 
-### 3. llm_parse_context_node — LLM 기반 문맥 분석
+#### 3. llm_parse_context_node — LLM 기반 문맥 분석
 
 사용자의 메시지에서 의도(intent), 현재 영웅, 적 영웅 등을 LLM이 추출한다.
 
@@ -312,22 +370,22 @@ LLM에게 JSON 형식으로만 답하도록 프롬프트를 설계해 구조화�
 
 의도는 6가지로 분류된다.
 
-| intent | 설명 |
-|--------|------|
-| `counter` | "겐지 카운터 알려줘" 같은 상대 영웅 대응법 질문 |
-| `swap` | "다른 영웅으로 바꿔야 할까?" 같은 교체 고민 |
-| `stay` | "이 영웅 계속 써도 돼?" 같은 유지 여부 질문 |
-| `performance_improve` | "딜량 어떻게 올려?" 같은 성능 개선 질문 |
-| `map_strategy` | 맵·공수 관련 전략 질문 |
-| `general` | 위에 해당하지 않는 일반 질문 |
+| intent                | 설명                                            |
+| --------------------- | ----------------------------------------------- |
+| `counter`             | "겐지 카운터 알려줘" 같은 상대 영웅 대응법 질문 |
+| `swap`                | "다른 영웅으로 바꿔야 할까?" 같은 교체 고민     |
+| `stay`                | "이 영웅 계속 써도 돼?" 같은 유지 여부 질문     |
+| `performance_improve` | "딜량 어떻게 올려?" 같은 성능 개선 질문         |
+| `map_strategy`        | 맵·공수 관련 전략 질문                          |
+| `general`             | 위에 해당하지 않는 일반 질문                    |
 
 <br>
 
-**원문 검증 단계**가 중요하다. 
+**원문 검증 단계**가 중요하다.
 
-LLM이 추출한 영웅 이름이 실제 메시지 원문에 등장하는지 반드시 확인한다. 
+LLM이 추출한 영웅 이름이 실제 메시지 원문에 등장하는지 반드시 확인한다.
 
-LLM은 "짐작"으로 채울 수 있기 때문이다.   
+LLM은 "짐작"으로 채울 수 있기 때문이다.
 
 ```py
 # target_enemy가 이번 메시지 원문에 실제로 존재할 때만 신뢰
@@ -338,7 +396,7 @@ if (normalized_enemy in [normalize_hero_name(h) for h in HEROES]
 
 <br><br>
 
-### 4. merge_context_node — 컨텍스트 통합
+#### 4. merge_context_node — 컨텍스트 통합
 
 LangGraph에서 가장 복잡한 노드다. 세 가지 정보를 통합해 최종 컨텍스트를 결정한다.
 
@@ -352,7 +410,7 @@ LLM 파싱 결과 + 규칙 기반 추출 결과 + 이전 세션 컨텍스트 →
 
 **세션 타임아웃**
 
-오버워치 한 판은 보통 10~20분이다. 
+오버워치 한 판은 보통 10~20분이다.
 
 마지막 메시지로부터 10분이 지나면 새 게임으로 간주하고 컨텍스트를 초기화한다.
 
@@ -388,15 +446,15 @@ if no_enemy_turn_count >= STALE_ENEMY_TURN_LIMIT:
 3순위: 세션에 남아있는 이전 role_filter (최후 수단)
 ```
 
-2순위가 3순위보다 높아야 한다. 
+2순위가 3순위보다 높아야 한다.
 
-그렇지 않으면 예전에 "탱커 추천해줘"라고 물었던 필터가 세션에 박혀 
+그렇지 않으면 예전에 "탱커 추천해줘"라고 물었던 필터가 세션에 박혀
 
-딜러로 영웅을 바꿨는데도 탱커만 추천하는 문제가 발생한다. 
+딜러로 영웅을 바꿨는데도 탱커만 추천하는 문제가 발생한다.
 
 <br><br>
 
-### 5. clarify_role_filter_node — 역할 선택 UI
+#### 5. clarify_role_filter_node — 역할 선택 UI
 
 카운터 영웅을 물어봤는데 역할 필터가 없을 때 발동한다. 답변 대신 버튼 UI를 반환해 사용자가 역할을 먼저 선택하게 한다.
 
@@ -416,7 +474,7 @@ def clarify_role_filter_node(state: ChatbotGraphState) -> ChatbotGraphState:
 
 <br><br>
 
-### 6. build_retrieval_queries_node — 검색 쿼리 생성
+#### 6. build_retrieval_queries_node — 검색 쿼리 생성
 
 단일 검색 대신 **의도에 맞는 여러 쿼리**를 생성해 검색 품질을 높인다.
 
@@ -436,15 +494,15 @@ if map_name:
         queries.append(f"{map_name} {side_text} {target_enemy} 대응법")
 ```
 
-`enemy_named_this_turn` 플래그가 중요하다. 
+`enemy_named_this_turn` 플래그가 중요하다.
 
-이번 메시지에서 실제로 언급된 적만 쿼리에 포함한다. 
+이번 메시지에서 실제로 언급된 적만 쿼리에 포함한다.
 
 그렇지 않으면 이전 대화의 적이 이번 검색 결과를 오염시킨다.
 
 <br><br>
 
-### 7. retrieve_docs_node — 문서 검색
+#### 7. retrieve_docs_node — 문서 검색
 
 여러 쿼리로 각각 검색한 결과를 중복 제거 후 합친다.
 
@@ -466,7 +524,7 @@ all_docs = all_docs[:12]  # 최대 12개 chunk
 
 <br><br>
 
-### 8. judge_strategy_node — 전략 판단
+#### 8. judge_strategy_node — 전략 판단
 
 LLM에게 "어떤 영웅을 추천할지"를 별도로 먼저 판단시킨다. 최종 답변 생성과 역할을 분리한 것이다.
 
@@ -489,9 +547,9 @@ if allowed_hero_set is not None:
 
 <br><br>
 
-### 9. generate_answer_node — 최종 답변 생성
+#### 9. generate_answer_node — 최종 답변 생성
 
-전략 판단 결과를 바탕으로 실제 사용자에게 보여줄 답변을 생성한다. 
+전략 판단 결과를 바탕으로 실제 사용자에게 보여줄 답변을 생성한다.
 
 프롬프트에는 역할 고정 규칙이 명시적으로 포함된다.
 
@@ -504,7 +562,7 @@ if allowed_hero_set is not None:
 영웅 교체 추천은 반드시 딜러 역할만: 겐지, 트레이서, 솜브라 ...
 ```
 
-답변은 JSON 형식으로 반환받아 파싱한다. 
+답변은 JSON 형식으로 반환받아 파싱한다.
 
 LLM이 마크다운 기호를 섞어 쓰는 경우를 대비해 `sanitize_answer_for_user()`로 후처리한다.
 
@@ -521,9 +579,9 @@ def sanitize_answer_for_user(answer: str) -> str:
 
 <br><br>
 
-### 10. generate_suggested_questions_node — 후속 질문 추천
+#### 10. generate_suggested_questions_node — 후속 질문 추천
 
-답변 아래에 표시할 "빠른 질문 버튼" 3개를 생성한다. 
+답변 아래에 표시할 "빠른 질문 버튼" 3개를 생성한다.
 
 LLM이 실패하면 인텐트 기반 규칙으로 폴백한다.
 
@@ -538,7 +596,7 @@ def build_fallback_suggested_questions(state: ChatbotGraphState) -> List[str]:
 
 <br><br>
 
-### 11. format_response_node — 응답 포맷팅
+#### 11. format_response_node — 응답 포맷팅
 
 모든 노드의 결과를 하나의 JSON 응답으로 정리한다.
 
@@ -559,7 +617,7 @@ return {
 
 <br><br>
 
-## 그래프 조립
+### 그래프 조립
 
 ```py
 def build_chatbot_graph():
@@ -582,7 +640,7 @@ def build_chatbot_graph():
     return graph.compile()
 ```
 
-`add_conditional_edges`는 라우팅 함수의 반환값을 보고 다음 노드를 결정한다. 
+`add_conditional_edges`는 라우팅 함수의 반환값을 보고 다음 노드를 결정한다.
 
 에러가 있으면 `format_response`로 바로 이동하고, 정상이면 다음 단계로 진행하는 패턴이 반복된다.
 
@@ -590,7 +648,7 @@ def build_chatbot_graph():
 
 ---
 
-# views.py — 세션 관리
+## views.py — 세션 관리
 
 기존 뷰에서 달라진 핵심은 **Django 세션으로 대화 컨텍스트를 관리**한다는 점이다.
 
@@ -628,13 +686,13 @@ def chat_api(request):
     return JsonResponse(result)
 ```
 
-**context_patch** 패턴이 핵심이다. 
+**context_patch** 패턴이 핵심이다.
 
-그래프가 "변경된 것만" `context_patch`로 반환하면, 뷰에서 기존 세션에 덮어씌운다. 
+그래프가 "변경된 것만" `context_patch`로 반환하면, 뷰에서 기존 세션에 덮어씌운다.
 
 덕분에 변경되지 않은 값들은 세션에 그대로 남는다.
 
-예를 들어 "겐지 카운터 알려줘"라고 물으면 `target_enemy: "겐지"`가 세션에 저장되고 
+예를 들어 "겐지 카운터 알려줘"라고 물으면 `target_enemy: "겐지"`가 세션에 저장되고
 
 바로 다음에 "운영법도 알려줘"라고 물어도 겐지 컨텍스트가 이어진다.
 
@@ -642,7 +700,7 @@ def chat_api(request):
 
 ---
 
-# 마무리
+## 마무리
 
 전체 흐름을 다시 정리하면 다음과 같다.
 
@@ -655,9 +713,9 @@ def chat_api(request):
 ⑥ context_patch를 Django 세션에 반영
 ```
 
-LangGraph를 적용하면서 얻은 가장 큰 이점은 **각 단계를 독립적으로 수정할 수 있다**는 점이다. 
+LangGraph를 적용하면서 얻은 가장 큰 이점은 **각 단계를 독립적으로 수정할 수 있다**는 점이다.
 
-스탯 파싱 로직을 바꾸고 싶으면 `parse_stats_from_text_node`만 수정하면 되고 
+스탯 파싱 로직을 바꾸고 싶으면 `parse_stats_from_text_node`만 수정하면 되고
 
 전략 판단 방식을 바꾸고 싶으면 `judge_strategy_node`만 건드리면 된다.
 
@@ -667,61 +725,61 @@ LangGraph를 적용하면서 얻은 가장 큰 이점은 **각 단계를 독립�
 
 ---
 
-# 부록: 트러블슈팅
+## 부록: 트러블슈팅
 
 개발 과정에서 반복적으로 마주친 문제들과 해결 방법을 정리했다.
 
 <br>
 
-## 1. LLM이 이전 대화의 적 영웅을 다음 질문에 그대로 가져오는 문제
+### 1. LLM이 이전 대화의 적 영웅을 다음 질문에 그대로 가져오는 문제
 
 **증상**: "겐지 카운터 알려줘" 후 "운영법 알려줘"라고 하면, 두 번째 질문에서도 겐지가 target_enemy로 박혀있어 엉뚱한 답변이 나왔다.
 
 **원인**: LLM이 컨텍스트를 보고 이전 대화의 `target_enemy`를 그대로 이어받는 경향이 있었다.
 
-**해결**: `enemy_named_this_turn` 플래그를 도입했다. 
+**해결**: `enemy_named_this_turn` 플래그를 도입했다.
 
-이번 메시지 원문에 적 영웅 이름이 실제로 등장했을 때만 `True`로 설정되며 
+이번 메시지 원문에 적 영웅 이름이 실제로 등장했을 때만 `True`로 설정되며
 
-검색 쿼리 생성과 답변 프롬프트 모두 이 플래그를 기준으로 적 정보를 포함할지 결정한다. 
+검색 쿼리 생성과 답변 프롬프트 모두 이 플래그를 기준으로 적 정보를 포함할지 결정한다.
 
 추가로 2턴 연속으로 적이 언급되지 않으면 세션에서 자동으로 비우는 소멸 로직도 함께 적용했다.
 
 <br><br>
 
-## 2. LLM이 역할 고정 모드를 무시하고 다른 역할 영웅을 추천하는 문제
+### 2. LLM이 역할 고정 모드를 무시하고 다른 역할 영웅을 추천하는 문제
 
 **증상**: 딜러로 플레이 중인데 "힐러가 케어를 안 해줘요"라고 하면 힐러 교체를 추천했다.
 
 **원인**: LLM이 맥락상 자연스러운 해결책(힐러를 바꿔라)을 제안하는 경향이 있었다.
 
-**해결**: 역할 고정 규칙을 프롬프트 최상단에 "절대 규칙"으로 명시하고 
+**해결**: 역할 고정 규칙을 프롬프트 최상단에 "절대 규칙"으로 명시하고
 
-답변에 포함된 영웅 이름을 파싱해 허용 목록 밖의 영웅을 사후에 치환하는 이중 방어 로직을 추가했다. 
+답변에 포함된 영웅 이름을 파싱해 허용 목록 밖의 영웅을 사후에 치환하는 이중 방어 로직을 추가했다.
 
 다만 사용자가 메시지에서 직접 언급한 영웅 이름(같은 편 동료를 가리키는 경우 등)은 치환 대상에서 제외한다.
 
 <br><br>
 
-## 3. LLM이 조합 질문을 "내 영웅 교체" 질문으로 오인하는 문제
+### 3. LLM이 조합 질문을 "내 영웅 교체" 질문으로 오인하는 문제
 
-**증상**: "상대가 바스티온, 토르비욘으로 압박하는데 팀 조합을 어떻게 짤까?"를 
+**증상**: "상대가 바스티온, 토르비욘으로 압박하는데 팀 조합을 어떻게 짤까?"를
 
 LLM이 `intent=swap`으로 분류해 본인 영웅(예: 디바)을 교체해야 한다는 답변을 했다.
 
 **원인**: 영웅 이름이 여러 개 등장하면 LLM이 `swap` 의도로 오판하는 경향이 있었다.
 
-**해결**: SWAP INTENT GUARD를 도입했다. 
+**해결**: SWAP INTENT GUARD를 도입했다.
 
-`intent=swap`으로 분류됐는데 메시지 원문에 `current_hero` 이름이 직접 등장하지 않으면 
+`intent=swap`으로 분류됐는데 메시지 원문에 `current_hero` 이름이 직접 등장하지 않으면
 
-`intent=general`로 재분류하고 `swap_guard_triggered` 플래그를 설정한다. 
+`intent=general`로 재분류하고 `swap_guard_triggered` 플래그를 설정한다.
 
 이 플래그가 있을 때만 `current_hero_uncertain=True`로 처리해 역할 제한 없이 자유로운 조합 답변이 나오게 했다.
 
 <br><br>
 
-## 4. LLM이 힐 불만을 "힐러 플레이 중"으로 오해하는 문제
+### 4. LLM이 힐 불만을 "힐러 플레이 중"으로 오해하는 문제
 
 **증상**: "힐을 못 받아서 자꾸 죽는다"고 하면, LLM이 `current_hero_role=support`로 분류해 힐러 교체를 추천했다.
 
@@ -739,16 +797,16 @@ if llm_hero_role == "support" and HEAL_COMPLAINT_PATTERN.search(message):
 
 <br><br>
 
-## 5. 후속 질문에서 이전 대화 맥락이 갑자기 사라지는 문제
+### 5. 후속 질문에서 이전 대화 맥락이 갑자기 사라지는 문제
 
 **증상**: "모이라 스탯 분석해줘" 후 "케어 우선순위 알려줘"라고 하면 모이라와 전혀 무관한 범용 답변이 나왔다.
 
 **원인**: `intent=general` + 영웅 이름 없음 → `current_hero_uncertain=True`로 처리되어 세션 컨텍스트가 통째로 무시됐다.
 
-**해결**: `current_hero_uncertain` 판단 기준을 `swap_guard_triggered` 플래그로 한정했다. 
+**해결**: `current_hero_uncertain` 판단 기준을 `swap_guard_triggered` 플래그로 한정했다.
 
-단순히 `intent=general`인 것만으로는 불확실로 판단하지 않는다. 
+단순히 `intent=general`인 것만으로는 불확실로 판단하지 않는다.
 
-SWAP INTENT GUARD가 실제로 발동한 경우(조합 질문을 교체 질문으로 오인한 경우)에만 
+SWAP INTENT GUARD가 실제로 발동한 경우(조합 질문을 교체 질문으로 오인한 경우)에만
 
 `current_hero_uncertain=True`가 설정되도록 제한해 정상적인 후속 질문의 맥락이 끊기는 문제를 해결했다.
