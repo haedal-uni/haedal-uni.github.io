@@ -11,7 +11,7 @@ tags: [Cloudflare, Docker]
 
 <br><br><br><br>
 
-## 1. 왜 https가 필요했나
+## 1. https
 
 http 주소(`http://서버 ip주소:포트번호`)로 서비스하던 동안 브라우저가 막는 기능이 있었다.
 
@@ -23,7 +23,7 @@ http 주소(`http://서버 ip주소:포트번호`)로 서비스하던 동안 브
 
 <br><br><br><br>
 
-## 2. 왜 Caddy가 아니라 Cloudflare Tunnel인가
+## 2. Caddy가 아닌 Cloudflare Tunnel 선택 이유
 
 https를 붙이는 방법으로 Caddy와 Cloudflare Tunnel을 비교했다.
 
