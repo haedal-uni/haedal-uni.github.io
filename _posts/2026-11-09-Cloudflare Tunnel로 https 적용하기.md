@@ -101,7 +101,7 @@ Cloudflare에 로그인한 뒤 대시보드에서 `Add a domain`을 누르고 �
 
 이때 화면 아래에서 `Add record`가 아니라 `Continue` 버튼을 누르면 된다.
 
-<img src="https://github.com/user-attachments/assets/ac7ca6a1-5bb2-46ab-b033-65aa809f8111" width="70%"/>
+<img src="/assets/img/posts/ac7ca6a1-5bb2-46ab-b033-65aa809f8111.png" width="70%"/>
 
 <br><br>
 
@@ -111,7 +111,7 @@ Cloudflare에 로그인한 뒤 대시보드에서 `Add a domain`을 누르고 �
 
 Cloudflare nameservers 부분의 이 두 개를 복사한다.
 
-<img src="https://github.com/user-attachments/assets/31ea89da-a424-4190-a727-aac2c802651b" width="70%"/>
+<img src="/assets/img/posts/31ea89da-a424-4190-a727-aac2c802651b.png" width="70%"/>
 
 <br><br>
 
@@ -192,7 +192,7 @@ Cloudflare 터널 화면에서 상태가 `HEALTHY`가 되면 연결된 것이다
 
 화면에 따라 메뉴 이름이 `Public Hostname` 또는 `Published application routes`로 나온다.
 
-<img src="https://github.com/user-attachments/assets/a018adf3-cff1-46ac-b620-21bccaf95e7a" width="60%" />
+<img src="/assets/img/posts/a018adf3-cff1-46ac-b620-21bccaf95e7a.png" width="60%" />
 
 <br><br> 
 
